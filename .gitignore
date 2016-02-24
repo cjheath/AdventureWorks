@@ -1,0 +1,9 @@
+Database/
+OLTP.*
+OLTP-.*
+*.suo
+orm/bin
+orm/obj
+orm/*.cs
+*.swp
+*.swo

@@ -1,0 +1,132 @@
+--- AdventureWorks.cql	2016-02-24 15:31:56.000000000 +1100
++++ AdventureWorks.cql.cql	2016-02-24 15:32:07.000000000 +1100
+@@ -189,3 +193,3 @@
+ Currency Rate applies at one average-Amount (as Average Rate);
+-Currency Rate has one endof- day Amount (as End Of Day Rate);
++Currency Rate has one end- of day Amount (as End Of Day Rate);
+ 
+@@ -228,5 +232,5 @@
+ Location has one cost-smallmoney (as Cost Rate);
+-Location has one workcapacity-Hours2 (as Availability);
++Location has one work- capacity Hours2 (as Availability);
+ 
+-Person is a kind of Business Entity;
++Person is a kind of Business Entity [separate];
+ Customer is at most one Person;
+@@ -269,8 +273,8 @@
+ Product was discontinued on at most one discontinued-Date;
+-Product has one listprice-Amount (as List Price);
++Product has one list- price Amount (as List Price);
+ Product should be re-ordered when inventory drops below one minimum-Number (as Reorder Point);
+ Product should be stocked at least in one minimum-Number (as Safety Stock Level);
+-Product is last available on at most one sellend-Date;
+-Product was first available on one sellstart-Date;
+-Product has one standardcost-Amount (as Standard Cost);
++Product is last available on at most one sell- end Date;
++Product was first available on one sell- start Date;
++Product has one standard- cost Amount (as Standard Cost);
+ Product (as Finished Goods Flag) is saleable;
+@@ -323,3 +327,3 @@
+ Product Photo has at most one large-Photo File Name;
+-Product Photo has at most one thumbnail-Photo;
++Product Photo has at most one thumb- nail Photo;
+ Product Photo has at most one thumbnail-Photo File Name;
+@@ -379,3 +383,3 @@
+ 	Sales Order Number is of at most one Sales Order;
+-Sales Order has at most one billto-Address;
++Sales Order has one bill- to Address;
+ Sales Order is on at most one customers-Account Number;
+@@ -384,4 +388,4 @@
+ Sales Order was ordered on one order-Date;
++Sales Order has one ship- to Address;
+ Sales Order was shipped on at most one ship-Date;
+-Sales Order has at most one shipto-Address;
+ Sales Order includes one tax-Amount (as Tax Amt);
+@@ -397,4 +401,4 @@
+ Sales Order Detail is for one Product;
++Sales Order Detail applies one unit- discount Amount (as Unit Price Discount);
+ Sales Order Detail has one unit-Amount (as Unit Price);
+-Sales Order Detail applies one unitdiscount-Amount (as Unit Price Discount);
+ 
+@@ -477,3 +481,3 @@
+ 
+-Store is a kind of Business Entity;
++Store is a kind of Business Entity [separate];
+ Customer is at most one Store;
+@@ -502,3 +506,3 @@
+ 
+-Vendor is a kind of Business Entity;
++Vendor is a kind of Business Entity [separate];
+ Purchase Order was placed with one Vendor;
+@@ -509,3 +513,3 @@
+ 	Name is of at most one Vendor;
+-Vendor has at most one purchasingweb- service URL;
++Vendor has at most one purchasing- web service URL;
+ Vendor (as Active Flag) is active;
+@@ -519,3 +523,3 @@
+ Work Order is for one ordered-Count (as Order Qty);
+-Work Order has one scrapped-Count;
++Work Order has one scrapped-Count (as Scrapped Qty);
+ Work Order has one start-Date;
+@@ -528,7 +532,7 @@
+ 	Location performed Work Order Routing;
+-Work Order Routing has at most one actualend-Date;
+-Work Order Routing took at most one actualresource-Resource Hours;
+-Work Order Routing has at most one actualstart-Date;
+-Work Order Routing has one scheduledend-Date;
+-Work Order Routing has one scheduledstart-Date;
++Work Order Routing has at most one actual- end Date;
++Work Order Routing has at most one actual- start Date;
++Work Order Routing took at most one actual-Resource Hours;
++Work Order Routing has one scheduled- end Date;
++Work Order Routing has one scheduled- start Date;
+ 
+@@ -554,3 +558,3 @@
+ 
+-Employee is a kind of Person;
++Employee is a kind of Person [separate];
+ Document is responsibility of one Employee (as Owner);
+@@ -569,3 +573,3 @@
+ Employee has one hire-Date;
+-Employee has one sickleave-Hours;
++Employee has one sick- leave Hours;
+ Employee has one vacation-Hours;
+@@ -582,3 +586,3 @@
+ Employee Pay History is where
+-	pay of Employee was changed on ratechange-Date;
++	pay of Employee was changed on rate- change Date;
+ Employee Pay History is at one Amount (as Rate);
+@@ -601,3 +605,3 @@
+ Product Vendor has one Unit Measure;
+-Product Vendor was paid on at most one lastreceipt-Date;
++Product Vendor was paid on at most one last- receipt Date;
+ Product Vendor has one maximum-Count (as Max Order Qty);
+@@ -608,3 +613,3 @@
+ 
+-Sales Person is a kind of Employee;
++Sales Person is a kind of Employee [separate];
+ Sales Order was taken by at most one Sales Person;
+@@ -612,3 +617,3 @@
+ Sales Person sold one Amount (as Sales Last Year) last year;
+-Sales Person is assigned to at most one Sales Territory (as Territory);
++Sales Person is assigned to at most one Sales Territory;
+ Sales Person may receive one bonus-Amount (as Bonus);
+@@ -648,7 +649,2 @@
+ 	Address is in State Province;
+-each combination Country Region, State Province Code occurs at most one time in
+-	State Province is in Country Region,
+-	State Province has State Province Code;
+-each Employee occurs at least one time in
+-	Employee started on start Date in Department working Shift;
+ each combination Name, Time(2), Time(1) occurs at most one time in
+@@ -657,3 +657,8 @@
+ 	Shift ends at end Time(1);
+-each Purchase Order Number occurs at most one time in
+-	Sales Order corresponds to customers Purchase Order Number;
++each Person Type occurs at least one time in
++	Person is of Person Type;
++each Personal Title occurs at least one time in
++	Person has Personal Title;
++each combination State Province Code, Country Region occurs at most one time in
++	State Province has State Province Code,
++	State Province is in Country Region;
