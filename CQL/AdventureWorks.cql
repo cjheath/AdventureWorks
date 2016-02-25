@@ -147,7 +147,7 @@ each Geography is written as Geography;
 each Address Line is written as String(60);
 each Address is identified by its ID;
 each City Name is written as String(30);
-each City is identified by its Name;
+each City [static] is identified by its Name;
 each Postal Code is written as String(15);
 Address has one Address Line (as Address Line1);
 Address has at most one second- Address Line (as Address Line2);
@@ -171,7 +171,7 @@ each Business Entity is identified by its ID;
 // SC = Store Contact, IN = Individual (retail) customer, SP = Sales person, EM = Employee (non-sales), VC = Vendor contact, GC = General contact
 // Should be a reference table containing these descriptive strings
 each Person Type Code is written as Char(2) restricted to {'GC', 'SP', 'EM', 'IN', 'VC', 'SC'};
-each Person Type is identified by its Code;
+each Person Type [static] is identified by its Code;
 each Personal Title is written as String(8);
 each Name Suffix is written as String(10);
 each Email Promotion Preference is written as Integer restricted to {0..2}; // None, only from us, from partners also
@@ -273,7 +273,7 @@ each Color is written as String(15);
 each Product Size is written as String(5);
 each Product Weight is written as Measure;
 each Product Line Name is written as Char(2) restricted to {'R', 'M', 'T', 'S'}; // Road, Mountain, Touring, Standard
-each Product Line is identified by its Name;
+each Product Line [static] is identified by its Name;
 each Product Class is written as Char(2) restricted to {'H', 'M', 'L'};	// High, medium, Low
 each Product Style is written as Char(2) restricted to {'W', 'M', 'U'};	// Womens, Mens, Universal
 
@@ -335,7 +335,7 @@ each BOM Level is written as Integer(16);
 Bill Of Materials has one BOM Level;
 // Bill Of Materials has one modified-Date;
 
-each Culture is identified by its ID;
+each Culture [static] is identified by its ID;
 Culture has one Name,
     Name is of at most one Culture;
 // Culture has one modified-Date;
@@ -500,7 +500,7 @@ Product Vendor has one outstanding- Count (as On Order Qty);
 Product Vendor has one Unit Measure;
 // Product Vendor has one modified-Date;
 
-each Ship Method is identified by its ID;
+each Ship Method [static] is identified by its ID;
 Ship Method has one Name,
      Name is of at most one Ship Method;
 Ship Method has one base- Amount (as Ship Base);
@@ -570,7 +570,7 @@ Currency has one Name,
      Name is of at most one Currency;
 // Currency has one modified-Date;
 
-each Country Region Currency is where
+each Country Region Currency [static] is where
     Country Region uses Currency;
 // Country Region Currency has one modified-Date;
 
@@ -740,7 +740,7 @@ each Sales Order Sales Reason is where
 // Sales Order Sales Reason has one modified-Date;
 
 each Tax Type is written as Integer(8) restricted to {1..3};
-each Sales Tax Rate is identified by its ID where
+each Sales Tax Rate [static] is identified by its ID where
     some State Province applies some Tax Type;
 Sales Tax Rate applies at one Amount (as Tax Rate);
 Sales Tax Rate has one Name,
