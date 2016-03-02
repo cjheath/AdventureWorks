@@ -1,9 +1,23 @@
 Database/
 OLTP.*
-OLTP-.*
+OLTP-*.*
 *.suo
 orm/bin
 orm/obj
 orm/*.cs
 *.swp
 *.swo
+
+AdventureWorks.cql
+AdventureWorks.cql.cql
+AdventureWorks.cql.diffs
+AdventureWorks.cql.orig
+
+# third-party files without permission:
+DataVault/OceanBI.html
+DataVault/OceanBI_files/
+
+# Not ready for publication:
+OLTP/AdventureWorks.sql
+OLTP/SchemaCollections.xsd
+
