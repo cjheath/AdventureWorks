@@ -1,0 +1,17 @@
+https://blogs.infosupport.com/adventureworks-data-vault/
+AdventureWorks Data Vault
+Posted on 7 November 2011 by Hans Geurtsen
+
+Recently, Dan Linstedt made available a Data Vault version of the
+Adventure Works database. He has done this for SQL Server 2005/2008.
+When I tried to run the corresponding script, I ran into some errors.
+Constraint names were not always unique, and here and there a keyword
+was used as a field name without using brackets. I got the error
+'quick-and-dirty' removed, which means that I mainly to solve the
+problem with the constraint names simply have used the name
+"PK_<tablename>'. The modified version that works well in my SQL
+Server 2008 R2 environment, you can find here. Note that the script
+to be carried out in an existing (preferably blank) database. The
+script only makes the tables, they are not filled! Leaving you so
+empty Data Vault database for Adventure Works model. For more
+information, see the original blog post by Dan Linstedt.

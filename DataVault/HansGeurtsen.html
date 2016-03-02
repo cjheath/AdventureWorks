@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)https://blogs.infosupport.com/adventureworks-data-vault/ -->
+<html ng-module="app" lang="en-US" id="ng-app"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="google-site-verification" content="6uRyPH4S6T5sMRJjNLIE2CHqsEN3uhC28x9dCjDlHIo">
+        <title>AdventureWorks Data Vault  </title>
+        <link rel="profile" href="http://gmpg.org/xfn/11">
+        
+        <link href="./HansGeurtsen_files/jquery-ui.css" type="text/css" rel="stylesheet">
+        
+        <link rel="stylesheet" type="text/css" media="all" href="./HansGeurtsen_files/style.css">
+        <link rel="stylesheet" type="text/css" media="all" href="./HansGeurtsen_files/main.css">
+        <link rel="pingback" href="https://blogs.infosupport.com/xmlrpc.php">
+        <!--[if lte IE 7]>
+        <script src="https://blogs.infosupport.com/wp-content/themes/infosupport/js/json2.js" type="text/javascript"></script>
+        <![endif]-->
+        <!--[if lt IE 9]>
+        <script src="https://blogs.infosupport.com/wp-content/themes/twentyeleven/js/html5.js" type="text/javascript"></script>
+        <script src="https://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js>"</script>
+
+        <![endif]-->
+
+        <!--[if IE]>
+        <link rel="stylesheet" type="text/css" href="https://blogs.infosupport.com/wp-content/themes/infosupport/css/ie.css">
+        <![endif]-->
+        <link rel="alternate" type="application/rss+xml" title="Info Support » Feed" href="https://blogs.infosupport.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Info Support » Comments Feed" href="https://blogs.infosupport.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Info Support » AdventureWorks Data Vault Comments Feed" href="https://blogs.infosupport.com/adventureworks-data-vault/feed/">
+		<script type="text/javascript" async="" src="./HansGeurtsen_files/ga.js"></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"https:\/\/blogs.infosupport.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.2"}};
+			!function(a,b,c){function d(a){var c,d=b.createElement("canvas"),e=d.getContext&&d.getContext("2d"),f=String.fromCharCode;return e&&e.fillText?(e.textBaseline="top",e.font="600 32px Arial","flag"===a?(e.fillText(f(55356,56806,55356,56826),0,0),d.toDataURL().length>3e3):"diversity"===a?(e.fillText(f(55356,57221),0,0),c=e.getImageData(16,16,1,1).data.toString(),e.fillText(f(55356,57221,55356,57343),0,0),c!==e.getImageData(16,16,1,1).data.toString()):("simple"===a?e.fillText(f(55357,56835),0,0):e.fillText(f(55356,57135),0,0),0!==e.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8"),diversity:d("diversity")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8&&c.supports.diversity||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./HansGeurtsen_files/wp-emoji-release.min.js" type="text/javascript"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="YoutubeShortcodeMargenn-css" href="./HansGeurtsen_files/youtube-shortcode.css" type="text/css" media="all">
+<link rel="https://api.w.org/" href="https://blogs.infosupport.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.infosupport.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.infosupport.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Creating a WCF 4 dynamic locator service part 2! Discovery extensions" href="https://blogs.infosupport.com/creating-a-wcf-4-dynamic-locator-service-part-2-discovery-extensions/">
+<link rel="next" title="Comparing Apples with Mango’s" href="https://blogs.infosupport.com/comparing-apples-with-mangos/">
+
+<link rel="canonical" href="https://blogs.infosupport.com/adventureworks-data-vault/">
+<link rel="shortlink" href="https://blogs.infosupport.com/?p=10256">
+<link rel="alternate" type="application/json+oembed" href="https://blogs.infosupport.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fblogs.infosupport.com%2Fadventureworks-data-vault%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://blogs.infosupport.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fblogs.infosupport.com%2Fadventureworks-data-vault%2F&amp;format=xml">
+
+<!-- This site is using AdRotate v3.14.2 to display their advertisements - https://ajdg.solutions/products/adrotate-for-wordpress/ -->
+<!-- AdRotate CSS -->
+<style type="text/css" media="screen">
+	.g { margin:0px; padding:0px; overflow:hidden; line-height:1; zoom:1; }
+	.g img { height:auto; }
+	.g-col { position:relative; float:left; }
+	.g-col:first-child { margin-left: 0; }
+	.g-col:last-child { margin-right: 0; }
+	.g-1 { margin:1px; }
+	.g-2 { margin:1px; }
+	.g-3 { margin:1px; }
+	.g-4 { margin:1px; }
+	.g-5 { margin:1px; }
+	.g-6 { margin:1px; }
+	.g-7 { margin:1px; }
+	.g-8 { margin:1px; }
+	.g-9 { margin:1px; }
+	.g-10 { margin:1px; }
+	.g-11 { margin:1px; }
+	.g-12 { margin:1px; }
+	.g-13 { margin:1px; }
+	.g-14 { margin:1px; }
+	.g-15 { margin:1px; }
+	.g-16 { margin:1px; }
+	.g-17 { margin:1px; }
+	.g-18 { margin:1px; }
+	@media only screen and (max-width: 480px) {
+		.g-col, .g-dyn, .g-single { width:100%; margin-left:0; margin-right:0; }
+	}
+</style>
+<!-- /AdRotate CSS -->
+
+		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		<style type="text/css">
+.avatar {vertical-align:middle}
+.credit {font-size: 50%;}
+</style>
+		<link rel="stylesheet" type="text/css" href="./HansGeurtsen_files/shCore.css"><link rel="stylesheet" type="text/css" href="./HansGeurtsen_files/shThemeDefault.css"><style type="text/css" id="syntaxhighlighteranchor"></style>
+        
+        <script src="./HansGeurtsen_files/jquery.min.js" type="text/javascript"></script>             
+        <link rel="shortcut icon" href="https://blogs.infosupport.com/wp-content/themes/infosupport/favicon.ico">
+		
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+        </script>
+        
+        <script src="./HansGeurtsen_files/cookie.custom.js" type="text/javascript"></script>
+            <link rel="stylesheet" href="./HansGeurtsen_files/widget.css"></head>
+
+    <body class="single single-post postid-10256 single-format-standard two-column right-sidebar">
+        <div class="full">
+
+            <header id="branding" class="slogan_en_US" role="banner">
+                <nav class="portal-menu">
+    <div class="container portal-container">
+        <div class="row">
+            <div class="col-sm-12">
+                <!-- menu for mobile -->
+                <ul class="visible-xs">
+                                                                                            <li class="blog active">
+                            <a href="https://blogs.infosupport.com/adventureworks-data-vault/#" id="mobile-menu-handler">Blog</a>
+                        </li>
+                                                                                                                <li class="toggle-search"><a href="https://blogs.infosupport.com/adventureworks-data-vault/#" class="searchform-handler"></a></li>
+                </ul>
+                <ul id="mobile-menu">
+                                                                    <li class="services">
+                            <a href="http://www.infosupport.com/">Info Support</a>
+                        </li>
+                                                                                            <li class="carreer">
+                            <a href="http://carriere.infosupport.com/">Carriere</a>
+                        </li>
+                                                                    <li class="training">
+                            <a href="http://training.infosupport.com/">Training</a>
+                        </li>
+                                                                    <li class="about-us">
+                            <a href="http://internationalgroup.infosupport.com/">International Group</a>
+                        </li>
+                                    </ul>
+
+                <!-- menu for tablet en desktop -->  
+                <ul class="hidden-xs">
+                                            <li class="services">
+                            <a href="http://www.infosupport.com/" target="_blank">Info Support</a>
+                        </li>
+                                            <li class="blog active">
+                            <a href="https://blogs.infosupport.com/" target="_blank">Blog</a>
+                        </li>
+                                            <li class="carreer">
+                            <a href="http://carriere.infosupport.com/" target="_blank">Carriere</a>
+                        </li>
+                                            <li class="training">
+                            <a href="http://training.infosupport.com/" target="_blank">Training</a>
+                        </li>
+                                            <li class="about-us">
+                            <a href="http://internationalgroup.infosupport.com/" target="_blank">International Group</a>
+                        </li>
+                                        <li class="toggle-search"><a href="https://blogs.infosupport.com/adventureworks-data-vault/#" class="searchform-handler">Zoeken</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <form id="searchform" role="search" method="get" class="navbar-form" action="https://blogs.infosupport.com/">
+        <div class="container">
+            <div class="input-group">
+                <input type="search" value="" name="s" class="search-field form-control" placeholder="Search">
+                <label class="hide">Search for:</label>
+                <span class="input-group-btn">
+                    <button type="submit" class="search-submit btn btn-default"><span class="iconshare-search"></span></button>
+                </span>
+            </div>
+        </div>
+    </form>
+</nav>                <div class="wrapper">
+                <hgroup>
+                    <h1 id="site-title"><span><a href="https://blogs.infosupport.com/" title="Info Support" rel="home"><img src="./HansGeurtsen_files/logo.png" alt="logo Info Support"></a></span></h1>
+                                        
+                </hgroup>
+                 <div id="mobile"><a href="javascript:void(0);">Menu</a></div>
+
+                                
+                
+               
+                <div id="flags">
+                    <a href="https://blogs.infosupport.com/adventureworks-data-vault/#" class="language-selector" data-slug="nl" title="Nederlands"><img src="./HansGeurtsen_files/nl.png" height="12" alt="Nederlands" width="18"></a><img class="active" src="./HansGeurtsen_files/en.png" height="12" alt="English" width="18">                    
+                </div>
+                <nav id="access" role="navigation">
+                    <h3 class="assistive-text">Main menu</h3>
+                                        <div class="skip-link"><a class="assistive-text" href="https://blogs.infosupport.com/adventureworks-data-vault/#content" title="Skip to primary content">Skip to primary content</a></div>
+                    <div class="skip-link"><a class="assistive-text" href="https://blogs.infosupport.com/adventureworks-data-vault/#secondary" title="Skip to secondary content">Skip to secondary content</a></div>
+                                        <div class="menu-mainmenu_en_us-container"><ul id="menu-mainmenu_en_us" class="menu"><li id="menu-item-10385" class="home menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-10385"><a href="https://blogs.infosupport.com/">Home</a></li>
+<li id="menu-item-10371" class="categorieen menu-item menu-item-type-post_type menu-item-object-page menu-item-10371"><a href="https://blogs.infosupport.com/categories/">Categories</a></li>
+<li id="menu-item-10372" class="over-ons menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-10372"><a href="https://blogs.infosupport.com/about/">About</a>
+<ul class="sub-menu">
+	<li id="menu-item-10395" class="about-us menu-item menu-item-type-post_type menu-item-object-page menu-item-10395"><a href="https://blogs.infosupport.com/about/about-info-support/">About Info Support</a></li>
+	<li id="menu-item-10394" class="bloggers menu-item menu-item-type-post_type menu-item-object-page menu-item-10394"><a href="https://blogs.infosupport.com/about/authors/">Our Authors</a></li>
+	<li id="menu-item-10393" class="contact menu-item menu-item-type-post_type menu-item-object-page menu-item-10393"><a href="https://blogs.infosupport.com/about/contact-information/">Contact information</a></li>
+</ul>
+</li>
+<li id="menu-item-10370" class="evenementen menu-item menu-item-type-post_type menu-item-object-page menu-item-10370"><a href="https://blogs.infosupport.com/events/">Events</a></li>
+<li id="menu-item-15818" class="downloads menu-item menu-item-type-post_type menu-item-object-page menu-item-15818"><a href="https://blogs.infosupport.com/media-library/">Media</a></li>
+</ul></div>                    
+                    
+                </nav><!-- #access -->
+            	</div>
+            </header><!-- #branding -->
+
+        </div>	
+
+
+            <div id="main">
+            	
+            	<div class="wrapper">
+                                    <header class="page-header">
+                        <hgroup>
+                            <h1 class="page-title">AdventureWorks Data Vault</h1>
+                        </hgroup>
+                    </header><!-- .page-header -->
+                
+                                		
+		<div id="primary">
+			<div id="content" role="main">
+
+<!--				-->					<!-- Remove the previous en next links
+					<nav id="nav-single">
+						<h3 class="assistive-text">Post navigation</h3>
+						<span class="nav-previous"><a href="https://blogs.infosupport.com/creating-a-wcf-4-dynamic-locator-service-part-2-discovery-extensions/" rel="prev"><span class="meta-nav">&larr;</span> Previous</a></span>
+						<span class="nav-next"><a href="https://blogs.infosupport.com/comparing-apples-with-mangos/" rel="next">Next <span class="meta-nav">&rarr;</span></a></span>
+					</nav>
+					-->
+
+					
+<article id="post-10256" class="post-10256 post type-post status-publish format-standard hentry category-business-intelligence-dwh tag-data-vault">
+	<header class="entry-header">
+		
+				<div class="entry-meta">
+			<span class="sep">Posted on </span><a href="https://blogs.infosupport.com/adventureworks-data-vault/" title="16:24" rel="bookmark"><time class="entry-date" datetime="2011-11-07T16:24:41+00:00">7 November 2011</time></a><span class="by-author"> <span class="sep"> by </span> <span class="author vcard"><a class="url fn n" href="https://blogs.infosupport.com/author/hansg/" title="View all posts by Hans Geurtsen" rel="author">Hans Geurtsen</a></span></span>		</div><!-- .entry-meta -->
+			</header><!-- .entry-header -->
+
+	<div class="entry-content extended-content">
+		<p>Recentelijk heeft Dan Linstedt een Data Vault versie beschikbaar gesteld van de AdventureWorks database. Hij heeft dat gedaan voor onder andere SQL Server 2005/2008. Toen ik probeerde het bijbehorende script uit te voeren, liep ik tegen wat fouten aan. Constraint namen waren niet altijd uniek en hier en daar werd een keyword als veldnaam gebruikt zonder blokhaken te gebruiken.<span id="more-10256"></span> Ik heb de fouten er ‘quick-en-dirty’ uitgehaald, dat wil zeggen dat ik vooral bij het oplossen van het probleem met de constraint namen simpelweg gebruik heb gemaakt van de naam ‘PK_&lt;tabelnaam&gt;’. De gewijzigde versie die in mijn SQL Server 2008 R2 omgeving goed werkt, vind je <a href="http://blogs.infosupport.com/wp-content/uploads/2011/11/ADVDV_SQLServer_V4.1.zip">hier</a>. Let op dat het script uitgevoerd moet worden in een bestaande (bij voorkeur lege) database. Het script maakt alleen de tabellen aan, deze worden niet gevuld! Je hebt hierna dus een lege Data Vault database voor het AdventureWorks model. Voor meer informatie, zie de <a href="http://danlinstedt.com/datavaultcat/adventureworks-data-vault-ddl/" target="_blank">oorspronkelijke blog post</a> van Dan Linstedt.</p>
+			</div><!-- .entry-content -->
+
+	<footer class="entry-meta">
+		This entry was posted in <a href="https://blogs.infosupport.com/themas/technology/business-intelligence-dwh/" rel="category tag">Business Intelligence</a> and tagged <a href="https://blogs.infosupport.com/tag/data-vault/" rel="tag">Data Vault</a> by <a href="https://blogs.infosupport.com/author/hansg/">Hans Geurtsen</a>. Bookmark the <a href="https://blogs.infosupport.com/adventureworks-data-vault/" title="Permalink to AdventureWorks Data Vault" rel="bookmark">permalink</a>.				<!-- AddThis Button BEGIN -->
+		<div class="refurl-share refurls-32">
+		    <a class="refurl-button refurl_twitter" data-platform="twitter" href="https://blogs.infosupport.com/adventureworks-data-vault/#"></a>
+		    <a class="refurl-button refurl_facebook" data-platform="facebook" href="https://blogs.infosupport.com/adventureworks-data-vault/#"></a>
+		    <a class="refurl-button refurl_linkedin" data-platform="linkedin" href="https://blogs.infosupport.com/adventureworks-data-vault/#"></a>
+		    <a class="refurl-button refurl_googleplus" data-platform="googleplus" href="https://blogs.infosupport.com/adventureworks-data-vault/#"></a>
+		    <a class="refurl-button refurl_email" data-platform="email" href="https://blogs.infosupport.com/adventureworks-data-vault/#"></a>
+		    <a class="refurl-button refurl_whatsapp" data-platform="whatsapp" href="https://blogs.infosupport.com/adventureworks-data-vault/#" style="display: none;"></a>
+		</div>
+		<script type="text/javascript">
+		var refurl_config = {
+		    "project": "blogs.infosupport.com"
+		};
+		</script>
+		<script type="text/javascript" src="./HansGeurtsen_files/widget.js"></script>
+		<!-- AddThis Button END -->
+
+				<div id="author-info">
+			<div id="author-avatar">
+				<img src="./HansGeurtsen_files/40.thumbnail.jpg" alt="Hans Geurtsen" width="53" height="80" class="photo">			</div><!-- #author-avatar -->
+			<div id="author-description">
+				<h2>About Hans Geurtsen</h2>
+				Hans Geurtsen started his IT carreer in 1988 as a software engineer. In 1997 he started specializing in Business Intelligence. He obtained his first experience in this field as a consultant for BI tool vendor Crystal Decisions. Later he was involved in founding a BI consultancy firm where he worked on large data warehouse implementations in the financial and governance world in roles ranging from consultant to technology manager. In 2007 Hans joined Info Support as a trainer at the Info Support Knowledge Center responsible for the Business Intelligence curriculum. In 2012 he started to work in the field again as a BI Architect.				<div id="author-link">
+					<a href="https://blogs.infosupport.com/author/hansg/" rel="author">
+						View all posts by Hans Geurtsen <span class="meta-nav">→</span>					</a>
+				</div><!-- #author-link	-->
+			</div><!-- #author-description -->
+		</div><!-- #entry-author-info -->
+			</footer><!-- .entry-meta -->
+</article><!-- #post-10256 -->
+    <script type="text/javascript">
+        _gaq.push(['_setAccount', 'UA-217327-19']);
+        _gaq.push(['_setDomainName', 'none']);
+        _gaq.push(['_setAllowLinker', true]);
+        _gaq.push(["_trackPageview"]);
+    </script>
+
+						<div id="comments">
+	
+	
+	
+					<div id="respond" class="comment-respond">
+			<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://blogs.infosupport.com/adventureworks-data-vault/#respond" style="display:none;">Cancel reply</a></small></h3>				<form action="https://blogs.infosupport.com/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+					<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" aria-required="true" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" aria-required="true" required="required"></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" aria-describedby="email-notes" aria-required="true" required="required"></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30"></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment"> <input type="hidden" name="comment_post_ID" value="10256" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="4fa0f34e00"></p><p style="display: none;"></p>				<input type="hidden" id="ak_js" name="ak_js" value="1455682693328"></form>
+					</div><!-- #respond -->
+		
+</div><!-- #comments -->
+
+<!--				-->
+			</div><!-- #content -->
+		</div><!-- #primary -->
+
+		
+		<div id="secondary" class="widget-area" role="complementary">
+			<div id="search">
+				<form method="get" id="searchform" action="https://blogs.infosupport.com/">
+		<label for="s" class="assistive-text">Search</label>
+		<input type="text" class="field" name="s" id="s" placeholder="Search">
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Search">
+	</form>
+			</div><!-- #search -->
+                        						<aside id="categories-3" class="widget widget_categories"><h3 class="widget-title">Categories</h3><label class="screen-reader-text" for="cat">Categories</label><select name="cat" id="cat" class="postform">
+	<option value="-1">Select Category</option>
+	<option class="level-0" value="27">.NET</option>
+	<option class="level-0" value="30">Business Intelligence</option>
+	<option class="level-0" value="33">Cloud</option>
+	<option class="level-0" value="1258">Continuous Delivery</option>
+	<option class="level-0" value="1461">Enterprise Architecture</option>
+	<option class="level-0" value="32">Infrastructure</option>
+	<option class="level-0" value="758">Integration</option>
+	<option class="level-0" value="1483">Internet of Things</option>
+	<option class="level-0" value="28">Java</option>
+	<option class="level-0" value="756">Mobile Development</option>
+	<option class="level-0" value="29">Oracle</option>
+	<option class="level-0" value="23">Project Management</option>
+	<option class="level-0" value="24">Quality Assurance &amp; Test</option>
+	<option class="level-0" value="26">Requirements Management</option>
+	<option class="level-0" value="597">Security</option>
+	<option class="level-0" value="25">Software Architecture</option>
+	<option class="level-0" value="759">Software Factory</option>
+	<option class="level-0" value="1252">Technology</option>
+	<option class="level-0" value="1">Various</option>
+	<option class="level-0" value="1460">Web Development</option>
+</select>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "cat" );
+	function onCatChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value > 0 ) {
+			location.href = "https://blogs.infosupport.com/?cat=" + dropdown.options[ dropdown.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onCatChange;
+})();
+/* ]]> */
+</script>
+
+</aside>		<aside id="authors-3" class="widget widget_authors">			<h3 class="widget-title">Authors</h3>			<select onchange="window.location=this.options[this.selectedIndex].value">
+<option value="#">Select Author...</option>
+<option value="https://blogs.infosupport.com/author/alexb/">Alex van Beek (27)</option>
+<option value="https://blogs.infosupport.com/author/arjank/">Arjan Kwakkel (3)</option>
+<option value="https://blogs.infosupport.com/author/arnoudr/">Arnoud Roo (2)</option>
+<option value="https://blogs.infosupport.com/author/b-eefting/">Bas Eefting (2)</option>
+<option value="https://blogs.infosupport.com/author/bass/">Bas Stemerdink (2)</option>
+<option value="https://blogs.infosupport.com/author/benny-michielsen/">Benny Michielsen (22)</option>
+<option value="https://blogs.infosupport.com/author/bertrandr/">Betrand Rohrböck (9)</option>
+<option value="https://blogs.infosupport.com/author/chrisb/">Chris van Beek (7)</option>
+<option value="https://blogs.infosupport.com/author/d-vanberkel/">Daan van Berkel (9)</option>
+<option value="https://blogs.infosupport.com/author/edwinw/">Edwin van Wijk (43)</option>
+<option value="https://blogs.infosupport.com/author/ericd/">Eric Denekamp (368)</option>
+<option value="https://blogs.infosupport.com/author/eriko/">Erik Oppedijk (16)</option>
+<option value="https://blogs.infosupport.com/author/e-steinebach/">Erik Steinebach (1)</option>
+<option value="https://blogs.infosupport.com/author/erikaw/">Erika Watt (11)</option>
+<option value="https://blogs.infosupport.com/author/e-vanalebeek/">Erma van Alebeek (1)</option>
+<option value="https://blogs.infosupport.com/author/ernow/">Erno de Weerd (346)</option>
+<option value="https://blogs.infosupport.com/author/frankb/">Frank Bakker (20)</option>
+<option value="https://blogs.infosupport.com/author/gijsd/">Gijs van Dulmen (18)</option>
+<option value="https://blogs.infosupport.com/author/hansg/">Hans Geurtsen (214)</option>
+<option value="https://blogs.infosupport.com/author/hansk/">Hans Kunz (2)</option>
+<option value="https://blogs.infosupport.com/author/harryn/">Harry Nieboer (196)</option>
+<option value="https://blogs.infosupport.com/author/h-peek/">Hylke Peek (1)</option>
+<option value="https://blogs.infosupport.com/author/i-diepstraten/">Ivo Diepstraten (1)</option>
+<option value="https://blogs.infosupport.com/author/johanj/">Johan Janssen (14)</option>
+<option value="https://blogs.infosupport.com/author/jonathanm/">Jonathan Mezach (19)</option>
+<option value="https://blogs.infosupport.com/author/j-snijder/">Joop Snijder (1)</option>
+<option value="https://blogs.infosupport.com/author/josd/">Jos van Dixhoorn (7)</option>
+<option value="https://blogs.infosupport.com/author/kooss/">Koos van Strien (15)</option>
+<option value="https://blogs.infosupport.com/author/l-bouquiet/">Léon Bouquiet (13)</option>
+<option value="https://blogs.infosupport.com/author/m-vanduren/">Maarten van Duren (5)</option>
+<option value="https://blogs.infosupport.com/author/manuelr/">Manuel Riezebosch (9)</option>
+<option value="https://blogs.infosupport.com/author/marcelv/">Marcel de Vries (191)</option>
+<option value="https://blogs.infosupport.com/author/marcoh/">Marco Hout (11)</option>
+<option value="https://blogs.infosupport.com/author/m-kuiper/">Marco Kuiper (12)</option>
+<option value="https://blogs.infosupport.com/author/markr/">Mark Rexwinkel (1)</option>
+<option value="https://blogs.infosupport.com/author/marks/">Mark Streutker (7)</option>
+<option value="https://blogs.infosupport.com/author/markt/">Mark Taling (5)</option>
+<option value="https://blogs.infosupport.com/author/markw/">Mark Wolzak (20)</option>
+<option value="https://blogs.infosupport.com/author/martijnb/">Martijn Beenes (21)</option>
+<option value="https://blogs.infosupport.com/author/martijnv/">Martijn de Vries (8)</option>
+<option value="https://blogs.infosupport.com/author/martind/">Martin Devillers (3)</option>
+<option value="https://blogs.infosupport.com/author/m-anbeek/">Melvin Anbeek (7)</option>
+<option value="https://blogs.infosupport.com/author/nielsn/">Niels Naglé (10)</option>
+<option value="https://blogs.infosupport.com/author/o-uyan/">Orhan Uyan (4)</option>
+<option value="https://blogs.infosupport.com/author/oscarz/">Oscar Zonneveld (13)</option>
+<option value="https://blogs.infosupport.com/author/overige/">Oud-medewerkers (321)</option>
+<option value="https://blogs.infosupport.com/author/patrickg/">Patrick Gilhuijs (7)</option>
+<option value="https://blogs.infosupport.com/author/peterhe/">Peter Hendriks (120)</option>
+<option value="https://blogs.infosupport.com/author/petert/">Peter Toonen (5)</option>
+<option value="https://blogs.infosupport.com/author/raimondb/">Raimond Brookman (157)</option>
+<option value="https://blogs.infosupport.com/author/remcos/">Remco Spil (6)</option>
+<option value="https://blogs.infosupport.com/author/r-hietkamp/">René Hietkamp (2)</option>
+<option value="https://blogs.infosupport.com/author/richardz/">Richard Zaat (37)</option>
+<option value="https://blogs.infosupport.com/author/r-oonk/">Rick Oonk (1)</option>
+<option value="https://blogs.infosupport.com/author/robp/">Rob Pellicaan (39)</option>
+<option value="https://blogs.infosupport.com/author/rogiers/">Rogier van het Schip (4)</option>
+<option value="https://blogs.infosupport.com/author/rolfh/">Rolf Huisman (7)</option>
+<option value="https://blogs.infosupport.com/author/roy-cornelissen/">Roy Cornelissen (19)</option>
+<option value="https://blogs.infosupport.com/author/saernouts/">Sander Aernouts (2)</option>
+<option value="https://blogs.infosupport.com/author/sshafaq/">Sara Shafaq (1)</option>
+<option value="https://blogs.infosupport.com/author/stephanv/">Stephan Versteegh (1)</option>
+<option value="https://blogs.infosupport.com/author/thomask/">Thomas de Klerk (5)</option>
+<option value="https://blogs.infosupport.com/author/thomasb/">Thomas van Bilsen (1)</option>
+<option value="https://blogs.infosupport.com/author/timm/">Tim Mahy (9)</option>
+<option value="https://blogs.infosupport.com/author/t-prijn/">Tim Prijn (2)</option>
+<option value="https://blogs.infosupport.com/author/tomm/">Tom Mensink (1)</option>
+<option value="https://blogs.infosupport.com/author/tonw/">Ton Werner (4)</option>
+<option value="https://blogs.infosupport.com/author/willemm/">Willem Meints (212)</option>
+<option value="https://blogs.infosupport.com/author/w-roelofs/">Wouter Roelofs (1)</option>
+<option value="https://blogs.infosupport.com/author/yentheo/">Yenthe Oerlemans (1)</option>
+</select>					</aside>	                                            <aside class="widget blogs">
+        <h3 class="widget-title">Related blogs</h3>
+    <ul class="pretty-links">
+                    <li>
+                <a href="https://blogs.infosupport.com/data-discovery-channel/" title="Data Discovery Channel">
+                  Data Discovery Channel                </a>
+            </li>
+                    <li>
+                <a href="https://blogs.infosupport.com/magic-quadrant-voor-bi-en-analytics-platforms/" title="Magic Quadrant voor BI en Analytics Platforms">
+                  Magic Quadrant voor BI en Analytics Platforms                </a>
+            </li>
+                    <li>
+                <a href="https://blogs.infosupport.com/beginnen-met-machine-learning/" title="Beginnen met Machine Learning">
+                  Beginnen met Machine Learning                </a>
+            </li>
+                    <li>
+                <a href="https://blogs.infosupport.com/dotnetflix-self-service-data-integration-with-power-query/" title="dotnetFlix: Self-service Data Integration with Power Query">
+                  dotnetFlix: Self-service Data Integration with Power Query                </a>
+            </li>
+                    <li>
+                <a href="https://blogs.infosupport.com/tweede-data-science-experience-groot-succes/" title="Tweede Data Science eXperience groot succes">
+                  Tweede Data Science eXperience groot succes                </a>
+            </li>
+            </ul>
+    </aside>
+                
+
+    <aside class="widget events">
+    <h3 class="widget-title">Related events</h3>
+    <ul>
+                              <li>
+                            20-02-2016                <a href="https://blogs.infosupport.com/event/javantura-zagreb-2016/" title="Javantura Zagreb 2016">Javantura Zagreb 2016</a>
+            </li>
+                                        <li>
+                            18-03-2016                <a href="https://blogs.infosupport.com/event/msterdev-2016/" title="M@sterDev 2016">M@sterDev 2016</a>
+            </li>
+                                        <li>
+                            02-05-2016                <a href="https://blogs.infosupport.com/event/pass-business-analytics-conference-2016/" title="PASS Business Analytics Conference">PASS Business Analytics Conference</a>
+            </li>
+                                        <li>
+                            25-10-2016                <a href="https://blogs.infosupport.com/event/pass-summit-2016/" title="PASS Summit 2016">PASS Summit 2016</a>
+            </li>
+                      </ul>
+    </aside>
+
+                                        <aside class="widget tag_cloud">
+    <h3 class="widget-title">Tag cloud</h3>
+    <div class="tagcloud">
+        <a href="https://blogs.infosupport.com/tag/net/" class="tag-link-5" title="341 topics" style="font-size: 22pt;">.NET</a>
+<a href="https://blogs.infosupport.com/tag/net-3-5/" class="tag-link-6" title="57 topics" style="font-size: 8.6913580246914pt;">.NET 3.5</a>
+<a href="https://blogs.infosupport.com/tag/bi/" class="tag-link-10" title="177 topics" style="font-size: 17.16049382716pt;">BI</a>
+<a href="https://blogs.infosupport.com/tag/business-intelligence/" class="tag-link-1593" title="67 topics" style="font-size: 9.9012345679012pt;">Business Intelligence &amp; DWH</a>
+<a href="https://blogs.infosupport.com/tag/c/" class="tag-link-13" title="70 topics" style="font-size: 10.246913580247pt;">C#</a>
+<a href="https://blogs.infosupport.com/tag/coding/" class="tag-link-8" title="165 topics" style="font-size: 16.641975308642pt;">Coding</a>
+<a href="https://blogs.infosupport.com/tag/design/" class="tag-link-482" title="51 topics" style="font-size: 8pt;">Design</a>
+<a href="https://blogs.infosupport.com/tag/future-stuff/" class="tag-link-9" title="85 topics" style="font-size: 11.62962962963pt;">Future Stuff</a>
+<a href="https://blogs.infosupport.com/tag/java/" class="tag-link-1576" title="110 topics" style="font-size: 13.703703703704pt;">Java</a>
+<a href="https://blogs.infosupport.com/tag/microsoft-general/" class="tag-link-567" title="185 topics" style="font-size: 17.506172839506pt;">Microsoft general</a>
+<a href="https://blogs.infosupport.com/tag/office-system-2007/" class="tag-link-767" title="89 topics" style="font-size: 11.975308641975pt;">Office System 2007</a>
+<a href="https://blogs.infosupport.com/tag/off-topic/" class="tag-link-623" title="56 topics" style="font-size: 8.6913580246914pt;">Off topic</a>
+<a href="https://blogs.infosupport.com/tag/other/" class="tag-link-603" title="53 topics" style="font-size: 8.1728395061728pt;">Other</a>
+<a href="https://blogs.infosupport.com/tag/requirements/" class="tag-link-1587" title="68 topics" style="font-size: 10.074074074074pt;">Requirements Management</a>
+<a href="https://blogs.infosupport.com/tag/silverlight/" class="tag-link-561" title="59 topics" style="font-size: 9.037037037037pt;">Silverlight</a>
+<a href="https://blogs.infosupport.com/tag/software-engineering/" class="tag-link-607" title="79 topics" style="font-size: 11.111111111111pt;">Software Engineering</a>
+<a href="https://blogs.infosupport.com/tag/team-system/" class="tag-link-442" title="94 topics" style="font-size: 12.493827160494pt;">Team System</a>
+<a href="https://blogs.infosupport.com/tag/vista/" class="tag-link-494" title="84 topics" style="font-size: 11.62962962963pt;">Vista</a>
+<a href="https://blogs.infosupport.com/tag/visual-studio-team-system/" class="tag-link-632" title="53 topics" style="font-size: 8.1728395061728pt;">Visual Studio Team System</a>
+<a href="https://blogs.infosupport.com/tag/windows-server-2008-aka-longhorn/" class="tag-link-569" title="62 topics" style="font-size: 9.3827160493827pt;">Windows Server 2008 (aka Longhorn)</a>    </div>
+</aside>            <aside class="widget socialmedia">
+    <div><a href="http://twitter.com/infosupportbv"><img src="./HansGeurtsen_files/twitter_32.png" width="32" height="32" border="0"></a></div>
+    <div><a href="http://www.linkedin.com/company/info-support"><img src="./HansGeurtsen_files/linkedin_32.png" width="32" height="32" border="0"></a></div>
+    <div><a href="http://www.youtube.com/infosupportfilms"><img src="./HansGeurtsen_files/youtube_32.png" width="32" height="32" border="0"></a></div>
+    <div><a href="https://blogs.infosupport.com/feed/"><img src="./HansGeurtsen_files/rss_32.png" width="32" height="32" border="0"></a></div>
+</aside>
+		</div><!-- #secondary .widget-area -->
+	</div>
+</div><!-- #main -->
+<footer id="colophon" role="contentinfo">
+    <div class="wrapper">
+
+
+				<div class="col3 col">
+					<a href="http://www.infosupport.com/" title="Info Support">
+						<img src="./HansGeurtsen_files/logo.png" alt="Info Support">
+					</a>
+					<div class="siteselector light">
+    <span>Blog site</span>
+    <ul>
+        <li>
+            <a href="http://www.infosupport.com/" target="_blank">
+                <span>Info Support site</span>
+                Go to our IT solutions            </a>
+        </li>
+        <li>
+            <a href="http://carriere.infosupport.com/" target="_blank">
+                <span>Career site</span>
+                Go to our vacancies            </a>
+        </li>
+        <li>
+            <a href="http://training.infosupport.com/" target="_blank">
+                <span>Training site</span>
+                Go to our IT courses            </a>
+        </li>
+    </ul>
+</div>				</div>
+
+				<div class="col3 col">
+					<h4>Info Support</h4>
+					<div class="menu-mainmenu_en_us-container"><ul id="menu-mainmenu_en_us-1" class="menu"><li class="home menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-10385"><a href="https://blogs.infosupport.com/">Home</a></li>
+<li class="categorieen menu-item menu-item-type-post_type menu-item-object-page menu-item-10371"><a href="https://blogs.infosupport.com/categories/">Categories</a></li>
+<li class="over-ons menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-10372"><a href="https://blogs.infosupport.com/about/">About</a></li>
+<li class="evenementen menu-item menu-item-type-post_type menu-item-object-page menu-item-10370"><a href="https://blogs.infosupport.com/events/">Events</a></li>
+<li class="downloads menu-item menu-item-type-post_type menu-item-object-page menu-item-15818"><a href="https://blogs.infosupport.com/media-library/">Media</a></li>
+</ul></div>				</div>
+
+				<div class="col3 col">
+					<h4>Contact</h4>
+					<p>
+                                        </p><address>
+						Headquarters Info Support BV<br>
+						Kruisboog 42<br>
+						3905 TG Veenendaal<br>
+                                                Netherlands<br>
+						T +31 318 552020<br>
+                                        </address>
+					<p></p>
+				</div>
+
+				<div class="col3">
+					<h4>Follow us on</h4>
+					<ul class="follow-us">
+						<li class="twitter">
+							<a href="https://twitter.com/infosupportbv" title="Twitter">Twitter</a>
+						</li>
+						<li class="facebook">
+							<a href="https://www.facebook.com/pages/Info-Support/137104562990541" title="Facebook">Facebook</a>
+						</li>
+						<li class="linkedin">
+							<a href="http://www.linkedin.com/company/info-support" title="LinkedIn">LinkedIn</a>
+						</li>
+						<li class="youtube">
+							<a href="http://www.youtube.com/user/InfoSupportfilms" title="YouTube">YouTube</a>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+    
+    
+</footer><!-- #colophon -->
+
+
+<script type="text/javascript" src="./HansGeurtsen_files/form.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shCore.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushAS3.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushBash.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushColdFusion.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushClojure.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushCpp.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushCSharp.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushCss.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushDelphi.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushDiff.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushErlang.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushFSharp.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushGroovy.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushJava.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushJavaFX.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushJScript.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushLatex.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushMatlabKey.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushObjC.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushPerl.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushPhp.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushPlain.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushPowerShell.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushPython.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushR.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushRuby.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushScala.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushSql.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushVb.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/shBrushXml.js"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://blogs.infosupport.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/styles/shCore.css?ver=2.1.364";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "https://blogs.infosupport.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/styles/shThemeDefault.css?ver=2.1.364";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.clipboardSwf = 'https://blogs.infosupport.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/clipboard.swf';
+	SyntaxHighlighter.config.strings.expandSource = 'show source';
+	SyntaxHighlighter.config.strings.viewSource = 'view source';
+	SyntaxHighlighter.config.strings.copyToClipboard = 'copy to clipboard';
+	SyntaxHighlighter.config.strings.copyToClipboardConfirmation = 'The code is in your clipboard now';
+	SyntaxHighlighter.config.strings.print = 'print';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['auto-links'] = false;
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['smart-tabs'] = false;
+	SyntaxHighlighter.defaults['tab-size'] = 2;
+	SyntaxHighlighter.defaults['wrap-lines'] = false;
+	SyntaxHighlighter.all();
+</script>
+<script type="text/javascript" src="./HansGeurtsen_files/comment-reply.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var click_object = {"ajax_url":"https:\/\/blogs.infosupport.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./HansGeurtsen_files/jquery.adrotate.clicktracker.js"></script>
+<script type="text/javascript" src="./HansGeurtsen_files/wp-embed.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var lsVars = {"ajax":"https:\/\/blogs.infosupport.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./HansGeurtsen_files/language-switch.js"></script>
+<!-- AdRotate JS -->
+<script type="text/javascript">
+</script>
+<!-- /AdRotate JS -->
+
+<script src="./HansGeurtsen_files/script.js" type="text/javascript"></script>
+
+</body></html>
