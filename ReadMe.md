@@ -51,4 +51,4 @@ http://msftdbprodsamples.codeplex.com/ and are subject to the
    [English version](DataVault/HansGeurtsen_EN.txt) is here courtesy of Google Translate.
 
    The file [AdventureWorks.dv.sql](DataVault/AdventureWorks.dv.sql) contains SQL for a data vault
-   schema, generated from the CQL using the ActiveFacts **schema_compositor**. (not yet published).
+   schema, generated from the CQL using the ActiveFacts **schema_compositor**.
