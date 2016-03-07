@@ -1,4 +1,4 @@
-Database/
+Original*
 OLTP.*
 OLTP-*.*
 *.suo
@@ -18,6 +18,5 @@ DataVault/OceanBI.html
 DataVault/OceanBI_files/
 
 # Not ready for publication:
-OLTP/AdventureWorks.sql
 OLTP/SchemaCollections.xsd
 
