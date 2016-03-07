@@ -20,7 +20,7 @@ http://msftdbprodsamples.codeplex.com/ and are subject to the
 
    * New ER Schema diagrams for the original
 
-   An alternate set of three schema diagrams for the original database, printable on A4 paper.
+   An [alternate set of three schema diagrams](OLTP/images) for the original database, printable on A4 paper.
 
    * Database generated from the CQL version
 
@@ -29,7 +29,7 @@ http://msftdbprodsamples.codeplex.com/ and are subject to the
 
 * CQL
 
-   The AdventureWorks schema reverse-engineered into the [Constellation Query Language](http://www.infinuendo.com/introduction-to-cql/).
+   The [AdventureWorks schema reverse-engineered](CQL/AdventureWorks.cql) into the [Constellation Query Language](http://www.infinuendo.com/introduction-to-cql/).
    This version can be processed using the [ActiveFacts]:(http://github.com/cjheath/activefacts) compiler
    and code generators *afgen* and *schema_compositor*.
 
@@ -51,4 +51,4 @@ http://msftdbprodsamples.codeplex.com/ and are subject to the
    [English version](DataVault/HansGeurtsen_EN.txt) is here courtesy of Google Translate.
 
    The file [AdventureWorks.dv.sql](DataVault/AdventureWorks.dv.sql) contains SQL for a data vault
-   schema, generated from the CQL using the ActiveFacts **schema_compositor**.
+   schema, generated from the CQL using the ActiveFacts **schema_compositor**. (not yet published).
