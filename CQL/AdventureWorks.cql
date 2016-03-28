@@ -282,25 +282,28 @@ Product has one Name,
     Name is of at most one Product;
 Product has one Product Number,
     Product Number is of at most one Product;
+
+Product is of at most one [satellite Product Group] Color;
+Product has at most one [satellite Product Group] Product Size (as Size);
+Product size is in at most one [satellite Product Group] size-Unit Measure;
+Product weight is in at most one [satellite Product Group] weight-Unit Measure;
+Product has at most one [satellite Product Group] Product Weight (as Weight);
+Product belongs to at most one [satellite Product Group] Product Line;
+Product is of at most one [satellite Product Group] Product Class (as Class);
+Product is of at most one [satellite Product Group] Product Style (as Style);
+Product belongs to at most one [satellite Product Group] Product Subcategory (as Product Subcategory);
+Product is of at most one [satellite Product Group] Product Model (as Product Model);
+
+Product should be stocked at least in one [satellite ProductSupply] minimum-Number (as Safety Stock Level);
+Product should be re-ordered when inventory drops below one [satellite ProductSupply] minimum-Number (as Reorder Point);
+Product takes one [satellite ProductSupply] Number (as Days To Manufacture) of days to manufacture;
+
 Product (as Finished Goods Flag) is saleable;
-Product is of at most one Color;
-Product should be stocked at least in one minimum-Number (as Safety Stock Level);
-Product should be re-ordered when inventory drops below one minimum-Number (as Reorder Point);
-Product has one standard- cost Amount (as Standard Cost);
-Product has one list- price Amount (as List Price);
-Product has at most one Product Size (as Size);
-Product size is in at most one size-Unit Measure;
-Product weight is in at most one weight-Unit Measure;
-Product has at most one Product Weight (as Weight);
-Product takes one Number (as Days To Manufacture) of days to manufacture;
-Product belongs to at most one Product Line;
-Product is of at most one Product Class (as Class);
-Product is of at most one Product Style (as Style);
-Product belongs to at most one Product Subcategory (as Product Subcategory);
-Product is of at most one Product Model (as Product Model);
-Product was first available on one sell- start Date;
-Product is last available on at most one sell- end Date;
-Product was discontinued on at most one discontinued- Date;
+Product has one [satellite GroupSales] standard- cost Amount (as Standard Cost);
+Product has one [satellite ProductSales] list- price Amount (as List Price);
+Product was first available on one [satellite ProductSales] sell- start Date;
+Product is last available on at most one [satellite ProductSales] sell- end Date;
+Product was discontinued on at most one [satellite ProductSales] discontinued- Date;
 // Product has one modified-Date;
 // Product has one Row GUID, Row GUID is of at most one Product;
 
