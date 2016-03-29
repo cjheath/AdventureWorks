@@ -2423,24 +2423,24 @@ CREATE TABLE WorkOrderIsForProductLINK (
 )
 GO
 
-CREATE TABLE WorkOrderRoutingLINK (
+CREATE TABLE WorkOrderRoutingHUB (
 	-- Work Order Routing VID
 	WorkOrderRoutingVID                     BIGINT IDENTITY NOT NULL,
-	-- Work Order VID
-	WorkOrderVID                            BIGINT NOT NULL,
-	-- Product VID
-	ProductVID                              BIGINT NOT NULL,
+	-- Work Order Routing involves Work Order that has Work Order ID
+	WorkOrderID                             BIGINT NOT NULL,
+	-- Work Order Routing involves Product that has Product ID
+	ProductID                               BIGINT NOT NULL,
 	-- Work Order Routing involves Operation Sequence
 	OperationSequence                       SMALLINT NOT NULL,
 	-- Location VID
 	LocationVID                             BIGINT NOT NULL,
-	-- Primary index to Work Order Routing LINK
+	-- Primary index to Work Order Routing HUB
 	PRIMARY KEY CLUSTERED(WorkOrderRoutingVID),
-	-- Unique index to Work Order Routing LINK over PresenceConstraint over (Work Order, Product, Operation Sequence in "Work Order activity on Product involves Operation Sequence") occurs at most one time
-	UNIQUE NONCLUSTERED(WorkOrderVID, ProductVID, OperationSequence),
+	-- Unique index to Work Order Routing HUB over PresenceConstraint over (Work Order, Product, Operation Sequence in "Work Order activity on Product involves Operation Sequence") occurs at most one time
+	UNIQUE NONCLUSTERED(WorkOrderID, ProductID, OperationSequence),
 	FOREIGN KEY (LocationVID) REFERENCES LocationHUB (LocationVID),
-	FOREIGN KEY (ProductVID) REFERENCES ProductHUB (ProductVID),
-	FOREIGN KEY (WorkOrderVID) REFERENCES WorkOrderHUB (WorkOrderVID)
+	FOREIGN KEY (ProductID) REFERENCES ProductHUB (ProductVID),
+	FOREIGN KEY (WorkOrderID) REFERENCES WorkOrderHUB (WorkOrderVID)
 )
 GO
 
@@ -2465,7 +2465,7 @@ CREATE TABLE WorkOrderRoutingSAT (
 	ActualStartDate                         datetime NULL,
 	-- Unique index to Work Order Routing SAT
 	UNIQUE NONCLUSTERED(WorkOrderRoutingVID, LoadDateTime),
-	FOREIGN KEY (WorkOrderRoutingVID) REFERENCES WorkOrderRoutingLINK (WorkOrderRoutingVID)
+	FOREIGN KEY (WorkOrderRoutingVID) REFERENCES WorkOrderRoutingHUB (WorkOrderRoutingVID)
 )
 GO
 
