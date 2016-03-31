@@ -2,7 +2,7 @@ CREATE TABLE AWBuildVersionHUB (
 	-- AWBuild Version VID
 	AWBuildVersionVID                       BIGINT IDENTITY NOT NULL,
 	-- AWBuild Version has AWBuild Version ID
-	AWBuildVersionID                        BIGINT NOT NULL IDENTITY,
+	AWBuildVersionID                        BIGINT NOT NULL,
 	-- Primary index to AWBuild Version HUB
 	PRIMARY KEY CLUSTERED(AWBuildVersionVID),
 	-- Unique index to AWBuild Version HUB over PresenceConstraint over (AWBuild Version ID in "AWBuild Version has AWBuild Version ID") occurs at most one time
@@ -14,7 +14,7 @@ CREATE TABLE AddressHUB (
 	-- Address VID
 	AddressVID                              BIGINT IDENTITY NOT NULL,
 	-- Address has Address ID
-	AddressID                               BIGINT NOT NULL IDENTITY,
+	AddressID                               BIGINT NOT NULL,
 	-- Primary index to Address HUB
 	PRIMARY KEY CLUSTERED(AddressVID),
 	-- Unique index to Address HUB over PresenceConstraint over (Address ID in "Address has Address ID") occurs at most one time
@@ -34,13 +34,13 @@ CREATE TABLE AddressSAT (
 	-- Address has Postal Code
 	PostalCode                              VARCHAR(15) NOT NULL,
 	-- Address is in State Province that has State Province ID
-	StateProvinceID                         BIGINT NOT NULL IDENTITY,
+	StateProvinceID                         BIGINT NOT NULL,
 	-- maybe Address has Address Line2
 	AddressLine2                            VARCHAR(60) NULL,
 	-- maybe Address is in Spatial Location
 	SpatialLocation                         Geography NULL,
-	-- Unique index to Address SAT
-	UNIQUE NONCLUSTERED(AddressVID, LoadDateTime),
+	-- Primary index to Address SAT
+	PRIMARY KEY CLUSTERED(AddressVID, LoadDateTime),
 	FOREIGN KEY (AddressVID) REFERENCES AddressHUB (AddressVID)
 )
 GO
@@ -49,7 +49,7 @@ CREATE TABLE BillOfMaterialsHUB (
 	-- Bill Of Materials VID
 	BillOfMaterialsVID                      BIGINT IDENTITY NOT NULL,
 	-- Bill Of Materials has Bill Of Materials ID
-	BillOfMaterialsID                       BIGINT NOT NULL IDENTITY,
+	BillOfMaterialsID                       BIGINT NOT NULL,
 	-- Primary index to Bill Of Materials HUB
 	PRIMARY KEY CLUSTERED(BillOfMaterialsVID),
 	-- Unique index to Bill Of Materials HUB over PresenceConstraint over (Bill Of Materials ID in "Bill Of Materials has Bill Of Materials ID") occurs at most one time
@@ -106,8 +106,8 @@ CREATE TABLE BillOfMaterialsSAT (
 	UnitMeasureCode                         CHAR(3) NOT NULL,
 	-- maybe Bill Of Materials is valid until end-Date
 	EndDate                                 datetime NULL,
-	-- Unique index to Bill Of Materials SAT
-	UNIQUE NONCLUSTERED(BillOfMaterialsVID, LoadDateTime),
+	-- Primary index to Bill Of Materials SAT
+	PRIMARY KEY CLUSTERED(BillOfMaterialsVID, LoadDateTime),
 	FOREIGN KEY (BillOfMaterialsVID) REFERENCES BillOfMaterialsHUB (BillOfMaterialsVID)
 )
 GO
@@ -120,7 +120,7 @@ CREATE TABLE BusinessEntityAddressLINK (
 	-- Address VID
 	AddressVID                              BIGINT NOT NULL,
 	-- Business Entity Address involves Address Type that has Address Type ID
-	AddressTypeID                           BIGINT NOT NULL IDENTITY,
+	AddressTypeID                           BIGINT NOT NULL,
 	-- Primary index to Business Entity Address LINK
 	PRIMARY KEY CLUSTERED(BusinessEntityAddressVID),
 	-- Unique index to Business Entity Address LINK over PresenceConstraint over (Business Entity, Address, Address Type in "Business Entity uses Address as Address Type") occurs at most one time
@@ -137,7 +137,7 @@ CREATE TABLE BusinessEntityContactLINK (
 	-- Person VID
 	PersonVID                               BIGINT NOT NULL,
 	-- Business Entity Contact involves Contact Type that has Contact Type ID
-	ContactTypeID                           BIGINT NOT NULL IDENTITY,
+	ContactTypeID                           BIGINT NOT NULL,
 	-- Primary index to Business Entity Contact LINK
 	PRIMARY KEY CLUSTERED(BusinessEntityContactVID),
 	-- Unique index to Business Entity Contact LINK over PresenceConstraint over (Business Entity, Person, Contact Type in "Business Entity appoints Person as Contact Type") occurs at most one time
@@ -149,7 +149,7 @@ CREATE TABLE BusinessEntityHUB (
 	-- Business Entity VID
 	BusinessEntityVID                       BIGINT IDENTITY NOT NULL,
 	-- Business Entity has Business Entity ID
-	BusinessEntityID                        BIGINT NOT NULL IDENTITY,
+	BusinessEntityID                        BIGINT NOT NULL,
 	-- Primary index to Business Entity HUB
 	PRIMARY KEY CLUSTERED(BusinessEntityVID),
 	-- Unique index to Business Entity HUB over PresenceConstraint over (Business Entity ID in "Business Entity has Business Entity ID") occurs at most one time
@@ -161,7 +161,7 @@ CREATE TABLE CreditCardHUB (
 	-- Credit Card VID
 	CreditCardVID                           BIGINT IDENTITY NOT NULL,
 	-- Credit Card has Credit Card ID
-	CreditCardID                            BIGINT NOT NULL IDENTITY,
+	CreditCardID                            BIGINT NOT NULL,
 	-- Primary index to Credit Card HUB
 	PRIMARY KEY CLUSTERED(CreditCardVID),
 	-- Unique index to Credit Card HUB over PresenceConstraint over (Credit Card ID in "Credit Card has Credit Card ID") occurs at most one time
@@ -182,8 +182,8 @@ CREATE TABLE CreditCardSAT (
 	ExpMonth                                tinyint NOT NULL,
 	-- Credit Card has Exp Year
 	ExpYear                                 smallint NOT NULL,
-	-- Unique index to Credit Card SAT
-	UNIQUE NONCLUSTERED(CreditCardVID, LoadDateTime),
+	-- Primary index to Credit Card SAT
+	PRIMARY KEY CLUSTERED(CreditCardVID, LoadDateTime),
 	FOREIGN KEY (CreditCardVID) REFERENCES CreditCardHUB (CreditCardVID)
 )
 GO
@@ -192,7 +192,7 @@ CREATE TABLE CurrencyRateHUB (
 	-- Currency Rate VID
 	CurrencyRateVID                         BIGINT IDENTITY NOT NULL,
 	-- Currency Rate has Currency Rate ID
-	CurrencyRateID                          BIGINT NOT NULL IDENTITY,
+	CurrencyRateID                          BIGINT NOT NULL,
 	-- Primary index to Currency Rate HUB
 	PRIMARY KEY CLUSTERED(CurrencyRateVID),
 	-- Unique index to Currency Rate HUB over PresenceConstraint over (Currency Rate ID in "Currency Rate has Currency Rate ID") occurs at most one time
@@ -215,8 +215,8 @@ CREATE TABLE CurrencyRateSAT (
 	FromCurrencyCode                        CHAR(3) NOT NULL,
 	-- Currency Rate involves to-Currency and Currency has Currency Code
 	ToCurrencyCode                          CHAR(3) NOT NULL,
-	-- Unique index to Currency Rate SAT
-	UNIQUE NONCLUSTERED(CurrencyRateVID, LoadDateTime),
+	-- Primary index to Currency Rate SAT
+	PRIMARY KEY CLUSTERED(CurrencyRateVID, LoadDateTime),
 	FOREIGN KEY (CurrencyRateVID) REFERENCES CurrencyRateHUB (CurrencyRateVID)
 )
 GO
@@ -241,7 +241,7 @@ CREATE TABLE CustomerHUB (
 	-- Customer VID
 	CustomerVID                             BIGINT IDENTITY NOT NULL,
 	-- Customer has Customer ID
-	CustomerID                              BIGINT NOT NULL IDENTITY,
+	CustomerID                              BIGINT NOT NULL,
 	-- Primary index to Customer HUB
 	PRIMARY KEY CLUSTERED(CustomerVID),
 	-- Unique index to Customer HUB over PresenceConstraint over (Customer ID in "Customer has Customer ID") occurs at most one time
@@ -290,8 +290,8 @@ CREATE TABLE CustomerSAT (
 	LoadDateTime                            DATETIME,
 	-- Customer has Account Number
 	AccountNumber                           VARCHAR(16) NOT NULL,
-	-- Unique index to Customer SAT
-	UNIQUE NONCLUSTERED(CustomerVID, LoadDateTime),
+	-- Primary index to Customer SAT
+	PRIMARY KEY CLUSTERED(CustomerVID, LoadDateTime),
 	FOREIGN KEY (CustomerVID) REFERENCES CustomerHUB (CustomerVID)
 )
 GO
@@ -300,7 +300,7 @@ CREATE TABLE DatabaseLogHUB (
 	-- Database Log VID
 	DatabaseLogVID                          BIGINT IDENTITY NOT NULL,
 	-- Database Log has Database Log ID
-	DatabaseLogID                           BIGINT NOT NULL IDENTITY,
+	DatabaseLogID                           BIGINT NOT NULL,
 	-- Primary index to Database Log HUB
 	PRIMARY KEY CLUSTERED(DatabaseLogVID),
 	-- Unique index to Database Log HUB over PresenceConstraint over (Database Log ID in "Database Log has Database Log ID") occurs at most one time
@@ -312,7 +312,7 @@ CREATE TABLE DepartmentHUB (
 	-- Department VID
 	DepartmentVID                           BIGINT IDENTITY NOT NULL,
 	-- Department has Department ID
-	DepartmentID                            BIGINT NOT NULL IDENTITY,
+	DepartmentID                            BIGINT NOT NULL,
 	-- Primary index to Department HUB
 	PRIMARY KEY CLUSTERED(DepartmentVID),
 	-- Unique index to Department HUB over PresenceConstraint over (Department ID in "Department has Department ID") occurs at most one time
@@ -329,8 +329,8 @@ CREATE TABLE DepartmentSAT (
 	GroupName                               VARCHAR(50) NOT NULL,
 	-- Department has Name
 	Name                                    VARCHAR(50) NOT NULL,
-	-- Unique index to Department SAT
-	UNIQUE NONCLUSTERED(DepartmentVID, LoadDateTime),
+	-- Primary index to Department SAT
+	PRIMARY KEY CLUSTERED(DepartmentVID, LoadDateTime),
 	FOREIGN KEY (DepartmentVID) REFERENCES DepartmentHUB (DepartmentVID)
 )
 GO
@@ -403,8 +403,8 @@ CREATE TABLE DocumentSAT (
 	Document                                VARCHAR(MAX) NULL,
 	-- maybe Document has Document Summary
 	DocumentSummary                         VARCHAR(MAX) NULL,
-	-- Unique index to Document SAT
-	UNIQUE NONCLUSTERED(DocumentVID, LoadDateTime),
+	-- Primary index to Document SAT
+	PRIMARY KEY CLUSTERED(DocumentVID, LoadDateTime),
 	FOREIGN KEY (DocumentVID) REFERENCES DocumentHUB (DocumentVID)
 )
 GO
@@ -413,9 +413,9 @@ CREATE TABLE EmailAddressHUB (
 	-- Email Address VID
 	EmailAddressVID                         BIGINT IDENTITY NOT NULL,
 	-- Email Address is used by Person that is a kind of Business Entity that has Business Entity ID
-	PersonID                                BIGINT NOT NULL IDENTITY,
+	PersonID                                BIGINT NOT NULL,
 	-- Email Address has Email Address ID
-	EmailAddressID                          BIGINT NOT NULL IDENTITY,
+	EmailAddressID                          BIGINT NOT NULL,
 	-- Primary index to Email Address HUB
 	PRIMARY KEY CLUSTERED(EmailAddressVID),
 	-- Unique index to Email Address HUB over PresenceConstraint over (Person, Email Address ID in "Email Address is used by Person", "Email Address has Email Address ID") occurs at most one time
@@ -447,8 +447,8 @@ CREATE TABLE EmailAddressSAT (
 	LoadDateTime                            DATETIME,
 	-- Email Address has EmailAddress
 	EmailAddress                            VARCHAR(50) NOT NULL,
-	-- Unique index to Email Address SAT
-	UNIQUE NONCLUSTERED(EmailAddressVID, LoadDateTime),
+	-- Primary index to Email Address SAT
+	PRIMARY KEY CLUSTERED(EmailAddressVID, LoadDateTime),
 	FOREIGN KEY (EmailAddressVID) REFERENCES EmailAddressHUB (EmailAddressVID)
 )
 GO
@@ -496,8 +496,8 @@ CREATE TABLE EmployeeDepartmentHistorySAT (
 	LoadDateTime                            DATETIME,
 	-- maybe Employee Department History is valid until end-Date
 	EndDate                                 datetime NULL,
-	-- Unique index to Employee Department History SAT
-	UNIQUE NONCLUSTERED(EmployeeDepartmentHistoryVID, LoadDateTime),
+	-- Primary index to Employee Department History SAT
+	PRIMARY KEY CLUSTERED(EmployeeDepartmentHistoryVID, LoadDateTime),
 	FOREIGN KEY (EmployeeDepartmentHistoryVID) REFERENCES EmployeeDepartmentHistoryLINK (EmployeeDepartmentHistoryVID)
 )
 GO
@@ -506,11 +506,9 @@ CREATE TABLE EmployeeHUB (
 	-- Employee VID
 	EmployeeVID                             BIGINT IDENTITY NOT NULL,
 	-- Employee is a kind of Person that is a kind of Business Entity that has Business Entity ID
-	PersonID                                BIGINT NOT NULL IDENTITY,
+	PersonID                                BIGINT NOT NULL,
 	-- Primary index to Employee HUB
 	PRIMARY KEY CLUSTERED(EmployeeVID),
-	-- Unique index to Employee HUB over PresenceConstraint over (Job Candidate in "Job Candidate was hired as Employee") occurs at most one time
-	UNIQUE NONCLUSTERED(JobCandidateVID),
 	-- Unique index to Employee HUB over PresenceConstraint over (Person in "Employee is a kind of Person") occurs at most one time
 	UNIQUE NONCLUSTERED(PersonID)
 )
@@ -537,7 +535,7 @@ CREATE TABLE EmployeePayHistoryHUB (
 	-- Employee Pay History VID
 	EmployeePayHistoryVID                   BIGINT IDENTITY NOT NULL,
 	-- Employee Pay History involves Employee that is a kind of Person that is a kind of Business Entity that has Business Entity ID
-	EmployeeID                              BIGINT NOT NULL IDENTITY,
+	EmployeeID                              BIGINT NOT NULL,
 	-- Employee Pay History involves rate- change Date
 	RateChangeDate                          datetime NOT NULL,
 	-- Primary index to Employee Pay History HUB
@@ -574,8 +572,8 @@ CREATE TABLE EmployeePayHistorySAT (
 	PayFrequency                            tinyint NOT NULL CHECK(PayFrequency = 1 OR PayFrequency = 2),
 	-- Employee Pay History is at Rate
 	Rate                                    money NOT NULL,
-	-- Unique index to Employee Pay History SAT
-	UNIQUE NONCLUSTERED(EmployeePayHistoryVID, LoadDateTime),
+	-- Primary index to Employee Pay History SAT
+	PRIMARY KEY CLUSTERED(EmployeePayHistoryVID, LoadDateTime),
 	FOREIGN KEY (EmployeePayHistoryVID) REFERENCES EmployeePayHistoryHUB (EmployeePayHistoryVID)
 )
 GO
@@ -607,8 +605,8 @@ CREATE TABLE EmployeeSAT (
 	SickLeaveHours                          INTEGER NOT NULL,
 	-- Employee has vacation-Hours
 	VacationHours                           INTEGER NOT NULL,
-	-- Unique index to Employee SAT
-	UNIQUE NONCLUSTERED(EmployeeVID, LoadDateTime),
+	-- Primary index to Employee SAT
+	PRIMARY KEY CLUSTERED(EmployeeVID, LoadDateTime),
 	FOREIGN KEY (EmployeeVID) REFERENCES EmployeeHUB (EmployeeVID)
 )
 GO
@@ -634,7 +632,7 @@ CREATE TABLE ErrorLogHUB (
 	-- Error Log VID
 	ErrorLogVID                             BIGINT IDENTITY NOT NULL,
 	-- Error Log has Error Log ID
-	ErrorLogID                              BIGINT NOT NULL IDENTITY,
+	ErrorLogID                              BIGINT NOT NULL,
 	-- Primary index to Error Log HUB
 	PRIMARY KEY CLUSTERED(ErrorLogVID),
 	-- Unique index to Error Log HUB over PresenceConstraint over (Error Log ID in "Error Log has Error Log ID") occurs at most one time
@@ -649,8 +647,8 @@ CREATE TABLE GroupSalesSAT (
 	LoadDateTime                            DATETIME,
 	-- Product has Standard Cost
 	StandardCost                            money NOT NULL,
-	-- Unique index to GroupSales SAT
-	UNIQUE NONCLUSTERED(ProductVID, LoadDateTime)
+	-- Primary index to GroupSales SAT
+	PRIMARY KEY CLUSTERED(ProductVID, LoadDateTime)
 )
 GO
 
@@ -658,7 +656,7 @@ CREATE TABLE IllustrationHUB (
 	-- Illustration VID
 	IllustrationVID                         BIGINT IDENTITY NOT NULL,
 	-- Illustration has Illustration ID
-	IllustrationID                          BIGINT NOT NULL IDENTITY,
+	IllustrationID                          BIGINT NOT NULL,
 	-- Primary index to Illustration HUB
 	PRIMARY KEY CLUSTERED(IllustrationVID),
 	-- Unique index to Illustration HUB over PresenceConstraint over (Illustration ID in "Illustration has Illustration ID") occurs at most one time
@@ -673,8 +671,8 @@ CREATE TABLE IllustrationSAT (
 	LoadDateTime                            DATETIME,
 	-- Illustration has Diagram
 	Diagram                                 VARCHAR(MAX) NOT NULL,
-	-- Unique index to Illustration SAT
-	UNIQUE NONCLUSTERED(IllustrationVID, LoadDateTime),
+	-- Primary index to Illustration SAT
+	PRIMARY KEY CLUSTERED(IllustrationVID, LoadDateTime),
 	FOREIGN KEY (IllustrationVID) REFERENCES IllustrationHUB (IllustrationVID)
 )
 GO
@@ -683,7 +681,7 @@ CREATE TABLE JobCandidateHUB (
 	-- Job Candidate VID
 	JobCandidateVID                         BIGINT IDENTITY NOT NULL,
 	-- Job Candidate has Job Candidate ID
-	JobCandidateID                          BIGINT NOT NULL IDENTITY,
+	JobCandidateID                          BIGINT NOT NULL,
 	-- Primary index to Job Candidate HUB
 	PRIMARY KEY CLUSTERED(JobCandidateVID),
 	-- Unique index to Job Candidate HUB over PresenceConstraint over (Job Candidate ID in "Job Candidate has Job Candidate ID") occurs at most one time
@@ -698,8 +696,8 @@ CREATE TABLE JobCandidateSAT (
 	LoadDateTime                            DATETIME,
 	-- maybe Job Candidate supplied Resume
 	Resume                                  VARCHAR(MAX) NULL,
-	-- Unique index to Job Candidate SAT
-	UNIQUE NONCLUSTERED(JobCandidateVID, LoadDateTime),
+	-- Primary index to Job Candidate SAT
+	PRIMARY KEY CLUSTERED(JobCandidateVID, LoadDateTime),
 	FOREIGN KEY (JobCandidateVID) REFERENCES JobCandidateHUB (JobCandidateVID)
 )
 GO
@@ -708,7 +706,7 @@ CREATE TABLE LocationHUB (
 	-- Location VID
 	LocationVID                             BIGINT IDENTITY NOT NULL,
 	-- Location has Location ID
-	LocationID                              BIGINT NOT NULL IDENTITY,
+	LocationID                              BIGINT NOT NULL,
 	-- Primary index to Location HUB
 	PRIMARY KEY CLUSTERED(LocationVID),
 	-- Unique index to Location HUB over PresenceConstraint over (Location ID in "Location has Location ID") occurs at most one time
@@ -727,8 +725,8 @@ CREATE TABLE LocationSAT (
 	CostRate                                smallmoney NOT NULL,
 	-- Location has Name
 	Name                                    VARCHAR(50) NOT NULL,
-	-- Unique index to Location SAT
-	UNIQUE NONCLUSTERED(LocationVID, LoadDateTime),
+	-- Primary index to Location SAT
+	PRIMARY KEY CLUSTERED(LocationVID, LoadDateTime),
 	FOREIGN KEY (LocationVID) REFERENCES LocationHUB (LocationVID)
 )
 GO
@@ -752,7 +750,7 @@ CREATE TABLE PersonHUB (
 	-- Person VID
 	PersonVID                               BIGINT IDENTITY NOT NULL,
 	-- Person is a kind of Business Entity that has Business Entity ID
-	BusinessEntityID                        BIGINT NOT NULL IDENTITY,
+	BusinessEntityID                        BIGINT NOT NULL,
 	-- Primary index to Person HUB
 	PRIMARY KEY CLUSTERED(PersonVID),
 	-- Unique index to Person HUB over PresenceConstraint over (Business Entity in "Person is a kind of Business Entity") occurs at most one time
@@ -782,11 +780,11 @@ CREATE TABLE PersonPhoneHUB (
 	-- Person Phone VID
 	PersonPhoneVID                          BIGINT IDENTITY NOT NULL,
 	-- Person Phone involves Person that is a kind of Business Entity that has Business Entity ID
-	PersonID                                BIGINT NOT NULL IDENTITY,
+	PersonID                                BIGINT NOT NULL,
 	-- Person Phone involves Phone Number
 	PhoneNumber                             VARCHAR(25) NOT NULL,
 	-- Person Phone involves Phone Number Type that has Phone Number Type ID
-	PhoneNumberTypeID                       BIGINT NOT NULL IDENTITY,
+	PhoneNumberTypeID                       BIGINT NOT NULL,
 	-- Primary index to Person Phone HUB
 	PRIMARY KEY CLUSTERED(PersonPhoneVID),
 	-- Unique index to Person Phone HUB over PresenceConstraint over (Person, Phone Number, Phone Number Type in "Person uses Phone Number of Phone Number Type") occurs at most one time
@@ -841,8 +839,8 @@ CREATE TABLE PersonSAT (
 	Suffix                                  VARCHAR(10) NULL,
 	-- maybe Person has Title
 	Title                                   VARCHAR(8) NULL,
-	-- Unique index to Person SAT
-	UNIQUE NONCLUSTERED(PersonVID, LoadDateTime),
+	-- Primary index to Person SAT
+	PRIMARY KEY CLUSTERED(PersonVID, LoadDateTime),
 	FOREIGN KEY (PersonVID) REFERENCES PersonHUB (PersonVID)
 )
 GO
@@ -867,7 +865,7 @@ CREATE TABLE ProductCategoryHUB (
 	-- Product Category VID
 	ProductCategoryVID                      BIGINT IDENTITY NOT NULL,
 	-- Product Category has Product Category ID
-	ProductCategoryID                       BIGINT NOT NULL IDENTITY,
+	ProductCategoryID                       BIGINT NOT NULL,
 	-- Primary index to Product Category HUB
 	PRIMARY KEY CLUSTERED(ProductCategoryVID),
 	-- Unique index to Product Category HUB over PresenceConstraint over (Product Category ID in "Product Category has Product Category ID") occurs at most one time
@@ -882,8 +880,8 @@ CREATE TABLE ProductCategorySAT (
 	LoadDateTime                            DATETIME,
 	-- Product Category has Name
 	Name                                    VARCHAR(50) NOT NULL,
-	-- Unique index to Product Category SAT
-	UNIQUE NONCLUSTERED(ProductCategoryVID, LoadDateTime),
+	-- Primary index to Product Category SAT
+	PRIMARY KEY CLUSTERED(ProductCategoryVID, LoadDateTime),
 	FOREIGN KEY (ProductCategoryVID) REFERENCES ProductCategoryHUB (ProductCategoryVID)
 )
 GO
@@ -892,7 +890,7 @@ CREATE TABLE ProductCostHistoryHUB (
 	-- Product Cost History VID
 	ProductCostHistoryVID                   BIGINT IDENTITY NOT NULL,
 	-- Product Cost History involves Product that has Product ID
-	ProductID                               BIGINT NOT NULL IDENTITY,
+	ProductID                               BIGINT NOT NULL,
 	-- Product Cost History involves start-Date
 	StartDate                               datetime NOT NULL,
 	-- Primary index to Product Cost History HUB
@@ -928,8 +926,8 @@ CREATE TABLE ProductCostHistorySAT (
 	StandardCost                            money NOT NULL,
 	-- maybe Product Cost History is valid until end-Date
 	EndDate                                 datetime NULL,
-	-- Unique index to Product Cost History SAT
-	UNIQUE NONCLUSTERED(ProductCostHistoryVID, LoadDateTime),
+	-- Primary index to Product Cost History SAT
+	PRIMARY KEY CLUSTERED(ProductCostHistoryVID, LoadDateTime),
 	FOREIGN KEY (ProductCostHistoryVID) REFERENCES ProductCostHistoryHUB (ProductCostHistoryVID)
 )
 GO
@@ -938,7 +936,7 @@ CREATE TABLE ProductDescriptionHUB (
 	-- Product Description VID
 	ProductDescriptionVID                   BIGINT IDENTITY NOT NULL,
 	-- Product Description has Product Description ID
-	ProductDescriptionID                    BIGINT NOT NULL IDENTITY,
+	ProductDescriptionID                    BIGINT NOT NULL,
 	-- Primary index to Product Description HUB
 	PRIMARY KEY CLUSTERED(ProductDescriptionVID),
 	-- Unique index to Product Description HUB over PresenceConstraint over (Product Description ID in "Product Description has Product Description ID") occurs at most one time
@@ -953,8 +951,8 @@ CREATE TABLE ProductDescriptionSAT (
 	LoadDateTime                            DATETIME,
 	-- Product Description has Description
 	Description                             VARCHAR(400) NOT NULL,
-	-- Unique index to Product Description SAT
-	UNIQUE NONCLUSTERED(ProductDescriptionVID, LoadDateTime),
+	-- Primary index to Product Description SAT
+	PRIMARY KEY CLUSTERED(ProductDescriptionVID, LoadDateTime),
 	FOREIGN KEY (ProductDescriptionVID) REFERENCES ProductDescriptionHUB (ProductDescriptionVID)
 )
 GO
@@ -978,7 +976,7 @@ CREATE TABLE ProductHUB (
 	-- Product VID
 	ProductVID                              BIGINT IDENTITY NOT NULL,
 	-- Product has Product ID
-	ProductID                               BIGINT NOT NULL IDENTITY,
+	ProductID                               BIGINT NOT NULL,
 	-- Primary index to Product HUB
 	PRIMARY KEY CLUSTERED(ProductVID),
 	-- Unique index to Product HUB over PresenceConstraint over (Product ID in "Product has Product ID") occurs at most one time
@@ -1013,8 +1011,8 @@ CREATE TABLE ProductInventorySAT (
 	Quantity                                INTEGER NOT NULL,
 	-- Product Inventory is on Shelf
 	Shelf                                   VARCHAR(10) NOT NULL,
-	-- Unique index to Product Inventory SAT
-	UNIQUE NONCLUSTERED(ProductInventoryVID, LoadDateTime),
+	-- Primary index to Product Inventory SAT
+	PRIMARY KEY CLUSTERED(ProductInventoryVID, LoadDateTime),
 	FOREIGN KEY (ProductInventoryVID) REFERENCES ProductInventoryLINK (ProductInventoryVID)
 )
 GO
@@ -1040,7 +1038,7 @@ CREATE TABLE ProductListPriceHistoryHUB (
 	-- Product List Price History VID
 	ProductListPriceHistoryVID              BIGINT IDENTITY NOT NULL,
 	-- Product List Price History involves Product that has Product ID
-	ProductID                               BIGINT NOT NULL IDENTITY,
+	ProductID                               BIGINT NOT NULL,
 	-- Product List Price History involves start-Date
 	StartDate                               datetime NOT NULL,
 	-- Primary index to Product List Price History HUB
@@ -1077,8 +1075,8 @@ CREATE TABLE ProductListPriceHistorySAT (
 	ListPrice                               money NOT NULL,
 	-- maybe Product List Price History is valid until end-Date
 	EndDate                                 datetime NULL,
-	-- Unique index to Product List Price History SAT
-	UNIQUE NONCLUSTERED(ProductListPriceHistoryVID, LoadDateTime),
+	-- Primary index to Product List Price History SAT
+	PRIMARY KEY CLUSTERED(ProductListPriceHistoryVID, LoadDateTime),
 	FOREIGN KEY (ProductListPriceHistoryVID) REFERENCES ProductListPriceHistoryHUB (ProductListPriceHistoryVID)
 )
 GO
@@ -1087,7 +1085,7 @@ CREATE TABLE ProductModelHUB (
 	-- Product Model VID
 	ProductModelVID                         BIGINT IDENTITY NOT NULL,
 	-- Product Model has Product Model ID
-	ProductModelID                          BIGINT NOT NULL IDENTITY,
+	ProductModelID                          BIGINT NOT NULL,
 	-- Primary index to Product Model HUB
 	PRIMARY KEY CLUSTERED(ProductModelVID),
 	-- Unique index to Product Model HUB over PresenceConstraint over (Product Model ID in "Product Model has Product Model ID") occurs at most one time
@@ -1119,7 +1117,7 @@ CREATE TABLE ProductModelProductDescriptionCultureLINK (
 	-- Product Description VID
 	ProductDescriptionVID                   BIGINT NOT NULL,
 	-- Product Model Product Description Culture involves Culture that has Culture ID
-	CultureID                               BIGINT NOT NULL IDENTITY,
+	CultureID                               BIGINT NOT NULL,
 	-- Primary index to Product Model Product Description Culture LINK
 	PRIMARY KEY CLUSTERED(ProductModelProductDescriptionCultureVID),
 	-- Unique index to Product Model Product Description Culture LINK over PresenceConstraint over (Product Model, Product Description, Culture in "Product Model has Product Description for Culture") occurs at most one time
@@ -1140,8 +1138,8 @@ CREATE TABLE ProductModelSAT (
 	CatalogDescription                      VARCHAR(MAX) NULL,
 	-- maybe Product Model has Instructions
 	Instructions                            VARCHAR(MAX) NULL,
-	-- Unique index to Product Model SAT
-	UNIQUE NONCLUSTERED(ProductModelVID, LoadDateTime),
+	-- Primary index to Product Model SAT
+	PRIMARY KEY CLUSTERED(ProductModelVID, LoadDateTime),
 	FOREIGN KEY (ProductModelVID) REFERENCES ProductModelHUB (ProductModelVID)
 )
 GO
@@ -1150,7 +1148,7 @@ CREATE TABLE ProductPhotoHUB (
 	-- Product Photo VID
 	ProductPhotoVID                         BIGINT IDENTITY NOT NULL,
 	-- Product Photo has Product Photo ID
-	ProductPhotoID                          BIGINT NOT NULL IDENTITY,
+	ProductPhotoID                          BIGINT NOT NULL,
 	-- Primary index to Product Photo HUB
 	PRIMARY KEY CLUSTERED(ProductPhotoVID),
 	-- Unique index to Product Photo HUB over PresenceConstraint over (Product Photo ID in "Product Photo has Product Photo ID") occurs at most one time
@@ -1171,21 +1169,21 @@ CREATE TABLE ProductPhotoSAT (
 	ThumbNailPhoto                          varbinary NULL,
 	-- maybe Product Photo has thumbnail-Photo File Name
 	ThumbnailPhotoFileName                  VARCHAR(50) NULL,
-	-- Unique index to Product Photo SAT
-	UNIQUE NONCLUSTERED(ProductPhotoVID, LoadDateTime),
+	-- Primary index to Product Photo SAT
+	PRIMARY KEY CLUSTERED(ProductPhotoVID, LoadDateTime),
 	FOREIGN KEY (ProductPhotoVID) REFERENCES ProductPhotoHUB (ProductPhotoVID)
 )
 GO
 
 CREATE TABLE ProductProductPhotoLINK (
 	-- Product Product Photo VID
-	ProductPhotoVID                         BIGINT IDENTITY NOT NULL,
+	ProductProductPhotoVID                  BIGINT IDENTITY NOT NULL,
 	-- Product VID
 	ProductVID                              BIGINT NOT NULL,
 	-- Product Photo VID
 	ProductPhotoVID                         BIGINT NOT NULL,
 	-- Primary index to Product Product Photo LINK
-	PRIMARY KEY CLUSTERED(ProductPhotoVID),
+	PRIMARY KEY CLUSTERED(ProductProductPhotoVID),
 	-- Unique index to Product Product Photo LINK over PresenceConstraint over (Product, Product Photo in "Product has Product Photo") occurs at most one time
 	UNIQUE NONCLUSTERED(ProductVID, ProductPhotoVID),
 	FOREIGN KEY (ProductPhotoVID) REFERENCES ProductPhotoHUB (ProductPhotoVID),
@@ -1195,14 +1193,14 @@ GO
 
 CREATE TABLE ProductProductPhotoSAT (
 	-- Product Product Photo VID
-	ProductPhotoVID                         BIGINT NOT NULL,
+	ProductProductPhotoVID                         BIGINT NOT NULL,
 	-- LoadDateTime
 	LoadDateTime                            DATETIME,
 	-- Primary
 	[Primary]                               BIT,
-	-- Unique index to Product Product Photo SAT
-	UNIQUE NONCLUSTERED(ProductPhotoVID, LoadDateTime),
-	FOREIGN KEY (ProductPhotoVID) REFERENCES ProductProductPhotoLINK (ProductPhotoVID)
+	-- Primary index to Product Product Photo SAT
+	PRIMARY KEY CLUSTERED(ProductProductPhotoVID, LoadDateTime),
+	FOREIGN KEY (ProductProductPhotoVID) REFERENCES ProductProductPhotoLINK (ProductProductPhotoVID)
 )
 GO
 
@@ -1210,7 +1208,7 @@ CREATE TABLE ProductReviewHUB (
 	-- Product Review VID
 	ProductReviewVID                        BIGINT IDENTITY NOT NULL,
 	-- Product Review has Product Review ID
-	ProductReviewID                         BIGINT NOT NULL IDENTITY,
+	ProductReviewID                         BIGINT NOT NULL,
 	-- Primary index to Product Review HUB
 	PRIMARY KEY CLUSTERED(ProductReviewVID),
 	-- Unique index to Product Review HUB over PresenceConstraint over (Product Review ID in "Product Review has Product Review ID") occurs at most one time
@@ -1251,8 +1249,8 @@ CREATE TABLE ProductReviewSAT (
 	ReviewerName                            VARCHAR(50) NOT NULL,
 	-- maybe Product Review has Comments
 	Comments                                VARCHAR(3850) NULL,
-	-- Unique index to Product Review SAT
-	UNIQUE NONCLUSTERED(ProductReviewVID, LoadDateTime),
+	-- Primary index to Product Review SAT
+	PRIMARY KEY CLUSTERED(ProductReviewVID, LoadDateTime),
 	FOREIGN KEY (ProductReviewVID) REFERENCES ProductReviewHUB (ProductReviewVID)
 )
 GO
@@ -1268,8 +1266,8 @@ CREATE TABLE ProductSAT (
 	Name                                    VARCHAR(50) NOT NULL,
 	-- Product has Product Number
 	ProductNumber                           VARCHAR(25) NOT NULL,
-	-- Unique index to Product SAT
-	UNIQUE NONCLUSTERED(ProductVID, LoadDateTime),
+	-- Primary index to Product SAT
+	PRIMARY KEY CLUSTERED(ProductVID, LoadDateTime),
 	FOREIGN KEY (ProductVID) REFERENCES ProductHUB (ProductVID)
 )
 GO
@@ -1295,7 +1293,7 @@ CREATE TABLE ProductSubcategoryHUB (
 	-- Product Subcategory VID
 	ProductSubcategoryVID                   BIGINT IDENTITY NOT NULL,
 	-- Product Subcategory has Product Subcategory ID
-	ProductSubcategoryID                    BIGINT NOT NULL IDENTITY,
+	ProductSubcategoryID                    BIGINT NOT NULL,
 	-- Primary index to Product Subcategory HUB
 	PRIMARY KEY CLUSTERED(ProductSubcategoryVID),
 	-- Unique index to Product Subcategory HUB over PresenceConstraint over (Product Subcategory ID in "Product Subcategory has Product Subcategory ID") occurs at most one time
@@ -1310,8 +1308,8 @@ CREATE TABLE ProductSubcategorySAT (
 	LoadDateTime                            DATETIME,
 	-- Product Subcategory has Name
 	Name                                    VARCHAR(50) NOT NULL,
-	-- Unique index to Product Subcategory SAT
-	UNIQUE NONCLUSTERED(ProductSubcategoryVID, LoadDateTime),
+	-- Primary index to Product Subcategory SAT
+	PRIMARY KEY CLUSTERED(ProductSubcategoryVID, LoadDateTime),
 	FOREIGN KEY (ProductSubcategoryVID) REFERENCES ProductSubcategoryHUB (ProductSubcategoryVID)
 )
 GO
@@ -1352,8 +1350,8 @@ CREATE TABLE ProductVendorSAT (
 	LastReceiptCost                         money NULL,
 	-- maybe Product Vendor was paid on last- receipt Date
 	LastReceiptDate                         datetime NULL,
-	-- Unique index to Product Vendor SAT
-	UNIQUE NONCLUSTERED(ProductVendorVID, LoadDateTime),
+	-- Primary index to Product Vendor SAT
+	PRIMARY KEY CLUSTERED(ProductVendorVID, LoadDateTime),
 	FOREIGN KEY (ProductVendorVID) REFERENCES ProductVendorLINK (ProductVendorVID)
 )
 GO
@@ -1379,8 +1377,8 @@ CREATE TABLE ProductGroupSAT (
 	Weight                                  DECIMAL NULL,
 	-- maybe Product weight is in weight-Unit Measure and Unit Measure has Unit Measure Code
 	WeightUnitMeasureCode                   CHAR(3) NULL,
-	-- Unique index to ProductGroup SAT
-	UNIQUE NONCLUSTERED(ProductVID, LoadDateTime),
+	-- Primary index to ProductGroup SAT
+	PRIMARY KEY CLUSTERED(ProductVID, LoadDateTime),
 	FOREIGN KEY (ProductVID) REFERENCES ProductHUB (ProductVID)
 )
 GO
@@ -1398,8 +1396,8 @@ CREATE TABLE ProductSalesSAT (
 	DiscontinuedDate                        datetime NULL,
 	-- maybe Product is last available on sell- end Date
 	SellEndDate                             datetime NULL,
-	-- Unique index to ProductSales SAT
-	UNIQUE NONCLUSTERED(ProductVID, LoadDateTime),
+	-- Primary index to ProductSales SAT
+	PRIMARY KEY CLUSTERED(ProductVID, LoadDateTime),
 	FOREIGN KEY (ProductVID) REFERENCES ProductHUB (ProductVID)
 )
 GO
@@ -1415,8 +1413,8 @@ CREATE TABLE ProductSupplySAT (
 	ReorderPoint                            INTEGER NOT NULL,
 	-- Product should be stocked at least in Safety Stock Level
 	SafetyStockLevel                        INTEGER NOT NULL,
-	-- Unique index to ProductSupply SAT
-	UNIQUE NONCLUSTERED(ProductVID, LoadDateTime),
+	-- Primary index to ProductSupply SAT
+	PRIMARY KEY CLUSTERED(ProductVID, LoadDateTime),
 	FOREIGN KEY (ProductVID) REFERENCES ProductHUB (ProductVID)
 )
 GO
@@ -1441,9 +1439,9 @@ CREATE TABLE PurchaseOrderDetailHUB (
 	-- Purchase Order Detail VID
 	PurchaseOrderDetailVID                  BIGINT IDENTITY NOT NULL,
 	-- Purchase Order Detail belongs to Purchase Order that has Purchase Order ID
-	PurchaseOrderID                         BIGINT NOT NULL IDENTITY,
+	PurchaseOrderID                         BIGINT NOT NULL,
 	-- Purchase Order Detail has Purchase Order Detail ID
-	PurchaseOrderDetailID                   BIGINT NOT NULL IDENTITY,
+	PurchaseOrderDetailID                   BIGINT NOT NULL,
 	-- Primary index to Purchase Order Detail HUB
 	PRIMARY KEY CLUSTERED(PurchaseOrderDetailVID),
 	-- Unique index to Purchase Order Detail HUB over PresenceConstraint over (Purchase Order, Purchase Order Detail ID in "Purchase Order includes Purchase Order Detail", "Purchase Order Detail has Purchase Order Detail ID") occurs at most one time
@@ -1484,8 +1482,8 @@ CREATE TABLE PurchaseOrderDetailSAT (
 	RejectedQty                             DECIMAL NOT NULL,
 	-- Purchase Order Detail costs Unit Price
 	UnitPrice                               money NOT NULL,
-	-- Unique index to Purchase Order Detail SAT
-	UNIQUE NONCLUSTERED(PurchaseOrderDetailVID, LoadDateTime),
+	-- Primary index to Purchase Order Detail SAT
+	PRIMARY KEY CLUSTERED(PurchaseOrderDetailVID, LoadDateTime),
 	FOREIGN KEY (PurchaseOrderDetailVID) REFERENCES PurchaseOrderDetailHUB (PurchaseOrderDetailVID)
 )
 GO
@@ -1494,7 +1492,7 @@ CREATE TABLE PurchaseOrderHUB (
 	-- Purchase Order VID
 	PurchaseOrderVID                        BIGINT IDENTITY NOT NULL,
 	-- Purchase Order has Purchase Order ID
-	PurchaseOrderID                         BIGINT NOT NULL IDENTITY,
+	PurchaseOrderID                         BIGINT NOT NULL,
 	-- Primary index to Purchase Order HUB
 	PRIMARY KEY CLUSTERED(PurchaseOrderVID),
 	-- Unique index to Purchase Order HUB over PresenceConstraint over (Purchase Order ID in "Purchase Order has Purchase Order ID") occurs at most one time
@@ -1516,7 +1514,7 @@ CREATE TABLE PurchaseOrderSAT (
 	-- Purchase Order has Revision Number
 	RevisionNumber                          TINYINT NOT NULL,
 	-- Purchase Order requests Ship Method that has Ship Method ID
-	ShipMethodID                            BIGINT NOT NULL IDENTITY,
+	ShipMethodID                            BIGINT NOT NULL,
 	-- Purchase Order has Status and Purchase Order Status has Purchase Order Status Code
 	StatusPurchaseOrderStatusCode           TINYINT NOT NULL CHECK((StatusPurchaseOrderStatusCode >= 1 AND StatusPurchaseOrderStatusCode <= 8)),
 	-- Purchase Order is worth Sub Total
@@ -1525,8 +1523,8 @@ CREATE TABLE PurchaseOrderSAT (
 	TaxAmt                                  money NOT NULL,
 	-- maybe Purchase Order was shipped on ship-Date
 	ShipDate                                datetime NULL,
-	-- Unique index to Purchase Order SAT
-	UNIQUE NONCLUSTERED(PurchaseOrderVID, LoadDateTime),
+	-- Primary index to Purchase Order SAT
+	PRIMARY KEY CLUSTERED(PurchaseOrderVID, LoadDateTime),
 	FOREIGN KEY (PurchaseOrderVID) REFERENCES PurchaseOrderHUB (PurchaseOrderVID)
 )
 GO
@@ -1636,9 +1634,9 @@ CREATE TABLE SalesOrderDetailHUB (
 	-- Sales Order Detail VID
 	SalesOrderDetailVID                     BIGINT IDENTITY NOT NULL,
 	-- Sales Order Detail belongs to Sales Order that has Sales Order ID
-	SalesOrderID                            BIGINT NOT NULL IDENTITY,
+	SalesOrderID                            BIGINT NOT NULL,
 	-- Sales Order Detail has Sales Order Detail ID
-	SalesOrderDetailID                      BIGINT NOT NULL IDENTITY,
+	SalesOrderDetailID                      BIGINT NOT NULL,
 	-- Primary index to Sales Order Detail HUB
 	PRIMARY KEY CLUSTERED(SalesOrderDetailVID),
 	-- Unique index to Sales Order Detail HUB over PresenceConstraint over (Sales Order, Sales Order Detail ID in "Sales Order includes Sales Order Detail", "Sales Order Detail has Sales Order Detail ID") occurs at most one time
@@ -1677,8 +1675,8 @@ CREATE TABLE SalesOrderDetailSAT (
 	UnitPriceDiscount                       money NOT NULL,
 	-- maybe Sales Order Detail has Carrier Tracking Number
 	CarrierTrackingNumber                   VARCHAR(25) NULL,
-	-- Unique index to Sales Order Detail SAT
-	UNIQUE NONCLUSTERED(SalesOrderDetailVID, LoadDateTime),
+	-- Primary index to Sales Order Detail SAT
+	PRIMARY KEY CLUSTERED(SalesOrderDetailVID, LoadDateTime),
 	FOREIGN KEY (SalesOrderDetailVID) REFERENCES SalesOrderDetailHUB (SalesOrderDetailVID)
 )
 GO
@@ -1687,7 +1685,7 @@ CREATE TABLE SalesOrderHUB (
 	-- Sales Order VID
 	SalesOrderVID                           BIGINT IDENTITY NOT NULL,
 	-- Sales Order has Sales Order ID
-	SalesOrderID                            BIGINT NOT NULL IDENTITY,
+	SalesOrderID                            BIGINT NOT NULL,
 	-- Primary index to Sales Order HUB
 	PRIMARY KEY CLUSTERED(SalesOrderVID),
 	-- Unique index to Sales Order HUB over PresenceConstraint over (Sales Order ID in "Sales Order has Sales Order ID") occurs at most one time
@@ -1784,7 +1782,7 @@ CREATE TABLE SalesOrderSAT (
 	-- Sales Order has Sales Order Number
 	SalesOrderNumber                        VARCHAR(25) NOT NULL,
 	-- Sales Order has Ship Method that has Ship Method ID
-	ShipMethodID                            BIGINT NOT NULL IDENTITY,
+	ShipMethodID                            BIGINT NOT NULL,
 	-- Sales Order has Status and Sales Order Status has Sales Order Status Code
 	StatusSalesOrderStatusCode              TINYINT NOT NULL CHECK((StatusSalesOrderStatusCode >= 1 AND StatusSalesOrderStatusCode <= 8)),
 	-- Sales Order is worth Sub Total
@@ -1801,8 +1799,8 @@ CREATE TABLE SalesOrderSAT (
 	SalesOrderComment                       VARCHAR(128) NULL,
 	-- maybe Sales Order was shipped on ship-Date
 	ShipDate                                datetime NULL,
-	-- Unique index to Sales Order SAT
-	UNIQUE NONCLUSTERED(SalesOrderVID, LoadDateTime),
+	-- Primary index to Sales Order SAT
+	PRIMARY KEY CLUSTERED(SalesOrderVID, LoadDateTime),
 	FOREIGN KEY (SalesOrderVID) REFERENCES SalesOrderHUB (SalesOrderVID)
 )
 GO
@@ -1811,9 +1809,9 @@ CREATE TABLE SalesOrderSalesReasonHUB (
 	-- Sales Order Sales Reason VID
 	SalesOrderSalesReasonVID                BIGINT IDENTITY NOT NULL,
 	-- Sales Order Sales Reason involves Sales Order that has Sales Order ID
-	SalesOrderID                            BIGINT NOT NULL IDENTITY,
+	SalesOrderID                            BIGINT NOT NULL,
 	-- Sales Order Sales Reason involves Sales Reason that has Sales Reason ID
-	SalesReasonID                           BIGINT NOT NULL IDENTITY,
+	SalesReasonID                           BIGINT NOT NULL,
 	-- Primary index to Sales Order Sales Reason HUB
 	PRIMARY KEY CLUSTERED(SalesOrderSalesReasonVID),
 	-- Unique index to Sales Order Sales Reason HUB over PresenceConstraint over (Sales Order, Sales Reason in "Sales Order has Sales Reason") occurs at most one time
@@ -1860,7 +1858,7 @@ CREATE TABLE SalesPersonHUB (
 	-- Sales Person VID
 	SalesPersonVID                          BIGINT IDENTITY NOT NULL,
 	-- Sales Person is a kind of Employee that is a kind of Person that is a kind of Business Entity that has Business Entity ID
-	EmployeeID                              BIGINT NOT NULL IDENTITY,
+	EmployeeID                              BIGINT NOT NULL,
 	-- Primary index to Sales Person HUB
 	PRIMARY KEY CLUSTERED(SalesPersonVID),
 	-- Unique index to Sales Person HUB over PresenceConstraint over (Employee in "Sales Person is a kind of Employee") occurs at most one time
@@ -1907,7 +1905,7 @@ CREATE TABLE SalesPersonQuotaHistoryHUB (
 	-- Sales Person Quota History VID
 	SalesPersonQuotaHistoryVID              BIGINT IDENTITY NOT NULL,
 	-- Sales Person Quota History involves Sales Person that is a kind of Employee that is a kind of Person that is a kind of Business Entity that has Business Entity ID
-	SalesPersonID                           BIGINT NOT NULL IDENTITY,
+	SalesPersonID                           BIGINT NOT NULL,
 	-- Sales Person Quota History involves quota-Date
 	QuotaDate                               datetime NOT NULL,
 	-- Primary index to Sales Person Quota History HUB
@@ -1942,8 +1940,8 @@ CREATE TABLE SalesPersonQuotaHistorySAT (
 	LoadDateTime                            DATETIME,
 	-- Sales Person Quota History involves Sales Quota
 	SalesQuota                              money NOT NULL,
-	-- Unique index to Sales Person Quota History SAT
-	UNIQUE NONCLUSTERED(SalesPersonQuotaHistoryVID, LoadDateTime),
+	-- Primary index to Sales Person Quota History SAT
+	PRIMARY KEY CLUSTERED(SalesPersonQuotaHistoryVID, LoadDateTime),
 	FOREIGN KEY (SalesPersonQuotaHistoryVID) REFERENCES SalesPersonQuotaHistoryHUB (SalesPersonQuotaHistoryVID)
 )
 GO
@@ -1963,8 +1961,8 @@ CREATE TABLE SalesPersonSAT (
 	SalesYTD                                money NOT NULL,
 	-- maybe Sales Person should sell Sales Quota
 	SalesQuota                              money NULL,
-	-- Unique index to Sales Person SAT
-	UNIQUE NONCLUSTERED(SalesPersonVID, LoadDateTime),
+	-- Primary index to Sales Person SAT
+	PRIMARY KEY CLUSTERED(SalesPersonVID, LoadDateTime),
 	FOREIGN KEY (SalesPersonVID) REFERENCES SalesPersonHUB (SalesPersonVID)
 )
 GO
@@ -1973,7 +1971,7 @@ CREATE TABLE SalesTerritoryHUB (
 	-- Sales Territory VID
 	SalesTerritoryVID                       BIGINT IDENTITY NOT NULL,
 	-- Sales Territory has Territory ID
-	TerritoryID                             BIGINT NOT NULL IDENTITY,
+	TerritoryID                             BIGINT NOT NULL,
 	-- Primary index to Sales Territory HUB
 	PRIMARY KEY CLUSTERED(SalesTerritoryVID),
 	-- Unique index to Sales Territory HUB over PresenceConstraint over (Territory ID in "Sales Territory has Territory ID") occurs at most one time
@@ -2006,8 +2004,8 @@ CREATE TABLE SalesTerritoryHistorySAT (
 	LoadDateTime                            DATETIME,
 	-- maybe Sales Territory History is valid until end-Date
 	EndDate                                 datetime NULL,
-	-- Unique index to Sales Territory History SAT
-	UNIQUE NONCLUSTERED(SalesTerritoryHistoryVID, LoadDateTime),
+	-- Primary index to Sales Territory History SAT
+	PRIMARY KEY CLUSTERED(SalesTerritoryHistoryVID, LoadDateTime),
 	FOREIGN KEY (SalesTerritoryHistoryVID) REFERENCES SalesTerritoryHistoryLINK (SalesTerritoryHistoryVID)
 )
 GO
@@ -2029,8 +2027,8 @@ CREATE TABLE SalesTerritorySAT (
 	SalesLastYear                           money NOT NULL,
 	-- Sales Territory sold Sales YTD this year
 	SalesYTD                                money NOT NULL,
-	-- Unique index to Sales Territory SAT
-	UNIQUE NONCLUSTERED(SalesTerritoryVID, LoadDateTime),
+	-- Primary index to Sales Territory SAT
+	PRIMARY KEY CLUSTERED(SalesTerritoryVID, LoadDateTime),
 	FOREIGN KEY (SalesTerritoryVID) REFERENCES SalesTerritoryHUB (SalesTerritoryVID)
 )
 GO
@@ -2056,7 +2054,7 @@ CREATE TABLE ShiftHUB (
 	-- Shift VID
 	ShiftVID                                BIGINT IDENTITY NOT NULL,
 	-- Shift has Shift ID
-	ShiftID                                 BIGINT NOT NULL IDENTITY,
+	ShiftID                                 BIGINT NOT NULL,
 	-- Primary index to Shift HUB
 	PRIMARY KEY CLUSTERED(ShiftVID),
 	-- Unique index to Shift HUB over PresenceConstraint over (Shift ID in "Shift has Shift ID") occurs at most one time
@@ -2075,8 +2073,8 @@ CREATE TABLE ShiftSAT (
 	Name                                    VARCHAR(50) NOT NULL,
 	-- Shift starts at start-Time
 	StartTime                               TIME NOT NULL,
-	-- Unique index to Shift SAT
-	UNIQUE NONCLUSTERED(ShiftVID, LoadDateTime),
+	-- Primary index to Shift SAT
+	PRIMARY KEY CLUSTERED(ShiftVID, LoadDateTime),
 	FOREIGN KEY (ShiftVID) REFERENCES ShiftHUB (ShiftVID)
 )
 GO
@@ -2085,7 +2083,7 @@ CREATE TABLE ShoppingCartItemHUB (
 	-- Shopping Cart Item VID
 	ShoppingCartItemVID                     BIGINT IDENTITY NOT NULL,
 	-- Shopping Cart Item has Shopping Cart Item ID
-	ShoppingCartItemID                      BIGINT NOT NULL IDENTITY,
+	ShoppingCartItemID                      BIGINT NOT NULL,
 	-- Primary index to Shopping Cart Item HUB
 	PRIMARY KEY CLUSTERED(ShoppingCartItemVID),
 	-- Unique index to Shopping Cart Item HUB over PresenceConstraint over (Shopping Cart Item ID in "Shopping Cart Item has Shopping Cart Item ID") occurs at most one time
@@ -2122,8 +2120,8 @@ CREATE TABLE ShoppingCartItemSAT (
 	Quantity                                INTEGER NOT NULL,
 	-- Shopping Cart Item is in Shopping Cart that has Shopping Cart ID
 	ShoppingCartID                          VARCHAR(50) NOT NULL,
-	-- Unique index to Shopping Cart Item SAT
-	UNIQUE NONCLUSTERED(ShoppingCartItemVID, LoadDateTime),
+	-- Primary index to Shopping Cart Item SAT
+	PRIMARY KEY CLUSTERED(ShoppingCartItemVID, LoadDateTime),
 	FOREIGN KEY (ShoppingCartItemVID) REFERENCES ShoppingCartItemHUB (ShoppingCartItemVID)
 )
 GO
@@ -2132,7 +2130,7 @@ CREATE TABLE SpecialOfferHUB (
 	-- Special Offer VID
 	SpecialOfferVID                         BIGINT IDENTITY NOT NULL,
 	-- Special Offer has Special Offer ID
-	SpecialOfferID                          BIGINT NOT NULL IDENTITY,
+	SpecialOfferID                          BIGINT NOT NULL,
 	-- Primary index to Special Offer HUB
 	PRIMARY KEY CLUSTERED(SpecialOfferVID),
 	-- Unique index to Special Offer HUB over PresenceConstraint over (Special Offer ID in "Special Offer has Special Offer ID") occurs at most one time
@@ -2177,8 +2175,8 @@ CREATE TABLE SpecialOfferSAT (
 	StartDate                               datetime NOT NULL,
 	-- Special Offer is of Type
 	Type                                    VARCHAR(50) NOT NULL,
-	-- Unique index to Special Offer SAT
-	UNIQUE NONCLUSTERED(SpecialOfferVID, LoadDateTime),
+	-- Primary index to Special Offer SAT
+	PRIMARY KEY CLUSTERED(SpecialOfferVID, LoadDateTime),
 	FOREIGN KEY (SpecialOfferVID) REFERENCES SpecialOfferHUB (SpecialOfferVID)
 )
 GO
@@ -2187,7 +2185,7 @@ CREATE TABLE StoreHUB (
 	-- Store VID
 	StoreVID                                BIGINT IDENTITY NOT NULL,
 	-- Store is a kind of Business Entity that has Business Entity ID
-	BusinessEntityID                        BIGINT NOT NULL IDENTITY,
+	BusinessEntityID                        BIGINT NOT NULL,
 	-- Primary index to Store HUB
 	PRIMARY KEY CLUSTERED(StoreVID),
 	-- Unique index to Store HUB over PresenceConstraint over (Business Entity in "Store is a kind of Business Entity") occurs at most one time
@@ -2222,8 +2220,8 @@ CREATE TABLE StoreSAT (
 	Name                                    VARCHAR(50) NOT NULL,
 	-- maybe Store has Demographics
 	Demographics                            VARCHAR(MAX) NULL,
-	-- Unique index to Store SAT
-	UNIQUE NONCLUSTERED(StoreVID, LoadDateTime),
+	-- Primary index to Store SAT
+	PRIMARY KEY CLUSTERED(StoreVID, LoadDateTime),
 	FOREIGN KEY (StoreVID) REFERENCES StoreHUB (StoreVID)
 )
 GO
@@ -2249,7 +2247,7 @@ CREATE TABLE TransactionHUB (
 	-- Transaction VID
 	TransactionVID                          BIGINT IDENTITY NOT NULL,
 	-- Transaction has Transaction ID
-	TransactionID                           BIGINT NOT NULL IDENTITY,
+	TransactionID                           BIGINT NOT NULL,
 	-- Primary index to Transaction HUB
 	PRIMARY KEY CLUSTERED(TransactionVID),
 	-- Unique index to Transaction HUB over PresenceConstraint over (Transaction ID in "Transaction has Transaction ID") occurs at most one time
@@ -2261,7 +2259,7 @@ CREATE TABLE TransactionHistoryArchiveHUB (
 	-- Transaction History Archive VID
 	TransactionHistoryArchiveVID            BIGINT IDENTITY NOT NULL,
 	-- Transaction History Archive is a kind of Transaction that has Transaction ID
-	TransactionID                           BIGINT NOT NULL IDENTITY,
+	TransactionID                           BIGINT NOT NULL,
 	-- Primary index to Transaction History Archive HUB
 	PRIMARY KEY CLUSTERED(TransactionHistoryArchiveVID),
 	-- Unique index to Transaction History Archive HUB over PresenceConstraint over (Transaction in "Transaction History Archive is a kind of Transaction") occurs at most one time
@@ -2291,7 +2289,7 @@ CREATE TABLE TransactionHistoryHUB (
 	-- Transaction History VID
 	TransactionHistoryVID                   BIGINT IDENTITY NOT NULL,
 	-- Transaction History is a kind of Transaction that has Transaction ID
-	TransactionID                           BIGINT NOT NULL IDENTITY,
+	TransactionID                           BIGINT NOT NULL,
 	-- Primary index to Transaction History HUB
 	PRIMARY KEY CLUSTERED(TransactionHistoryVID),
 	-- Unique index to Transaction History HUB over PresenceConstraint over (Transaction in "Transaction History is a kind of Transaction") occurs at most one time
@@ -2334,8 +2332,8 @@ CREATE TABLE TransactionSAT (
 	TransactionDate                         datetime NOT NULL,
 	-- Transaction has Transaction Type
 	TransactionType                         CHAR(1) NOT NULL,
-	-- Unique index to Transaction SAT
-	UNIQUE NONCLUSTERED(TransactionVID, LoadDateTime),
+	-- Primary index to Transaction SAT
+	PRIMARY KEY CLUSTERED(TransactionVID, LoadDateTime),
 	FOREIGN KEY (TransactionVID) REFERENCES TransactionHUB (TransactionVID)
 )
 GO
@@ -2344,7 +2342,7 @@ CREATE TABLE VendorHUB (
 	-- Vendor VID
 	VendorVID                               BIGINT IDENTITY NOT NULL,
 	-- Vendor is a kind of Business Entity that has Business Entity ID
-	BusinessEntityID                        BIGINT NOT NULL IDENTITY,
+	BusinessEntityID                        BIGINT NOT NULL,
 	-- Primary index to Vendor HUB
 	PRIMARY KEY CLUSTERED(VendorVID),
 	-- Unique index to Vendor HUB over PresenceConstraint over (Business Entity in "Vendor is a kind of Business Entity") occurs at most one time
@@ -2387,8 +2385,8 @@ CREATE TABLE VendorSAT (
 	Name                                    VARCHAR(50) NOT NULL,
 	-- maybe Vendor has purchasing- web service URL
 	PurchasingWebServiceURL                 VARCHAR(1024) NULL,
-	-- Unique index to Vendor SAT
-	UNIQUE NONCLUSTERED(VendorVID, LoadDateTime),
+	-- Primary index to Vendor SAT
+	PRIMARY KEY CLUSTERED(VendorVID, LoadDateTime),
 	FOREIGN KEY (VendorVID) REFERENCES VendorHUB (VendorVID)
 )
 GO
@@ -2397,7 +2395,7 @@ CREATE TABLE WorkOrderHUB (
 	-- Work Order VID
 	WorkOrderVID                            BIGINT IDENTITY NOT NULL,
 	-- Work Order has Work Order ID
-	WorkOrderID                             BIGINT NOT NULL IDENTITY,
+	WorkOrderID                             BIGINT NOT NULL,
 	-- Primary index to Work Order HUB
 	PRIMARY KEY CLUSTERED(WorkOrderVID),
 	-- Unique index to Work Order HUB over PresenceConstraint over (Work Order ID in "Work Order has Work Order ID") occurs at most one time
@@ -2437,10 +2435,7 @@ CREATE TABLE WorkOrderRoutingHUB (
 	-- Primary index to Work Order Routing HUB
 	PRIMARY KEY CLUSTERED(WorkOrderRoutingVID),
 	-- Unique index to Work Order Routing HUB over PresenceConstraint over (Work Order, Product, Operation Sequence in "Work Order activity on Product involves Operation Sequence") occurs at most one time
-	UNIQUE NONCLUSTERED(WorkOrderID, ProductID, OperationSequence),
-	FOREIGN KEY (LocationVID) REFERENCES LocationHUB (LocationVID),
-	FOREIGN KEY (ProductID) REFERENCES ProductHUB (ProductVID),
-	FOREIGN KEY (WorkOrderID) REFERENCES WorkOrderHUB (WorkOrderVID)
+	UNIQUE NONCLUSTERED(WorkOrderID, ProductID, OperationSequence)
 )
 GO
 
@@ -2463,8 +2458,8 @@ CREATE TABLE WorkOrderRoutingSAT (
 	ActualResourceHours                     DECIMAL NULL,
 	-- maybe Work Order Routing has actual- start Date
 	ActualStartDate                         datetime NULL,
-	-- Unique index to Work Order Routing SAT
-	UNIQUE NONCLUSTERED(WorkOrderRoutingVID, LoadDateTime),
+	-- Primary index to Work Order Routing SAT
+	PRIMARY KEY CLUSTERED(WorkOrderRoutingVID, LoadDateTime),
 	FOREIGN KEY (WorkOrderRoutingVID) REFERENCES WorkOrderRoutingHUB (WorkOrderRoutingVID)
 )
 GO
@@ -2485,9 +2480,9 @@ CREATE TABLE WorkOrderSAT (
 	-- maybe Work Order is valid until end-Date
 	EndDate                                 datetime NULL,
 	-- maybe Work Order has Scrap Reason that has Scrap Reason ID
-	ScrapReasonID                           BIGINT NULL IDENTITY,
-	-- Unique index to Work Order SAT
-	UNIQUE NONCLUSTERED(WorkOrderVID, LoadDateTime),
+	ScrapReasonID                           BIGINT NULL,
+	-- Primary index to Work Order SAT
+	PRIMARY KEY CLUSTERED(WorkOrderVID, LoadDateTime),
 	FOREIGN KEY (WorkOrderVID) REFERENCES WorkOrderHUB (WorkOrderVID)
 )
 GO
