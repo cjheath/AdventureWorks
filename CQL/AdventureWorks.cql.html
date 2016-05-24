@@ -1,0 +1,869 @@
+<style media='screen' type='text/css'>
+a:link, a:visited {
+  color: #8A0092; text-decoration: underline;
+}
+ul {
+  margin: 0px 0px 0px 2em;
+  -webkit-margin-before: 0px;
+  -webkit-margin-after: 0px;
+  -webkit-padding-start: 0px;
+  padding: 0px;
+}
+pre.slide {
+  background-color: #000;
+  padding: 5px;
+  display: table-cell;
+  border-style: dashed;
+  border-width: 2px;
+  border-color: #BBB;
+}
+span {
+  font-family: "Frutiger", sans-serif;
+}
+.keyword {
+  color: #0000CC;
+}
+.term, .concept {
+  /* Xcolor: #6A0072;   The color used by NORMA */
+  color: #8A0092;
+}
+.vocabulary, .object_type {
+  /* Xcolor: #6A0072;   The color used by NORMA */
+  color: #8A0092;
+}
+.linking, .copula {
+  color: #0E5400;
+}
+.literal, .value {
+  color: #FF990E;
+}
+dd {
+  margin-bottom: 0.5em;
+  margin-left: 60px;
+  text-indent: -20px;
+}
+dd ul {
+  margin-left: -80px;
+  text-indent: 80px;
+}
+.glossary-sidebar {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  width: 240px;
+  display: block;
+  margin: 0;
+  padding: 0 16px;
+  border-right: solid #DDD 3px;
+  background: #EEE;
+}
+.glossary-toc {
+  position: absolute;
+  top: 0px;
+  bottom: 24px;
+  overflow: auto;
+  margin: 0;
+  padding: 0 0;
+  list-style: none;
+  font-family: Menlo, Consolas, Monaco, "Lucida Console", monospace;
+}
+.glossary-controls {
+  position: absolute; bottom: 0px;
+}
+.glossary-doc {
+  position: absolute;
+  display: block;
+  background: #FFF;
+  border-right: solid #EEE 3px;
+  font: 300 16px/1.4 "Myriad Pro", "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
+  overflow: auto;
+  padding: 0 0 0 30px;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 270px;
+}
+.glossary-toc li {
+  margin-left: 20px;
+  text-indent: -20px;
+}
+.glossary-doc dl {
+  margin-bottom: 1600px;
+}
+.glossary-doc dd {
+  margin-bottom: 30px;
+}
+.glossary-constraint {
+  background: #EDC;
+}
+.value {
+  display: inline;
+}
+.keyword,
+.glossary-facttype,
+.glossary-reading {
+  display: inline;
+  XXbackground: #E8E8E8;
+}
+</style>
+<pre>
+<span class='keyword'><span class='comment'>/*
+ * The Microsoft AdventureWorks database,
+ * represented using the Constellation Query Language (CQL).
+ *
+ * AdventureWorks is available at <http://msftdbprodsamples.codeplex.com/>.
+ * Your rights may be restricted by terms of the Microsoft Public License (Ms-PL).
+ * Read them at <http://msftdbprodsamples.codeplex.com/license>
+ *
+ * This work is a derivative of the SQL Server 2008R2 OLTP database,
+ * produced by reverse engineering the physical database snapshot.
+ * Copyright 2016 Infinuendo Pty Ltd.
+ * Read the LICENSE file for license terms.
+ */</span>
+vocabulary <span class='vocabulary'>AdventureWorks</span>;
+<span class='comment'>// SQL/CQL base types:</span>
+</span>
+<span class='keyword'>each <span class='term'>uniqueidentifier </span>is written as <span class='term'>uniqueidentifier</span>;</span>
+<span class='keyword'>each <span class='term'>Row GUID </span>is written as <span class='term'>uniqueidentifier</span>;</span>
+<span class='keyword'>each <span class='term'>Time </span>is written as <span class='term'>Time</span>;</span>
+<span class='keyword'>each <span class='term'>Date </span>is written as <span class='term'>datetime</span>;</span>
+<span class='keyword'>each <span class='term'>money </span>is written as <span class='term'>money</span>;</span>
+<span class='keyword'>each <span class='term'>smallmoney </span>is written as <span class='term'>smallmoney</span>;</span>
+<span class='keyword'>each <span class='term'>Percentage </span>is written as <span class='term'>Decimal</span>(<span class='literal'>8</span>, <span class='literal'>2</span>);	<span class='comment'>// Bad modeling (as "smallmoney") in original</span>
+</span>
+<span class='keyword'>each <span class='term'>Amount </span>is written as <span class='term'>money</span>;</span>
+<span class='keyword'>each <span class='term'>Measure </span>is written as <span class='term'>Decimal</span>(<span class='literal'>8</span>, <span class='literal'>2</span>);   <span class='comment'>// For continuous quantities</span>
+</span>
+<span class='keyword'>each <span class='term'>Count </span>is written as <span class='term'>Integer</span>;	    <span class='comment'>// For discrete quantities, usually (as MeasureQty)</span>
+</span>
+<span class='keyword'>each <span class='term'>Number </span>is written as <span class='term'>Integer</span>;</span>
+<span class='keyword'>each <span class='term'>ID </span>is written as <span class='term'>Auto Counter</span>;</span>
+<span class='keyword'>each <span class='term'>XML </span>is written as <span class='term'>Text</span>;		    <span class='comment'>// (with facet xmlschema)</span>
+</span>
+<span class='keyword'>each <span class='term'>URL </span>is written as <span class='term'>String</span>(<span class='literal'>1024</span>);
+<span class='comment'>// User Defined Data Types:</span>
+</span>
+<span class='keyword'>each <span class='term'>Name </span>is written as a <span class='term'>String</span>(<span class='literal'>50</span>);</span>
+<span class='keyword'>each <span class='term'>Phone Number </span>is written as <span class='term'>String</span>(<span class='literal'>25</span>);</span>
+<span class='keyword'>each <span class='term'>Account Number </span>is written as <span class='term'>String</span>(<span class='literal'>15</span>);<span class='comment'>// each Flag is written as bit;</span>
+</span>
+<span class='keyword'>each <span class='term'>Order Number </span>is written as <span class='term'>String</span>(<span class='literal'>25</span>);
+<span class='comment'>// Value Types</span>
+</span>
+<span class='keyword'>each <span class='term'>Description </span>is written as <span class='term'>String</span>;</span>
+<span class='keyword'>each <span class='term'>Photo </span>is written as <span class='term'>varbinary</span>;</span>
+<span class='keyword'>each <span class='term'>Revision Number </span>is written as an <span class='term'>Integer</span>(<span class='literal'>8</span>);</span>
+<span class='keyword'>each <span class='term'>Email Address Value </span>is written as <span class='term'>String</span>(<span class='literal'>50</span>);</span>
+<span class='keyword'>each <span class='term'>Hours </span>is written as an <span class='term'>Integer</span>;
+<span class='comment'>////////////////////////////////////////////////////////////////////////////////</span>
+<span class='comment'>// topic HumanResources;</span>
+</span>
+<span class='keyword'>each <span class='term'>Department </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Department</span> <span class='linking'>has </span>one <span class='term'>Name</span>, <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Department</span>;</span>
+<span class='keyword'><span class='term'>Department</span> <span class='linking'>has </span>one <span class='term'>group-Name</span>;	<span class='comment'>// Avoid ambiguity; this is a new fact type</span>
+</span>
+<span class='keyword'><span class='term'>Department</span> <span class='linking'>has </span>one <span class='term'>group-Name</span>,
+    <span class='term'>group-Name</span> <span class='linking'>is of </span><span class='term'>Department</span>;<span class='comment'>// Department has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>National ID Number	</span>is written as <span class='term'>String</span>(<span class='literal'>15</span>);</span>
+<span class='keyword'>each <span class='term'>Login ID </span>is written as <span class='term'>String</span>(<span class='literal'>256</span>);</span>
+<span class='keyword'>each <span class='term'>Job Title </span>is written as <span class='term'>String</span>(<span class='literal'>50</span>);</span>
+<span class='keyword'>each <span class='term'>Marital Status </span>is written as <span class='term'>Char</span>(<span class='literal'>1</span>) restricted to {<span class='literal'>'S'</span>, <span class='literal'>'M'</span>};</span>
+<span class='keyword'>each <span class='term'>Gender </span>is written as <span class='term'>Char</span>(<span class='literal'>1</span>) restricted to {<span class='literal'>'f'</span>, <span class='literal'>'F'</span>, <span class='literal'>'m'</span>, <span class='literal'>'M'</span>};</span>
+<span class='keyword'>each <span class='term'>OrganizationNode </span>is written as <span class='term'>hierarchyid</span>;    <span class='comment'>// This is an SQL-Server-ism</span>
+</span>
+<span class='keyword'>each <span class='term'>Employee </span>[separate] is a kind of <span class='term'>Person</span>;</span>
+<span class='keyword'><span class='term'>Employee</span> <span class='linking'>belongs to </span>one <span class='term'>Department</span> (as <span class='term'>Organization Node</span>);<span class='comment'>// Employee is at one OrganizationLevel where... (derived from OrganizationNode)</span>
+</span>
+<span class='keyword'><span class='term'>Employee</span> <span class='linking'>has </span>one <span class='term'>National ID Number</span>, <span class='term'>National ID Number</span> <span class='linking'>is of </span><span class='term'>Employee</span>;</span>
+<span class='keyword'><span class='term'>Employee</span> <span class='linking'>has </span>one <span class='term'>Login ID</span>,
+    <span class='term'>Login ID</span> <span class='linking'>is of </span><span class='term'>Employee</span>;</span>
+<span class='keyword'><span class='term'>Employee</span> <span class='linking'>has </span>one <span class='term'>Job Title</span>,
+    <span class='term'>Job Title</span> <span class='linking'>is of </span><span class='term'>Employee</span>;</span>
+<span class='keyword'><span class='term'>Employee</span> <span class='linking'>has </span>one <span class='term'>birth-Date</span>;</span>
+<span class='keyword'><span class='term'>Employee</span> <span class='linking'>has </span>one <span class='term'>Marital Status</span>,
+    <span class='term'>Marital Status</span> <span class='linking'>is of </span><span class='term'>Employee</span>;</span>
+<span class='keyword'><span class='term'>Employee</span> <span class='linking'>has </span>one <span class='term'>Gender</span>,
+    <span class='term'>Gender</span> <span class='linking'>is of </span><span class='term'>Employee</span>;</span>
+<span class='keyword'><span class='term'>Employee</span> <span class='linking'>has </span>one <span class='term'>hire-Date</span>;</span>
+<span class='keyword'><span class='term'>Employee</span> (as <span class='term'>Salaried Flag</span>) <span class='linking'>is salaried</span>;</span>
+<span class='keyword'><span class='term'>Employee</span> <span class='linking'>has </span>one <span class='term'>vacation- Hours</span>;</span>
+<span class='keyword'><span class='term'>Employee</span> <span class='linking'>has </span>one <span class='term'>sick- leave Hours</span>;</span>
+<span class='keyword'><span class='term'>Employee</span> (as <span class='term'>Current Flag</span>) <span class='linking'>is current</span>;<span class='comment'>// Employee has one Row GUID, Row GUID is of at most one Employee;</span>
+<span class='comment'>// Employee has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Shift </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Shift</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+    <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Shift</span>;</span>
+<span class='keyword'><span class='term'>Shift</span> <span class='linking'>starts at </span>one <span class='term'>start-Time</span>;</span>
+<span class='keyword'><span class='term'>Shift</span> <span class='linking'>ends at </span>one <span class='term'>end-Time</span>;<span class='comment'>// Shift has one modified-Date;</span>
+</span>
+<span class='keyword'>each combination <span class='term'>Name</span>, <span class='term'>Time</span>(1), <span class='term'>Time</span>(2) occurs at most one time in
+    <span class='term'>Shift</span> <span class='linking'>has </span><span class='term'>Name</span>,
+    <span class='term'>Shift</span> <span class='linking'>starts at </span><span class='term'>start-Time</span>(1),
+    <span class='term'>Shift</span> <span class='linking'>ends at </span><span class='term'>end-Time</span>(2);
+</span>
+<span class='keyword'>each <span class='term'>Employee Department History </span>is where
+    <span class='term'>Employee</span> <span class='linking'>started on </span><span class='term'>start-Date</span> <span class='linking'>in </span><span class='term'>Department</span> <span class='linking'>working </span><span class='term'>Shift</span>;</span>
+<span class='keyword'><span class='term'>Employee Department History</span> <span class='linking'>is valid until </span>at most one <span class='term'>end-Date</span>;<span class='comment'>// Employee Department History has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Employee Pay History </span>is where
+    <span class='linking'>pay of </span><span class='term'>Employee</span> <span class='linking'>was changed on </span><span class='term'>rate- change Date</span>;</span>
+<span class='keyword'><span class='term'>Pay Frequency </span>is written as <span class='term'>tinyint</span> restricted to {<span class='literal'>1</span>, <span class='literal'>2</span>};   <span class='comment'>// 1=monthly, 2=biweekly</span>
+</span>
+<span class='keyword'><span class='term'>Employee Pay History</span> <span class='linking'>is paid at </span>one <span class='term'>Pay Frequency</span>;</span>
+<span class='keyword'><span class='term'>Employee Pay History</span> <span class='linking'>is at </span>one <span class='term'>Amount</span> (as <span class='term'>Rate</span>);<span class='comment'>// Employee Pay History has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Job Candidate </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Job Candidate</span> <span class='linking'>was hired as </span>at most one <span class='term'>Employee</span>,
+    <span class='term'>Employee</span> <span class='linking'>was </span>at most one <span class='term'>Job Candidate</span>;</span>
+<span class='keyword'>each <span class='term'>Resume </span>is written as <span class='term'>XML</span>;	 <span class='comment'>// (with xmlschema HR Resume)</span>
+</span>
+<span class='keyword'><span class='term'>Job Candidate</span> <span class='linking'>supplied </span>at most one <span class='term'>Resume</span>;<span class='comment'>// Job Candidate has one modified-Date;</span>
+<span class='comment'>////////////////////////////////////////////////////////////////////////////////</span>
+<span class='comment'>// topic Person;</span>
+</span>
+<span class='keyword'>each <span class='term'>Country Region Code </span>is written as <span class='term'>String</span>(<span class='literal'>3</span>);</span>
+<span class='keyword'>each <span class='term'>Country Region </span>[static] is identified by its <span class='term'>Code</span>;</span>
+<span class='keyword'><span class='term'>Country Region</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+    <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Country Region</span>;
+</span>
+<span class='keyword'>each <span class='term'>State Province Code </span>is written as <span class='term'>Char</span>(<span class='literal'>3</span>);</span>
+<span class='keyword'>each <span class='term'>State Province </span>[static] is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>State Province</span> <span class='linking'>has </span>one <span class='term'>State Province Code</span>;</span>
+<span class='keyword'><span class='term'>State Province</span> <span class='linking'>is in </span>one <span class='term'>Country Region</span>;</span>
+<span class='keyword'>each combination <span class='term'>State Province Code</span>, <span class='term'>Country Region</span> occurs at most one time in
+    <span class='term'>State Province</span> <span class='linking'>has </span><span class='term'>State Province Code</span>,
+    <span class='term'>State Province</span> <span class='linking'>is in </span><span class='term'>Country Region</span>;</span>
+<span class='keyword'><span class='term'>State Province</span> (as <span class='term'>Is Only State Province Flag</span>) <span class='linking'>is entire state</span>;</span>
+<span class='keyword'><span class='term'>State Province</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+    <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>State Province</span>;<span class='comment'>// State Province has one modified-Date;</span>
+<span class='comment'>// State Province has one Row GUID, Row GUID is of at most one State Province;</span>
+</span>
+<span class='keyword'>each combination <span class='term'>Country Region</span>, <span class='term'>State Province Code</span> occurs at most one time in
+    <span class='term'>State Province</span> <span class='linking'>is in </span><span class='term'>Country Region</span>,
+    <span class='term'>State Province</span> <span class='linking'>has </span><span class='term'>State Province Code</span>;
+</span>
+<span class='keyword'>each <span class='term'>Address Type </span>[static] is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Address Type</span> <span class='linking'>has </span>one <span class='term'>Name</span>,	<span class='comment'>// e.g. Billing, Home, or Shipping</span>
+    <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Address Type</span>;<span class='comment'>// Address Type has one Row GUID, Row GUID is of at most one Address Type;</span>
+<span class='comment'>// Address Type has one modified-Date;</span>
+<span class='comment'>// This is an SQL Server spatial data type that supports points, lines and polygons expressed in GPS latitude and longitude according to the OpenODC standard */</span>
+</span>
+<span class='keyword'>each <span class='term'>Geography </span>is written as <span class='term'>Geography</span>;
+</span>
+<span class='keyword'>each <span class='term'>Address Line </span>is written as <span class='term'>String</span>(<span class='literal'>60</span>);</span>
+<span class='keyword'>each <span class='term'>Address </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'>each <span class='term'>City Name </span>is written as <span class='term'>String</span>(<span class='literal'>30</span>);</span>
+<span class='keyword'>each <span class='term'>City </span>[static] is identified by its <span class='term'>Name</span>;</span>
+<span class='keyword'>each <span class='term'>Postal Code </span>is written as <span class='term'>String</span>(<span class='literal'>15</span>);</span>
+<span class='keyword'><span class='term'>Address</span> <span class='linking'>has </span>one <span class='term'>Address Line</span> (as <span class='term'>Address Line1</span>);</span>
+<span class='keyword'><span class='term'>Address</span> <span class='linking'>has </span>at most one <span class='term'>second- Address Line</span> (as <span class='term'>Address Line2</span>);</span>
+<span class='keyword'><span class='term'>Address</span> <span class='linking'>is in </span>one <span class='term'>City</span>;	    <span class='comment'>// REVISIT: Field will be CityName not City</span>
+</span>
+<span class='keyword'><span class='term'>Address</span> <span class='linking'>has </span>one <span class='term'>Postal Code</span>;</span>
+<span class='keyword'><span class='term'>Address</span> <span class='linking'>is in </span>one <span class='term'>State Province</span>;</span>
+<span class='keyword'><span class='term'>Address</span> <span class='linking'>is in </span>at most one <span class='term'>Geography</span> (as <span class='term'>Spatial Location</span>);<span class='comment'>// Address has one Row GUID, Row GUID is of at most one Address;</span>
+<span class='comment'>// Address has one modified-Date;</span>
+</span>
+<span class='keyword'>each combination <span class='term'>Address Line</span>(1), <span class='term'>Address Line</span>(2), <span class='term'>City</span>, <span class='term'>Postal Code</span>, <span class='term'>State Province</span> occurs at most one time in
+    <span class='term'>Address</span> <span class='linking'>has </span><span class='term'>Address Line</span>(1),
+    <span class='term'>Address</span> <span class='linking'>has second </span><span class='term'>Address Line</span>(2),
+    <span class='term'>Address</span> <span class='linking'>is in </span><span class='term'>City</span>,
+    <span class='term'>Address</span> <span class='linking'>has </span><span class='term'>Postal Code</span>,
+    <span class='term'>Address</span> <span class='linking'>is in </span><span class='term'>State Province</span>;
+</span>
+<span class='keyword'>each <span class='term'>Business Entity </span>is identified by its <span class='term'>ID</span>;<span class='comment'>// Business Entity has one Row GUID, Row GUID is of at most one Business Entity;</span>
+<span class='comment'>// Business Entity has one modified-Date;</span>
+<span class='comment'>// SC = Store Contact, IN = Individual (retail) customer, SP = Sales person, EM = Employee (non-sales), VC = Vendor contact, GC = General contact</span>
+<span class='comment'>// Should be a reference table containing these descriptive strings</span>
+</span>
+<span class='keyword'>each <span class='term'>Person Type Code </span>is written as <span class='term'>Char</span>(<span class='literal'>2</span>) restricted to {<span class='literal'>'GC'</span>, <span class='literal'>'SP'</span>, <span class='literal'>'EM'</span>, <span class='literal'>'IN'</span>, <span class='literal'>'VC'</span>, <span class='literal'>'SC'</span>};</span>
+<span class='keyword'>each <span class='term'>Person Type </span>[static] is identified by its <span class='term'>Code</span>;</span>
+<span class='keyword'>each <span class='term'>Personal Title </span>is written as <span class='term'>String</span>(<span class='literal'>8</span>);</span>
+<span class='keyword'>each <span class='term'>Name Suffix </span>is written as <span class='term'>String</span>(<span class='literal'>10</span>);</span>
+<span class='keyword'>each <span class='term'>Email Promotion Preference </span>is written as <span class='term'>Integer</span> restricted to {<span class='literal'>0..2</span>}; <span class='comment'>// None, only from us, from partners also</span>
+</span>
+<span class='keyword'>each <span class='term'>Person </span>[separate] is a kind of <span class='term'>Business Entity</span>;</span>
+<span class='keyword'>each <span class='term'>Vendor </span>[separate] is a kind of <span class='term'>Business Entity</span>;</span>
+<span class='keyword'>each <span class='term'>Store </span>[separate] is a kind of <span class='term'>Business Entity</span>;</span>
+<span class='keyword'>for each <span class='term'>Business Entity</span> exactly one of these holds:
+    <span class='term'>Business Entity</span> <span class='linking'>is a </span><span class='term'>Person</span>,
+    <span class='term'>Business Entity</span> <span class='linking'>is a </span><span class='term'>Store</span>,
+    <span class='term'>Business Entity</span> <span class='linking'>is a </span><span class='term'>Vendor</span>;
+</span>
+<span class='keyword'>each <span class='term'>Person</span> <span class='linking'>is of </span>one <span class='term'>Person Type</span>;</span>
+<span class='keyword'>each <span class='term'>Person</span> (as <span class='term'>Name Style</span>) <span class='linking'>uses eastern name style</span>;</span>
+<span class='keyword'>each <span class='term'>Person</span> <span class='linking'>has </span>at most one <span class='term'>Personal Title</span> (as <span class='term'>Title</span>);</span>
+<span class='keyword'><span class='term'>Person</span> <span class='linking'>has </span>one <span class='term'>first-Name</span>, <span class='term'>first-Name</span> <span class='linking'>is of </span><span class='term'>Person</span>;</span>
+<span class='keyword'><span class='term'>Person</span> <span class='linking'>has </span>at most one <span class='term'>middle-Name</span>, <span class='term'>middle-Name</span> <span class='linking'>is of </span><span class='term'>Person</span>;</span>
+<span class='keyword'><span class='term'>Person</span> <span class='linking'>has </span>one <span class='term'>last-Name</span>, <span class='term'>last-Name</span> <span class='linking'>is of </span><span class='term'>Person</span>;</span>
+<span class='keyword'><span class='term'>Person</span> <span class='linking'>has </span>at most one <span class='term'>Name Suffix</span> (as <span class='term'>Suffix</span>);</span>
+<span class='keyword'><span class='term'>Person</span> <span class='linking'>has </span>one <span class='term'>Email Promotion Preference</span> (as <span class='term'>Email Promotion</span>);</span>
+<span class='keyword'>each <span class='term'>Additional Contact Info </span>is written as <span class='term'>XML</span>;	<span class='comment'>// (with xmlschema Additional Contact Info)</span>
+</span>
+<span class='keyword'>each <span class='term'>Demographics </span>is written as <span class='term'>XML</span>;		<span class='comment'>// (with xmlschema Demographics)</span>
+</span>
+<span class='keyword'><span class='term'>Person</span> <span class='linking'>has </span>at most one <span class='term'>Additional Contact Info</span>;</span>
+<span class='keyword'><span class='term'>Person</span> <span class='linking'>has </span>at most one <span class='term'>Demographics</span>;<span class='comment'>// Person has one Row GUID, Row GUID is of at most one Person;</span>
+<span class='comment'>// Person has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Business Entity Address </span>is where
+    some <span class='term'>Business Entity</span> <span class='linking'>uses </span>some <span class='term'>Address</span> <span class='linking'>as </span><span class='term'>Address Type</span>;<span class='comment'>// Business Entity Address has one Row GUID, Row GUID is of at most one Business Entity Address;</span>
+<span class='comment'>// Business Entity Address has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Contact Type </span>[static] is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Contact Type</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+    <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Contact Type</span>;<span class='comment'>// Contact Type has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Business Entity Contact </span>is where
+    some <span class='term'>Business Entity</span> <span class='linking'>appoints </span>some <span class='term'>Person</span> <span class='linking'>as </span><span class='term'>Contact Type</span>;<span class='comment'>// Business Entity Contact has one modified-Date;</span>
+<span class='comment'>// Business Entity Contact has one Row GUID, Row GUID is of at most one Business Entity Contact;</span>
+</span>
+<span class='keyword'>each <span class='term'>Email Address ID </span>is written as <span class='term'>ID</span>;</span>
+<span class='keyword'>each <span class='term'>Email Address </span>is identified by <span class='term'>Person</span> and <span class='term'>Email Address ID</span> where
+    <span class='term'>Email Address</span> <span class='linking'>is used by </span>one <span class='term'>Person</span>, <span class='term'>Person</span> <span class='linking'>uses </span><span class='term'>Email Address</span>,
+    <span class='term'>Email Address</span> <span class='linking'>has </span>one <span class='term'>Email Address ID</span>, <span class='term'>Email Address ID</span> <span class='linking'>is of </span><span class='term'>Email Address</span>;</span>
+<span class='keyword'><span class='term'>Email Address</span> <span class='linking'>has </span>one <span class='term'>Email Address Value</span> (as <span class='term'>EmailAddress</span>);
+</span>
+<span class='keyword'>each <span class='term'>Password </span>is identified by <span class='term'>Person</span> where
+    <span class='term'>Password</span> <span class='linking'>is used by </span>one <span class='term'>Person</span>,
+    <span class='term'>Person</span> <span class='linking'>uses </span>at most one <span class='term'>Password</span>;</span>
+<span class='keyword'>each <span class='term'>Password Hash </span>is written as <span class='term'>String</span>(<span class='literal'>128</span>);</span>
+<span class='keyword'>each <span class='term'>Password Salt </span>is written as <span class='term'>String</span>(<span class='literal'>10</span>);</span>
+<span class='keyword'><span class='term'>Password</span> <span class='linking'>has </span>one <span class='term'>Password Hash</span>;</span>
+<span class='keyword'><span class='term'>Password</span> <span class='linking'>has </span>one <span class='term'>Password Salt</span>;<span class='comment'>// Password has one modified-Date;</span>
+<span class='comment'>// Password has one Row GUID, Row GUID is of at most one Password;</span>
+</span>
+<span class='keyword'>each <span class='term'>Phone Number Type </span>[static] is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Phone Number Type</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+    <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Phone Number Type</span>;<span class='comment'>// Phone Number Type has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Person Phone </span>is where
+    some <span class='term'>Person</span> <span class='linking'>uses </span>some <span class='term'>Phone Number</span> <span class='linking'>of </span><span class='term'>Phone Number Type</span>;<span class='comment'>// Person Phone has one modified-Date;</span>
+<span class='comment'>////////////////////////////////////////////////////////////////////////////////</span>
+<span class='comment'>// topic Production;</span>
+</span>
+<span class='keyword'>each <span class='term'>Unit Measure Code </span>is written as <span class='term'>Char</span>(<span class='literal'>3</span>);</span>
+<span class='keyword'>each <span class='term'>Unit Measure </span>[static] is identified by its <span class='term'>Code</span>;</span>
+<span class='keyword'><span class='term'>Unit Measure</span> <span class='linking'>has </span>one <span class='term'>Name</span>, <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Unit Measure</span>;<span class='comment'>// Unit Measure has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Category </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Product Category</span> <span class='linking'>has </span>one <span class='term'>Name</span>, <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Product Category</span>;<span class='comment'>// Product Category has one modified-Date;</span>
+<span class='comment'>// Product Category has one Row GUID, Row GUID is of at most one Product Category;</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Subcategory </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Product Subcategory</span> <span class='linking'>has </span>one <span class='term'>Name</span>, <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Product Subcategory</span>;</span>
+<span class='keyword'><span class='term'>Product Subcategory</span> <span class='linking'>belongs to </span>one <span class='term'>Product Category</span>;<span class='comment'>// Product Subcategory has one modified-Date;</span>
+<span class='comment'>// Product Subcategory has one Row GUID, Row GUID is of at most one Product Subcategory;</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Description XML </span>is written as <span class='term'>XML</span>;	 <span class='comment'>// (with xmlschema Product Description)</span>
+</span>
+<span class='keyword'>each <span class='term'>Manufacturer Instructions </span>is written as <span class='term'>XML</span>;	 <span class='comment'>// (with xmlschema ManuInstructions)</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Model </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Product Model</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+    <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Product Model</span>;</span>
+<span class='keyword'><span class='term'>Product Model</span> <span class='linking'>is described by </span>at most one <span class='term'>Product Description XML</span> (as <span class='term'>Catalog Description</span>);</span>
+<span class='keyword'><span class='term'>Product Model</span> <span class='linking'>has </span>at most one <span class='term'>Manufacturer Instructions</span> (as <span class='term'>Instructions</span>);	<span class='comment'>// XML</span>
+<span class='comment'>// Product Model has one modified-Date;</span>
+<span class='comment'>// Product Model has one Row GUID, Row GUID is of at most one Product Model;</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Number </span>is written as <span class='term'>String</span>(<span class='literal'>25</span>);</span>
+<span class='keyword'>each <span class='term'>Color </span>is written as <span class='term'>String</span>(<span class='literal'>15</span>);</span>
+<span class='keyword'>each <span class='term'>Product Size </span>is written as <span class='term'>String</span>(<span class='literal'>5</span>);</span>
+<span class='keyword'>each <span class='term'>Product Weight </span>is written as <span class='term'>Measure</span>;</span>
+<span class='keyword'>each <span class='term'>Product Line Name </span>is written as <span class='term'>Char</span>(<span class='literal'>2</span>) restricted to {<span class='literal'>'R'</span>, <span class='literal'>'M'</span>, <span class='literal'>'T'</span>, <span class='literal'>'S'</span>}; <span class='comment'>// Road, Mountain, Touring, Standard</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Line </span>[static] is identified by its <span class='term'>Name</span>;</span>
+<span class='keyword'>each <span class='term'>Product Class </span>is written as <span class='term'>Char</span>(<span class='literal'>2</span>) restricted to {<span class='literal'>'H'</span>, <span class='literal'>'M'</span>, <span class='literal'>'L'</span>};	<span class='comment'>// High, medium, Low</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Style </span>is written as <span class='term'>Char</span>(<span class='literal'>2</span>) restricted to {<span class='literal'>'W'</span>, <span class='literal'>'M'</span>, <span class='literal'>'U'</span>};	<span class='comment'>// Womens, Mens, Universal</span>
+</span>
+<span class='keyword'>each <span class='term'>Product </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+    <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Product</span>;</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>has </span>one <span class='term'>Product Number</span>,
+    <span class='term'>Product Number</span> <span class='linking'>is of </span>at most one <span class='term'>Product</span>;
+</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>is of </span>at most one <span class='term'>Color</span>;</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>has </span>at most one <span class='term'>Product Size</span> (as <span class='term'>Size</span>);</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>size is in </span>at most one <span class='term'>size-Unit Measure</span>;</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>weight is in </span>at most one <span class='term'>weight-Unit Measure</span>;</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>has </span>at most one <span class='term'>Product Weight</span> (as <span class='term'>Weight</span>);</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>belongs to </span>at most one <span class='term'>Product Line</span>;</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>is of </span>at most one <span class='term'>Product Class</span> (as <span class='term'>Class</span>);</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>is of </span>at most one <span class='term'>Product Style</span> (as <span class='term'>Style</span>);</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>belongs to </span>at most one <span class='term'>Product Subcategory</span> (as <span class='term'>Product Subcategory</span>);</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>is of </span>at most one <span class='term'>Product Model</span> (as <span class='term'>Product Model</span>);
+</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>should be stocked at least in </span>one <span class='term'>minimum-Number</span> (as <span class='term'>Safety Stock Level</span>);</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>should be re-ordered when inventory drops below </span>one <span class='term'>minimum-Number</span> (as <span class='term'>Reorder Point</span>);</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>takes </span>one <span class='term'>Number</span> (as <span class='term'>Days To Manufacture</span>) <span class='linking'>of days to manufacture</span>;
+</span>
+<span class='keyword'><span class='term'>Product</span> (as <span class='term'>Finished Goods Flag</span>) <span class='linking'>is saleable</span>;</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>has </span>one <span class='term'>standard- cost Amount</span> (as <span class='term'>Standard Cost</span>);</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>has </span>one <span class='term'>list- price Amount</span> (as <span class='term'>List Price</span>);</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>was first available on </span>one <span class='term'>sell- start Date</span>;</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>is last available on </span>at most one <span class='term'>sell- end Date</span>;</span>
+<span class='keyword'><span class='term'>Product</span> <span class='linking'>was discontinued on </span>at most one <span class='term'>discontinued- Date</span>;<span class='comment'>// Product has one modified-Date;</span>
+<span class='comment'>// Product has one Row GUID, Row GUID is of at most one Product;</span>
+</span>
+<span class='keyword'>each <span class='term'>Illustration </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Illustration</span> <span class='linking'>has </span>one <span class='term'>diagram- XML</span> (as <span class='term'>Diagram</span>);<span class='comment'>// Illustration has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Model Illustration </span>is where
+    <span class='term'>Product Model</span> <span class='linking'>has </span><span class='term'>Illustration</span>;<span class='comment'>// Product Model Illustration has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Description Text </span>is written as <span class='term'>String</span>(<span class='literal'>400</span>);</span>
+<span class='keyword'>each <span class='term'>Product Description </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Product Description</span> <span class='linking'>has </span>one <span class='term'>Product Description Text</span> (as <span class='term'>Description</span>);<span class='comment'>// Product Description has one Row GUID, Row GUID is of at most one Product Description;</span>
+<span class='comment'>// Product Description has one modified-Date;</span>
+<span class='comment'>// Location is a manufacturing location</span>
+</span>
+<span class='keyword'>each <span class='term'>Location </span>is identified by its <span class='term'>ID</span>; <span class='comment'>// (with length 16)</span>
+</span>
+<span class='keyword'><span class='term'>Location</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+    <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Location</span>;</span>
+<span class='keyword'><span class='term'>Location</span> <span class='linking'>has </span>one <span class='term'>cost-smallmoney</span> (as <span class='term'>Cost Rate</span>);</span>
+<span class='keyword'>each <span class='term'>Hours2 </span>is written as <span class='term'>Decimal</span>(<span class='literal'>8</span>, <span class='literal'>2</span>);</span>
+<span class='keyword'><span class='term'>Location</span> <span class='linking'>has </span>one <span class='term'>work- capacity Hours2</span> (as <span class='term'>Availability</span>);   <span class='comment'>// Work capacity (in hours) of the manufacturing location</span>
+</span>
+<span class='keyword'>each <span class='term'>Bill Of Materials </span>is identified by its <span class='term'>ID</span> where
+    <span class='term'>Product</span> (as <span class='term'>Product Assembly</span>) <span class='linking'>includes </span><span class='term'>Product</span> (as <span class='term'>Component</span>) <span class='linking'>from </span><span class='term'>start-Date</span>;</span>
+<span class='keyword'><span class='term'>Bill Of Materials</span> <span class='linking'>is valid until </span>at most one <span class='term'>end-Date</span>;</span>
+<span class='keyword'><span class='term'>Bill Of Materials</span> <span class='linking'>has </span>one <span class='term'>Unit Measure</span>;</span>
+<span class='keyword'><span class='term'>Bill Of Materials</span> <span class='linking'>has </span>one <span class='term'>assembly- Measure</span> (as <span class='term'>Per Assembly Qty</span>);</span>
+<span class='keyword'>each <span class='term'>BOM Level </span>is written as <span class='term'>Integer</span>(<span class='literal'>16</span>);</span>
+<span class='keyword'><span class='term'>Bill Of Materials</span> <span class='linking'>has </span>one <span class='term'>BOM Level</span>;<span class='comment'>// Bill Of Materials has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Culture </span>[static] is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Culture</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+    <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Culture</span>;<span class='comment'>// Culture has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Model Product Description Culture </span>is where
+    <span class='term'>Product Model</span> <span class='linking'>has </span><span class='term'>Product Description</span> <span class='linking'>for </span><span class='term'>Culture</span>;<span class='comment'>// Product Model Product Description Culture has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Document ID </span>is written as a <span class='term'>hierarchyid</span>;</span>
+<span class='keyword'>each <span class='term'>Document </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Document</span> <span class='linking'>belongs to </span>at most one <span class='term'>parent-Document</span>;	<span class='comment'>// REVISIT: This is implicit in the hierarchyid</span>
+<span class='comment'>// Document is at DocumentLevel where DocumentLevel = Level(DocumentID) and DocumentID is of Document;</span>
+</span>
+<span class='keyword'>each <span class='term'>Document Title </span>is written as <span class='term'>String</span>(<span class='literal'>50</span>);</span>
+<span class='keyword'><span class='term'>Document</span> <span class='linking'>has </span>one <span class='term'>Document Title</span> (as <span class='term'>Title</span>);</span>
+<span class='keyword'><span class='term'>Document</span> <span class='linking'>is responsibility of </span>one <span class='term'>Employee</span> (as <span class='term'>Owner</span>);</span>
+<span class='keyword'>each <span class='term'>Document Status </span>is written as <span class='term'>Integer</span>(<span class='literal'>8</span>) restricted to {<span class='literal'>1..3</span>};</span>
+<span class='keyword'><span class='term'>Document</span> (as <span class='term'>Folder Flag</span>) <span class='linking'>is folder</span>;</span>
+<span class='keyword'>each <span class='term'>Document File Name </span>is written as <span class='term'>String</span>(<span class='literal'>400</span>);</span>
+<span class='keyword'><span class='term'>Document</span> <span class='linking'>has </span>one <span class='term'>Document File Name</span>;</span>
+<span class='keyword'>each <span class='term'>File Extension </span>is written as <span class='term'>String</span>(<span class='literal'>8</span>);</span>
+<span class='keyword'><span class='term'>Document</span> <span class='linking'>has </span>one <span class='term'>File Extension</span>;</span>
+<span class='keyword'>each <span class='term'>Document Revision </span>is written as <span class='term'>Char</span>(<span class='literal'>5</span>);</span>
+<span class='keyword'><span class='term'>Document</span> <span class='linking'>has </span>one <span class='term'>Document Revision</span>;</span>
+<span class='keyword'><span class='term'>Document Change Number </span>is written as <span class='term'>Integer</span>;</span>
+<span class='keyword'><span class='term'>Document</span> <span class='linking'>has </span>one <span class='term'>Document Change Number</span> (as <span class='term'>Change Number</span>);</span>
+<span class='keyword'><span class='term'>Document</span> <span class='linking'>has </span>one <span class='term'>Document Status</span> (as <span class='term'>Status</span>);	<span class='comment'>// 1='Pending approval', 2='Approved', 3='Obsolete'</span>
+</span>
+<span class='keyword'>each <span class='term'>Document Summary </span>is written as <span class='term'>Text</span>;</span>
+<span class='keyword'>each <span class='term'>Document Content </span>is written as <span class='term'>Text</span>;</span>
+<span class='keyword'><span class='term'>Document</span> <span class='linking'>has </span>at most one <span class='term'>Document Summary</span>;</span>
+<span class='keyword'><span class='term'>Document</span> <span class='linking'>has </span>at most one <span class='term'>Document Content</span> (as <span class='term'>Document</span>);<span class='comment'>// Document has one Row GUID, Row GUID is of at most one Document;</span>
+<span class='comment'>// Document has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Cost History </span>is where
+    <span class='term'>Product</span> <span class='linking'>was costed on </span><span class='term'>start-Date</span>;</span>
+<span class='keyword'><span class='term'>Product Cost History</span> <span class='linking'>is valid until </span>at most one <span class='term'>end-Date</span>;</span>
+<span class='keyword'><span class='term'>Product Cost History</span> <span class='linking'>has </span>one <span class='term'>Amount</span> (as <span class='term'>Standard Cost</span>);<span class='comment'>// Product Cost History has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Document </span>is where
+    <span class='term'>Product</span> <span class='linking'>is described by </span><span class='term'>Document</span>,
+    <span class='term'>Document</span> <span class='linking'>applies to </span><span class='term'>Product</span>;<span class='comment'>// Product Document has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Shelf </span>is written as <span class='term'>String</span>(<span class='literal'>10</span>);</span>
+<span class='keyword'>each <span class='term'>Bin </span>is written as <span class='term'>Integer</span>(<span class='literal'>8</span>);</span>
+<span class='keyword'>each <span class='term'>Product Inventory </span>is where
+    <span class='term'>Product</span> <span class='linking'>is available at </span><span class='term'>Location</span>;</span>
+<span class='keyword'><span class='term'>Product Inventory</span> <span class='linking'>is on </span>one <span class='term'>Shelf</span>;</span>
+<span class='keyword'><span class='term'>Product Inventory</span> <span class='linking'>is in </span>one <span class='term'>Bin</span>;</span>
+<span class='keyword'><span class='term'>Product Inventory</span> <span class='linking'>has </span>one <span class='term'>Count</span> (as <span class='term'>Quantity</span>);<span class='comment'>// Product Inventory has one Row GUID, Row GUID is of at most one Product Inventory;</span>
+<span class='comment'>// Product Inventory has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Product List Price History </span>is where
+    <span class='term'>Product</span> <span class='linking'>was priced on </span><span class='term'>start-Date</span>;</span>
+<span class='keyword'><span class='term'>Product List Price History</span> <span class='linking'>is valid until </span>at most one <span class='term'>end-Date</span>;</span>
+<span class='keyword'><span class='term'>Product List Price History</span> <span class='linking'>has </span>one <span class='term'>Amount</span> (as <span class='term'>List Price</span>);<span class='comment'>// Product List Price History has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Photo File Name </span>is written as <span class='term'>String</span>(<span class='literal'>50</span>);</span>
+<span class='keyword'>each <span class='term'>Product Photo </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Product Photo</span> <span class='linking'>has </span>at most one <span class='term'>thumb- nail Photo</span>;</span>
+<span class='keyword'><span class='term'>Product Photo</span> <span class='linking'>has </span>at most one <span class='term'>thumbnail- Photo File Name</span>;</span>
+<span class='keyword'><span class='term'>Product Photo</span> <span class='linking'>has </span>at most one <span class='term'>large- Photo</span>;</span>
+<span class='keyword'><span class='term'>Product Photo</span> <span class='linking'>has </span>at most one <span class='term'>large- Photo File Name</span>;<span class='comment'>// Product Photo has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Product Photo </span>is where
+    some <span class='term'>Product</span> <span class='linking'>has </span>some <span class='term'>Product Photo</span>;</span>
+<span class='keyword'><span class='term'>Product Product Photo</span> (as <span class='term'>Primary</span>) <span class='linking'>is primary</span>;<span class='comment'>// Product Product Photo has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Review </span>is identified by its <span class='term'>ID</span> where
+    <span class='term'>Product</span> <span class='linking'>was reviewed by </span><span class='term'>reviewer- Name</span> <span class='linking'>on </span>one <span class='term'>review- Date</span>;</span>
+<span class='keyword'><span class='term'>Product Review</span> <span class='linking'>has </span>one <span class='term'>Email Address Value</span> (as <span class='term'>EmailAddress</span>);</span>
+<span class='keyword'>each <span class='term'>Product Rating </span>is written as <span class='term'>Integer</span> restricted to {<span class='literal'>1..5</span>};</span>
+<span class='keyword'><span class='term'>Product Review</span> <span class='linking'>assigned </span>one <span class='term'>Product Rating</span> (as <span class='term'>Rating</span>);</span>
+<span class='keyword'>each <span class='term'>Product Review Comments </span>is written as <span class='term'>String</span>(<span class='literal'>3850</span>);</span>
+<span class='keyword'><span class='term'>Product Review</span> <span class='linking'>has </span>at most one <span class='term'>Product Review Comments</span> (as <span class='term'>Comments</span>);<span class='comment'>// Product Review has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Scrap Reason </span>[static] is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Scrap Reason</span> <span class='linking'>has </span>one <span class='term'>Name</span>, <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Scrap Reason</span>;<span class='comment'>// Scrap Reason has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Transaction ID </span>is written as an <span class='term'>ID</span>;    <span class='comment'>// (with startID 10000)</span>
+</span>
+<span class='keyword'>each <span class='term'>Reference Order ID </span>is written as <span class='term'>Integer</span>;</span>
+<span class='keyword'>each <span class='term'>Reference Order Line ID </span>is written as <span class='term'>Integer</span>;</span>
+<span class='keyword'>each <span class='term'>Transaction </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Transaction</span> <span class='linking'>applies to </span>one <span class='term'>Product</span>;</span>
+<span class='keyword'><span class='term'>Transaction</span> <span class='linking'>applies to </span>one <span class='term'>Reference Order ID</span>;</span>
+<span class='keyword'><span class='term'>Transaction</span> <span class='linking'>applies to </span>one <span class='term'>Reference Order Line ID</span>;</span>
+<span class='keyword'><span class='term'>Transaction</span> <span class='linking'>has </span>one <span class='term'>transaction-Date</span>;</span>
+<span class='keyword'><span class='term'>Transaction Type </span>is written as <span class='term'>Char</span>(<span class='literal'>1</span>);</span>
+<span class='keyword'><span class='term'>Transaction</span> <span class='linking'>has </span>one <span class='term'>Transaction Type</span>;</span>
+<span class='keyword'><span class='term'>Transaction</span> <span class='linking'>has </span>one <span class='term'>Count</span> (as <span class='term'>Quantity</span>);</span>
+<span class='keyword'><span class='term'>Transaction</span> <span class='linking'>has </span>one <span class='term'>Amount</span> (as <span class='term'>Actual Cost</span>);<span class='comment'>// Transaction has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Transaction History </span>[partitioned] is a kind of <span class='term'>Transaction</span>;<span class='comment'>// REVISIT: ID of Archive table should not be auto-assigned</span>
+</span>
+<span class='keyword'>each <span class='term'>Transaction History Archive </span>[partitioned] is a kind of <span class='term'>Transaction</span>;</span>
+<span class='keyword'>either <span class='term'>Transaction</span> <span class='linking'>is a </span><span class='term'>Transaction History</span> or <span class='term'>Transaction</span> <span class='linking'>is a </span><span class='term'>Transaction History Archive</span> but not both;
+</span>
+<span class='keyword'>each <span class='term'>Work Order </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Work Order</span> <span class='linking'>is for </span>one <span class='term'>Product</span>;</span>
+<span class='keyword'><span class='term'>Work Order</span> <span class='linking'>is for </span>one <span class='term'>ordered- Count</span> (as <span class='term'>Order Qty</span>);<span class='comment'>/* REVISIT: Derived Fact Type
+Stocked Qty is written as Count;
+Work Order has Stocked Qty where
+    Work Order has Order Qty,
+    Work Order has Stocked Qty,
+    Stocked Qty = Order Qty - Scrapped Qty,
+*/</span>
+</span>
+<span class='keyword'><span class='term'>Work Order</span> <span class='linking'>has </span>one <span class='term'>start-Date</span>;</span>
+<span class='keyword'><span class='term'>Work Order</span> <span class='linking'>is valid until </span>at most one <span class='term'>end-Date</span>;</span>
+<span class='keyword'><span class='term'>Work Order</span> <span class='linking'>has </span>one <span class='term'>due-Date</span>;</span>
+<span class='keyword'><span class='term'>Work Order</span> <span class='linking'>has </span>one <span class='term'>scrapped- Count</span> (as <span class='term'>Scrapped Qty</span>);</span>
+<span class='keyword'><span class='term'>Work Order</span> <span class='linking'>has </span>at most one <span class='term'>Scrap Reason</span>;<span class='comment'>// Work Order has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Operation Sequence </span>is written as an <span class='term'>Integer</span>(<span class='literal'>16</span>);</span>
+<span class='keyword'>each <span class='term'>Resource Hours </span>is written as <span class='term'>Decimal</span>(<span class='literal'>9</span>,<span class='literal'>4</span>);</span>
+<span class='keyword'>each <span class='term'>Work Order Routing </span>is where
+    <span class='term'>Work Order</span> <span class='linking'>activity on </span><span class='term'>Product</span> <span class='linking'>involves </span><span class='term'>Operation Sequence</span>;</span>
+<span class='keyword'><span class='term'>Work Order Routing</span> <span class='linking'>is performed at </span>one <span class='term'>Location</span>,
+    <span class='term'>Location</span> <span class='linking'>performed </span><span class='term'>Work Order Routing</span>;</span>
+<span class='keyword'><span class='term'>Work Order Routing</span> <span class='linking'>has </span>one <span class='term'>scheduled- start Date</span>;</span>
+<span class='keyword'><span class='term'>Work Order Routing</span> <span class='linking'>has </span>one <span class='term'>scheduled- end Date</span>;</span>
+<span class='keyword'><span class='term'>Work Order Routing</span> <span class='linking'>has </span>at most one <span class='term'>actual- start Date</span>;</span>
+<span class='keyword'><span class='term'>Work Order Routing</span> <span class='linking'>has </span>at most one <span class='term'>actual- end Date</span>;</span>
+<span class='keyword'><span class='term'>Work Order Routing</span> <span class='linking'>took </span>at most one <span class='term'>actual- Resource Hours</span>;</span>
+<span class='keyword'><span class='term'>Work Order Routing</span> <span class='linking'>is anticipated to cost </span>one <span class='term'>Amount</span> (as <span class='term'>Planned Cost</span>);</span>
+<span class='keyword'><span class='term'>Work Order Routing</span> <span class='linking'>cost </span>at most one <span class='term'>Amount</span> (as <span class='term'>Actual Cost</span>);<span class='comment'>// Work Order Routing has one modified-Date;</span>
+<span class='comment'>////////////////////////////////////////////////////////////////////////////////</span>
+<span class='comment'>// topic Purchasing;</span>
+</span>
+<span class='keyword'><span class='term'>Vendor</span> <span class='linking'>has </span>one <span class='term'>Account Number</span>,
+     <span class='term'>Account Number</span> <span class='linking'>is of </span>at most one <span class='term'>Vendor</span>;</span>
+<span class='keyword'><span class='term'>Vendor</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+     <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Vendor</span>;</span>
+<span class='keyword'>each <span class='term'>Credit Rating </span>is written as <span class='term'>tinyint</span>;</span>
+<span class='keyword'><span class='term'>Vendor</span> <span class='linking'>has </span>one <span class='term'>Credit Rating</span>;</span>
+<span class='keyword'><span class='term'>Vendor</span> (as <span class='term'>Preferred Vendor Status</span>) <span class='linking'>is preferred</span>;</span>
+<span class='keyword'><span class='term'>Vendor</span> (as <span class='term'>Active Flag</span>) <span class='linking'>is active</span>;</span>
+<span class='keyword'><span class='term'>Vendor</span> <span class='linking'>has </span>at most one <span class='term'>purchasing- web service URL</span>;<span class='comment'>// Vendor has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Product Vendor </span>is where
+    some <span class='term'>Product</span> <span class='linking'>is sourced from </span>some <span class='term'>Vendor</span>;</span>
+<span class='keyword'><span class='term'>Product Vendor</span> <span class='linking'>averages </span>one <span class='term'>Count</span> (as <span class='term'>Average Lead Time</span>) <span class='linking'>days to deliver</span>;</span>
+<span class='keyword'><span class='term'>Product Vendor</span> <span class='linking'>asks </span>one <span class='term'>Amount</span> (as <span class='term'>Standard Price</span>);</span>
+<span class='keyword'><span class='term'>Product Vendor</span> <span class='linking'>was paid </span>at most one <span class='term'>Amount</span> (as <span class='term'>Last Receipt Cost</span>);</span>
+<span class='keyword'><span class='term'>Product Vendor</span> <span class='linking'>was paid on </span>at most one <span class='term'>last- receipt Date</span>;</span>
+<span class='keyword'><span class='term'>Product Vendor</span> <span class='linking'>has </span>one <span class='term'>minimum- Count</span> (as <span class='term'>Min Order Qty</span>);</span>
+<span class='keyword'><span class='term'>Product Vendor</span> <span class='linking'>has </span>one <span class='term'>maximum- Count</span> (as <span class='term'>Max Order Qty</span>);</span>
+<span class='keyword'><span class='term'>Product Vendor</span> <span class='linking'>has </span>one <span class='term'>outstanding- Count</span> (as <span class='term'>On Order Qty</span>);</span>
+<span class='keyword'><span class='term'>Product Vendor</span> <span class='linking'>has </span>one <span class='term'>Unit Measure</span>;<span class='comment'>// Product Vendor has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Ship Method </span>[static] is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Ship Method</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+     <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Ship Method</span>;</span>
+<span class='keyword'><span class='term'>Ship Method</span> <span class='linking'>has </span>one <span class='term'>base- Amount</span> (as <span class='term'>Ship Base</span>);</span>
+<span class='keyword'><span class='term'>Ship Method</span> <span class='linking'>has </span>one <span class='term'>rate- Amount</span> (as <span class='term'>Ship Rate</span>);<span class='comment'>// Ship Method has one Row GUID, Row GUID is of at most one Ship Method;</span>
+<span class='comment'>// Ship Method has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Purchase Order Status Code </span>is written as <span class='term'>Integer</span>(<span class='literal'>8</span>) restricted to {<span class='literal'>1..8</span>};</span>
+<span class='keyword'>each <span class='term'>Purchase Order Status Text </span>is written as <span class='term'>String</span>(<span class='literal'>15</span>);</span>
+<span class='keyword'>each <span class='term'>Purchase Order Status </span>[static] is identified by its <span class='term'>Code</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order Status</span> <span class='linking'>is described by </span>one <span class='term'>Purchase Order Status Text</span>,
+    <span class='term'>Purchase Order Status Text</span> <span class='linking'>is of </span>at most one <span class='term'>Purchase Order Status</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order Status</span> <span class='literal'>1 </span><span class='linking'>is described by </span><span class='term'>Purchase Order Status Text</span> <span class='literal'>'Pending'</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order Status</span> <span class='literal'>2 </span><span class='linking'>is described by </span><span class='term'>Purchase Order Status Text</span> <span class='literal'>'Approved'</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order Status</span> <span class='literal'>3 </span><span class='linking'>is described by </span><span class='term'>Purchase Order Status Text</span> <span class='literal'>'Rejected'</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order Status</span> <span class='literal'>4 </span><span class='linking'>is described by </span><span class='term'>Purchase Order Status Text</span> <span class='literal'>'Complete'</span>;
+</span>
+<span class='keyword'>each <span class='term'>Purchase Order Number </span>is written as an <span class='term'>Order Number</span>;</span>
+<span class='keyword'>each <span class='term'>Purchase Order </span>is identified by its <span class='term'>ID</span>;	<span class='comment'>// Wrongly called Purchase Order Header in original</span>
+</span>
+<span class='keyword'><span class='term'>Purchase Order</span> <span class='linking'>has </span>one <span class='term'>Purchase Order Number</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order</span> <span class='linking'>has </span>one <span class='term'>Revision Number</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order</span> <span class='linking'>has </span>one <span class='term'>Purchase Order Status</span> (as <span class='term'>Status</span>);</span>
+<span class='keyword'><span class='term'>Purchase Order</span> <span class='linking'>was made by </span>one <span class='term'>Employee</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order</span> <span class='linking'>was placed with </span>one <span class='term'>Vendor</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order</span> <span class='linking'>requests </span>one <span class='term'>Ship Method</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order</span> <span class='linking'>was made on </span>one <span class='term'>order- Date</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order</span> <span class='linking'>was shipped on </span>at most one <span class='term'>ship- Date</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order</span> <span class='linking'>is worth </span>one <span class='term'>Amount</span> (as <span class='term'>Sub Total</span>);</span>
+<span class='keyword'><span class='term'>Purchase Order</span> <span class='linking'>includes </span>one <span class='term'>tax- Amount</span> (as <span class='term'>Tax Amt</span>);</span>
+<span class='keyword'><span class='term'>Purchase Order</span> <span class='linking'>freight costs </span>one <span class='term'>Amount</span> (as <span class='term'>Freight</span>);<span class='comment'>// Purchase Order totals Amount (as Total Due) where Total Due = Sub Total + Tax Amt + Freight;</span>
+<span class='comment'>// Purchase Order has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Purchase Order Detail ID </span>is written as an <span class='term'>ID</span>;</span>
+<span class='keyword'>each <span class='term'>Purchase Order Detail </span>is identified by <span class='term'>Purchase Order</span> and <span class='term'>Purchase Order Detail ID</span> where
+    <span class='term'>Purchase Order</span> <span class='linking'>includes </span><span class='term'>Purchase Order Detail</span>,
+    <span class='term'>Purchase Order Detail</span> <span class='linking'>belongs to </span>one <span class='term'>Purchase Order</span>,
+    <span class='term'>Purchase Order Detail</span> <span class='linking'>has </span>one <span class='term'>Purchase Order Detail ID</span>,
+    <span class='term'>Purchase Order Detail ID</span> <span class='linking'>is of </span><span class='term'>Purchase Order Detail</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order Detail</span> <span class='linking'>has </span>one <span class='term'>due-Date</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order Detail</span> <span class='linking'>is for </span>one <span class='term'>Count</span> (as <span class='term'>Order Qty</span>);</span>
+<span class='keyword'><span class='term'>Purchase Order Detail</span> <span class='linking'>is for </span>one <span class='term'>Product</span>;</span>
+<span class='keyword'><span class='term'>Purchase Order Detail</span> <span class='linking'>costs </span>one <span class='term'>unit-Amount</span> (as <span class='term'>Unit Price</span>);<span class='comment'>// Purchase Order Detail has one line- total Amount where ...</span>
+</span>
+<span class='keyword'><span class='term'>Purchase Order Detail</span> <span class='linking'>has </span>one <span class='term'>received- Measure</span> (as <span class='term'>Received Qty</span>);</span>
+<span class='keyword'><span class='term'>Purchase Order Detail</span> <span class='linking'>has </span>one <span class='term'>rejected- Measure</span> (as <span class='term'>Rejected Qty</span>);<span class='comment'>// Purchase Order Detail has one stocked- Measure where ...</span>
+<span class='comment'>// Purchase Order Detail has one modified-Date;</span>
+<span class='comment'>////////////////////////////////////////////////////////////////////////////////</span>
+<span class='comment'>// topic Sales;</span>
+</span>
+<span class='keyword'>each <span class='term'>Card Type </span>is written as <span class='term'>String</span>(<span class='literal'>50</span>);</span>
+<span class='keyword'>each <span class='term'>Card Number </span>is written as <span class='term'>String</span>(<span class='literal'>25</span>);</span>
+<span class='keyword'>each <span class='term'>Expiry Month </span>is written as <span class='term'>tinyint</span>;</span>
+<span class='keyword'>each <span class='term'>Expiry Year </span>is written as <span class='term'>smallint</span>;</span>
+<span class='keyword'>each <span class='term'>Credit Card </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Credit Card</span> <span class='linking'>has </span>one <span class='term'>Card Type</span>;</span>
+<span class='keyword'><span class='term'>Credit Card</span> <span class='linking'>has </span>one <span class='term'>Card Number</span>, <span class='term'>Card Number</span> <span class='linking'>is of </span>at most one <span class='term'>Credit Card</span>;</span>
+<span class='keyword'><span class='term'>Credit Card</span> <span class='linking'>has </span>one <span class='term'>Expiry Month</span> (as <span class='term'>Exp Month</span>);</span>
+<span class='keyword'><span class='term'>Credit Card</span> <span class='linking'>has </span>one <span class='term'>Expiry Year</span> (as <span class='term'>Exp Year</span>);<span class='comment'>// Credit Card has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Currency Code </span>is written as a <span class='term'>Char</span>(<span class='literal'>3</span>);</span>
+<span class='keyword'>each <span class='term'>Currency </span>is identified by its <span class='term'>Code</span>;</span>
+<span class='keyword'><span class='term'>Currency</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+     <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Currency</span>;<span class='comment'>// Currency has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Country Region Currency </span>[static] is where
+    <span class='term'>Country Region</span> <span class='linking'>uses </span><span class='term'>Currency</span>;<span class='comment'>// Country Region Currency has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Currency Rate </span>is identified by its <span class='term'>ID</span> where
+    <span class='term'>from-Currency</span> <span class='linking'>converts to </span><span class='term'>to-Currency</span> <span class='linking'>on </span><span class='term'>Date</span> (as <span class='term'>Currency Rate Date</span>);    <span class='comment'>// Link fact type readings are not yet supported by the CQL compiler:</span>
+    <span class='comment'>// Currency Rate applies at one currency- rate Date,</span>
+    <span class='comment'>// Currency Rate converts one from-Currency,</span>
+    <span class='comment'>// Currency Rate converts one to-Currency;</span>
+</span>
+<span class='keyword'><span class='term'>Currency Rate</span> <span class='linking'>applies at </span>one <span class='term'>average-Amount</span> (as <span class='term'>Average Rate</span>);</span>
+<span class='keyword'><span class='term'>Currency Rate</span> <span class='linking'>has </span>one <span class='term'>end- of day Amount</span> (as <span class='term'>End Of Day Rate</span>);<span class='comment'>// Currency Rate has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Territory ID </span>is written as an <span class='term'>ID</span>;</span>
+<span class='keyword'>each <span class='term'>Sales Territory </span>is identified by <span class='term'>Territory ID</span> where
+    <span class='term'>Sales Territory</span> <span class='linking'>has </span>one <span class='term'>Territory ID</span>,
+    <span class='term'>Territory ID</span> <span class='linking'>is of </span>at most one <span class='term'>Sales Territory</span>;</span>
+<span class='keyword'><span class='term'>Sales Territory</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+    <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Sales Territory</span>;</span>
+<span class='keyword'><span class='term'>Sales Territory</span> <span class='linking'>covers </span><span class='term'>State Province</span>,
+    <span class='term'>State Province</span> <span class='linking'>is in </span>one <span class='term'>Sales Territory</span>;  <span class='comment'>// REVISIT: (as Territory),</span>
+</span>
+<span class='keyword'><span class='term'>Sales Territory Group </span>is identified by its <span class='term'>Name</span>;</span>
+<span class='keyword'><span class='term'>Sales Territory</span> <span class='linking'>is in </span>one <span class='term'>Sales Territory Group</span> (as <span class='term'>Group</span>);</span>
+<span class='keyword'><span class='term'>Sales Territory</span> <span class='linking'>sold </span>one <span class='term'>Amount</span> (as <span class='term'>Sales YTD</span>) <span class='linking'>this year</span>;</span>
+<span class='keyword'><span class='term'>Sales Territory</span> <span class='linking'>sold </span>one <span class='term'>Amount</span> (as <span class='term'>Sales Last Year</span>) <span class='linking'>last year</span>;</span>
+<span class='keyword'><span class='term'>Sales Territory</span> <span class='linking'>cost </span>one <span class='term'>Amount</span> (as <span class='term'>Cost YTD</span>) <span class='linking'>this year</span>;</span>
+<span class='keyword'><span class='term'>Sales Territory</span> <span class='linking'>cost </span>one <span class='term'>Amount</span> (as <span class='term'>Cost Last Year</span>) <span class='linking'>last year</span>;<span class='comment'>// Sales Territory has one Row GUID, Row GUID is of at most one Sales Territory;</span>
+<span class='comment'>// Sales Territory has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Sales Person </span>[separate] is a kind of <span class='term'>Employee</span>;</span>
+<span class='keyword'><span class='term'>Sales Person</span> <span class='linking'>is assigned to </span>at most one <span class='term'>Sales Territory</span>; <span class='comment'>// REVISIT: (as Territory);</span>
+</span>
+<span class='keyword'><span class='term'>Sales Person</span> <span class='linking'>should sell </span>at most one <span class='term'>quota- Amount</span> (as <span class='term'>Sales Quota</span>);</span>
+<span class='keyword'><span class='term'>Sales Person</span> <span class='linking'>may receive </span>one <span class='term'>bonus- Amount</span> (as <span class='term'>Bonus</span>);</span>
+<span class='keyword'><span class='term'>Sales Person</span> <span class='linking'>receives </span>one <span class='term'>commission- Percentage</span> (as <span class='term'>Commission Pct</span>);</span>
+<span class='keyword'><span class='term'>Sales Person</span> <span class='linking'>has sold </span>one <span class='term'>Amount</span> (as <span class='term'>Sales YTD</span>) <span class='linking'>this year</span>;</span>
+<span class='keyword'><span class='term'>Sales Person</span> <span class='linking'>sold </span>one <span class='term'>Amount</span> (as <span class='term'>Sales Last Year</span>) <span class='linking'>last year</span>;<span class='comment'>// Sales Person has one Row GUID, Row GUID is of at most one Sales Person;</span>
+<span class='comment'>// Sales Person has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Sales Person Quota History </span>is where
+    <span class='term'>Sales Person</span> <span class='linking'>had quota to </span><span class='term'>quota-Date</span> <span class='linking'>of </span>one <span class='term'>Amount</span> (as <span class='term'>Sales Quota</span>);<span class='comment'>// Sales Person Quota History has one Row GUID, Row GUID is of at most one Sales Person Quota History;</span>
+<span class='comment'>// Sales Person Quota History has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Sales Territory History </span>is where
+    some <span class='term'>Sales Person</span> <span class='linking'>was assigned on </span><span class='term'>start-Date</span> <span class='linking'>to </span>some <span class='term'>Sales Territory</span>, <span class='comment'>// REVISIT: (as Territory),</span>
+    that <span class='term'>Sales Person</span> <span class='linking'>worked </span>that <span class='term'>Sales Territory</span> <span class='linking'>from </span><span class='term'>start-Date</span>,
+    that <span class='term'>Sales Territory</span> <span class='linking'>was worked by </span>that <span class='term'>Sales Person</span> <span class='linking'>from </span><span class='term'>start-Date</span>;</span>
+<span class='keyword'><span class='term'>Sales Territory History</span> <span class='linking'>is valid until </span>at most one <span class='term'>end-Date</span>;<span class='comment'>// Sales Territory History has one Row GUID, Row GUID is of at most one Sales Territory History</span>
+<span class='comment'>// Sales Territory History has one modified-Date;</span>
+</span>
+<span class='keyword'><span class='term'>Store</span> <span class='linking'>has </span>one <span class='term'>Name</span>, <span class='term'>Name</span> <span class='linking'>is of </span><span class='term'>Store</span>; <span class='comment'>// Store names are not unique</span>
+</span>
+<span class='keyword'><span class='linking'>sales to </span><span class='term'>Store</span> <span class='linking'>are managed by </span>at most one <span class='term'>Sales Person</span>;</span>
+<span class='keyword'>each <span class='term'>Store Survey </span>is written as <span class='term'>XML</span>;	 <span class='comment'>// (with xmlschema Store Survey)</span>
+</span>
+<span class='keyword'><span class='term'>Store</span> <span class='linking'>has </span>at most one <span class='term'>Store Survey</span> (as <span class='term'>Demographics</span>);<span class='comment'>// Store has one Row GUID, Row GUID is of at most one Store;</span>
+<span class='comment'>// Store has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Customer </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Customer</span> <span class='linking'>is </span>at most one <span class='term'>Person</span>;</span>
+<span class='keyword'><span class='term'>Customer</span> <span class='linking'>is </span>at most one <span class='term'>Store</span>;</span>
+<span class='keyword'>either <span class='term'>Customer</span> <span class='linking'>is </span><span class='term'>Person</span> or <span class='term'>Customer</span> <span class='linking'>is </span><span class='term'>Store</span> but not both;</span>
+<span class='keyword'><span class='term'>Customer</span> <span class='linking'>belongs to </span>at most one <span class='term'>Sales Territory</span>;</span>
+<span class='keyword'><span class='term'>Account Number </span>is written as <span class='term'>String</span>(<span class='literal'>16</span>);</span>
+<span class='keyword'><span class='term'>Customer</span> <span class='linking'>has </span>one <span class='term'>Account Number</span>,
+    <span class='term'>Account Number</span> <span class='linking'>is of </span>at most one <span class='term'>Customer</span>;<span class='comment'>// Customer has Account Number where Customer has Customer ID and Account Number = 'AW' + ZeroPad(Customer ID);</span>
+<span class='comment'>// Customer has one Row GUID, Row GUID is of at most one Customer;</span>
+<span class='comment'>// Customer has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Person Credit Card </span>is where
+    some <span class='term'>Person</span> <span class='linking'>uses </span>some <span class='term'>Credit Card</span>;<span class='comment'>// Person Credit Card has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Special Offer Description </span>is written as <span class='term'>Description</span>(<span class='literal'>255</span>);</span>
+<span class='keyword'><span class='term'>Special Offer Type </span>is written as <span class='term'>String</span>(<span class='literal'>50</span>);</span>
+<span class='keyword'><span class='term'>Special Offer Category </span>is written as <span class='term'>String</span>(<span class='literal'>50</span>);</span>
+<span class='keyword'>each <span class='term'>Special Offer </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Special Offer</span> <span class='linking'>has </span>one <span class='term'>Special Offer Description</span> (as <span class='term'>Description</span>);</span>
+<span class='keyword'><span class='term'>Special Offer</span> <span class='linking'>has </span>one <span class='term'>discount-Percentage</span> (as <span class='term'>Discount Pct</span>);</span>
+<span class='keyword'><span class='term'>Special Offer</span> <span class='linking'>is of </span>one <span class='term'>Special Offer Type</span> (as <span class='term'>Type</span>);</span>
+<span class='keyword'><span class='term'>Special Offer</span> <span class='linking'>belongs to </span>one <span class='term'>Special Offer Category</span> (as <span class='term'>Category</span>);</span>
+<span class='keyword'><span class='term'>Special Offer</span> <span class='linking'>starts on </span>one <span class='term'>start-Date</span>;</span>
+<span class='keyword'><span class='term'>Special Offer</span> <span class='linking'>is valid until </span>one <span class='term'>end-Date</span>;</span>
+<span class='keyword'><span class='term'>Special Offer</span> <span class='linking'>applies to </span>one <span class='term'>min-Count</span> (as <span class='term'>Min Qty</span>);</span>
+<span class='keyword'><span class='term'>Special Offer</span> <span class='linking'>applies to </span>one <span class='term'>max-Count</span> (as <span class='term'>Max Qty</span>);<span class='comment'>// Special Offer has one Row GUID, Row GUID is of at most one Special Offer;</span>
+<span class='comment'>// Special Offer has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Special Offer Product </span>is where
+    some <span class='term'>Special Offer</span> <span class='linking'>includes </span>at least one <span class='term'>Product</span>;<span class='comment'>// Special Offer Product has one Row GUID, Row GUID is of at most one Special Offer Product;</span>
+<span class='comment'>// Special Offer Product has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Sales Order Status Code </span>is written as <span class='term'>Integer</span>(<span class='literal'>8</span>) restricted to {<span class='literal'>1..8</span>};</span>
+<span class='keyword'>each <span class='term'>Sales Order Status Text </span>is written as <span class='term'>String</span>(<span class='literal'>15</span>);</span>
+<span class='keyword'>each <span class='term'>Sales Order Status </span>[static] is identified by its <span class='term'>Code</span>;</span>
+<span class='keyword'><span class='term'>Sales Order Status</span> <span class='linking'>is described by </span>one <span class='term'>Sales Order Status Text</span>,
+    <span class='term'>Sales Order Status Text</span> <span class='linking'>is of </span>at most one <span class='term'>Sales Order Status</span>;
+</span>
+<span class='keyword'><span class='term'>Sales Order Status</span> <span class='literal'>1 </span><span class='linking'>is described by </span><span class='term'>Sales Order Status Text</span> <span class='literal'>'In process'</span>;</span>
+<span class='keyword'><span class='term'>Sales Order Status</span> <span class='literal'>2 </span><span class='linking'>is described by </span><span class='term'>Sales Order Status Text</span> <span class='literal'>'Approved'</span>;</span>
+<span class='keyword'><span class='term'>Sales Order Status</span> <span class='literal'>3 </span><span class='linking'>is described by </span><span class='term'>Sales Order Status Text</span> <span class='literal'>'Backordered'</span>;</span>
+<span class='keyword'><span class='term'>Sales Order Status</span> <span class='literal'>4 </span><span class='linking'>is described by </span><span class='term'>Sales Order Status Text</span> <span class='literal'>'Rejected'</span>;</span>
+<span class='keyword'><span class='term'>Sales Order Status</span> <span class='literal'>5 </span><span class='linking'>is described by </span><span class='term'>Sales Order Status Text</span> <span class='literal'>'Shipped'</span>;</span>
+<span class='keyword'><span class='term'>Sales Order Status</span> <span class='literal'>6 </span><span class='linking'>is described by </span><span class='term'>Sales Order Status Text</span> <span class='literal'>'Cancelled'</span>;
+</span>
+<span class='keyword'>each <span class='term'>Sales Order </span>is identified by its <span class='term'>ID</span>;   <span class='comment'>// Wrongly called Sales Order Header in original</span>
+</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>has </span>one <span class='term'>Revision Number</span>;</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>was ordered on </span>one <span class='term'>order-Date</span>;</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>should be shipped by </span>one <span class='term'>due-Date</span>;</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>was shipped on </span>at most one <span class='term'>ship-Date</span>;</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>has </span>one <span class='term'>Sales Order Status</span> (as <span class='term'>Status</span>);</span>
+<span class='keyword'><span class='term'>Sales Order</span> (as <span class='term'>Online Order Flag</span>) <span class='linking'>was entered online</span>;</span>
+<span class='keyword'>each <span class='term'>Sales Order Number </span>is written as an <span class='term'>Order Number</span>; <span class='comment'>// matching 'SO0*[1-9][0-9]*';</span>
+</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>has </span>one <span class='term'>Sales Order Number</span>,
+    <span class='term'>Sales Order Number</span> <span class='linking'>is of </span>at most one <span class='term'>Sales Order</span>;	<span class='comment'>// where ... 'SO' + </span>
+</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>corresponds to </span>at most one <span class='term'>customers- Purchase Order Number</span> (as <span class='term'>Purchase Order Number</span>);</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>is on </span>at most one <span class='term'>customers- Account Number</span> (as <span class='term'>Account Number</span>);</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>is from </span>one <span class='term'>Customer</span>;</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>was taken by </span>at most one <span class='term'>Sales Person</span>;</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>is assigned to </span>at most one <span class='term'>Sales Territory</span>; <span class='comment'>// (as Territory);</span>
+</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>has </span>one <span class='term'>bill- to Address</span>;</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>has </span>one <span class='term'>ship- to Address</span>;</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>has </span>one <span class='term'>Ship Method</span>;</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>bills </span>at most one <span class='term'>Credit Card</span>;</span>
+<span class='keyword'>each <span class='term'>Credit Card Approval Code </span>is written as <span class='term'>String</span>(<span class='literal'>15</span>);</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>has </span>at most one <span class='term'>Credit Card Approval Code</span>;</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>converts currency at </span>at most one <span class='term'>Currency Rate</span>;</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>is worth </span>one <span class='term'>Amount</span> (as <span class='term'>Sub Total</span>);</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>includes </span>one <span class='term'>tax- Amount</span> (as <span class='term'>Tax Amt</span>);</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>freight costs </span>one <span class='term'>Amount</span> (as <span class='term'>Freight</span>);<span class='comment'>// Sales Order totals Amount (as Total Due) where Total Due = Sub Total + Tax Amt + Freight;</span>
+</span>
+<span class='keyword'>each <span class='term'>Sales Order Comment </span>is written as <span class='term'>String</span>(<span class='literal'>128</span>);</span>
+<span class='keyword'><span class='term'>Sales Order</span> <span class='linking'>has </span>at most one <span class='term'>Sales Order Comment</span>;<span class='comment'>// Sales Order has one Row GUID, Row GUID is of at most one Sales Order;</span>
+<span class='comment'>// Sales Order has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Sales Order Detail ID </span>is written as an <span class='term'>ID</span>;</span>
+<span class='keyword'>each <span class='term'>Sales Order Detail </span>is identified by <span class='term'>Sales Order</span> and <span class='term'>Sales Order Detail ID</span> where
+    <span class='term'>Sales Order</span> <span class='linking'>includes </span><span class='term'>Sales Order Detail</span>,
+    <span class='term'>Sales Order Detail</span> <span class='linking'>belongs to </span>one <span class='term'>Sales Order</span>,
+    <span class='term'>Sales Order Detail</span> <span class='linking'>has </span>one <span class='term'>Sales Order Detail ID</span>,
+    <span class='term'>Sales Order Detail ID</span> <span class='linking'>is of </span><span class='term'>Sales Order Detail</span>;</span>
+<span class='keyword'><span class='term'>Carrier Tracking Number </span>is written as <span class='term'>String</span>(<span class='literal'>25</span>);</span>
+<span class='keyword'><span class='term'>Sales Order Detail</span> <span class='linking'>has </span>at most one <span class='term'>Carrier Tracking Number</span>;</span>
+<span class='keyword'><span class='term'>Sales Order Detail</span> <span class='linking'>is for </span>one <span class='term'>Count</span> (as <span class='term'>Order Qty</span>);</span>
+<span class='keyword'><span class='term'>Sales Order Detail</span> <span class='linking'>is for </span>one <span class='term'>Product</span>;</span>
+<span class='keyword'><span class='term'>Sales Order Detail</span> <span class='linking'>applies </span>at most one <span class='term'>Special Offer</span>;</span>
+<span class='keyword'><span class='term'>Sales Order Detail</span> <span class='linking'>has </span>one <span class='term'>unit-Amount</span> (as <span class='term'>Unit Price</span>);</span>
+<span class='keyword'><span class='term'>Sales Order Detail</span> <span class='linking'>applies </span>one <span class='term'>unit- discount Amount</span> (as <span class='term'>Unit Price Discount</span>);<span class='comment'>// Sales Order Detail has one line- total Amount where ...</span>
+<span class='comment'>// Sales Order Detail has one Row GUID, Row GUID is of at most one Sales Order Detail;</span>
+<span class='comment'>// Sales Order Detail has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Sales Reason </span>[static] is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Sales Reason</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+     <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Sales Reason</span>;</span>
+<span class='keyword'><span class='term'>Sales Reason Type </span>is identified by its <span class='term'>Name</span>;</span>
+<span class='keyword'><span class='term'>Sales Reason</span> <span class='linking'>is of </span>one <span class='term'>Sales Reason Type</span> (as <span class='term'>Reason Type</span>);<span class='comment'>// Sales Reason has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Sales Order Sales Reason </span>is where
+    <span class='term'>Sales Order</span> <span class='linking'>has </span><span class='term'>Sales Reason</span>;<span class='comment'>// Sales Order Sales Reason has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Tax Type </span>is written as <span class='term'>Integer</span>(<span class='literal'>8</span>) restricted to {<span class='literal'>1..3</span>};</span>
+<span class='keyword'>each <span class='term'>Sales Tax Rate </span>[static] is identified by its <span class='term'>ID</span> where
+    some <span class='term'>State Province</span> <span class='linking'>applies </span>some <span class='term'>Tax Type</span>;</span>
+<span class='keyword'><span class='term'>Sales Tax Rate</span> <span class='linking'>applies at </span>one <span class='term'>Amount</span> (as <span class='term'>Tax Rate</span>);</span>
+<span class='keyword'><span class='term'>Sales Tax Rate</span> <span class='linking'>has </span>one <span class='term'>Name</span>,
+    <span class='term'>Name</span> <span class='linking'>is of </span>at most one <span class='term'>Sales Tax Rate</span>;<span class='comment'>// Sales Tax Rate has one Row GUID, Row GUID is of at most one Sales Tax Rate</span>
+<span class='comment'>// Sales Tax Rate has one modified-Date;</span>
+</span>
+<span class='keyword'>each <span class='term'>Shopping Cart ID </span>is written as <span class='term'>String</span>(<span class='literal'>50</span>);</span>
+<span class='keyword'>each <span class='term'>Shopping Cart </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'>each <span class='term'>Shopping Cart Item </span>is identified by its <span class='term'>ID</span>;</span>
+<span class='keyword'><span class='term'>Shopping Cart Item</span> <span class='linking'>is in </span>one <span class='term'>Shopping Cart</span>;</span>
+<span class='keyword'><span class='term'>Shopping Cart Item</span> <span class='linking'>is for </span>one <span class='term'>Number</span> (as <span class='term'>Quantity</span>);</span>
+<span class='keyword'><span class='term'>Shopping Cart Item</span> <span class='linking'>is for </span>one <span class='term'>Product</span>;</span>
+<span class='keyword'><span class='term'>Shopping Cart Item</span> <span class='linking'>was created on </span>one <span class='term'>Date</span> (as <span class='term'>Date Created</span>);<span class='comment'>// Shopping Cart Item has one modified-Date;</span>
+<span class='comment'>////////////////////////////////////////////////////////////////////////////////</span>
+<span class='comment'>// topic dbo;</span>
+</span>
+<span class='keyword'>each <span class='term'>AWBuild Version </span>is identified by its <span class='term'>ID</span>;<span class='comment'>/*
+	SystemInformationID	tinyint IDENTITY NOT NULL,
+	[Database Version] nvarchar(25) NOT NULL,
+	VersionDate		datetime NOT NULL,
+	ModifiedDate		datetime NOT NULL,
+	CONSTRAINT PK_AWBuildVersion_SystemInformationID PRIMARY KEY CLUSTERED (SystemInformationID)
+*/</span>
+</span>
+<span class='keyword'>each <span class='term'>Database Log </span>is identified by its <span class='term'>ID</span>;<span class='comment'>/*
+	DatabaseLogID		int IDENTITY NOT NULL,
+	PostTime		datetime NOT NULL,
+	DatabaseUser		sysname NOT NULL,
+	Event			sysname NOT NULL,
+	Schema			sysname NULL,
+	Object			sysname NULL,
+	TSQL nvarchar(max) NOT NULL,
+	XmlEvent		xml NOT NULL,
+	CONSTRAINT PK_DatabaseLog_DatabaseLogID PRIMARY KEY NONCLUSTERED (DatabaseLogID)
+*/</span>
+</span>
+<span class='keyword'>each <span class='term'>Error Log </span>is identified by its <span class='term'>ID</span>;<span class='comment'>/*
+	ErrorLogID		int IDENTITY NOT NULL,
+	ErrorTime		datetime NOT NULL,
+	UserName		sysname NOT NULL,
+	ErrorNumber		int NOT NULL,
+	ErrorSeverity		int NULL,
+	ErrorState		int NULL,
+	ErrorProcedure		nvarchar(126) NULL,
+	ErrorLine		int NULL,
+	ErrorMessage		nvarchar(4000) NOT NULL,
+	CONSTRAINT PK_ErrorLog_ErrorLogID PRIMARY KEY CLUSTERED (ErrorLogID)
+*/</span>
+</span>CQL? 
+</pre>

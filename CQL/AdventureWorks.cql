@@ -294,16 +294,16 @@ Product is of at most one [satellite Product Group] Product Style (as Style);
 Product belongs to at most one [satellite Product Group] Product Subcategory (as Product Subcategory);
 Product is of at most one [satellite Product Group] Product Model (as Product Model);
 
-Product should be stocked at least in one [satellite ProductSupply] minimum-Number (as Safety Stock Level);
-Product should be re-ordered when inventory drops below one [satellite ProductSupply] minimum-Number (as Reorder Point);
-Product takes one [satellite ProductSupply] Number (as Days To Manufacture) of days to manufacture;
+Product should be stocked at least in one [satellite Product Supply] minimum-Number (as Safety Stock Level);
+Product should be re-ordered when inventory drops below one [satellite Product Supply] minimum-Number (as Reorder Point);
+Product takes one [satellite Product Supply] Number (as Days To Manufacture) of days to manufacture;
 
 Product (as Finished Goods Flag) is saleable;
-Product has one [satellite GroupSales] standard- cost Amount (as Standard Cost);
-Product has one [satellite ProductSales] list- price Amount (as List Price);
-Product was first available on one [satellite ProductSales] sell- start Date;
-Product is last available on at most one [satellite ProductSales] sell- end Date;
-Product was discontinued on at most one [satellite ProductSales] discontinued- Date;
+Product has one [satellite Product Sales] standard- cost Amount (as Standard Cost);
+Product has one [satellite Product Sales] list- price Amount (as List Price);
+Product was first available on one [satellite Product Sales] sell- start Date;
+Product is last available on at most one [satellite Product Sales] sell- end Date;
+Product was discontinued on at most one [satellite Product Sales] discontinued- Date;
 // Product has one modified-Date;
 // Product has one Row GUID, Row GUID is of at most one Product;
 
@@ -568,7 +568,7 @@ Credit Card has one Expiry Year (as Exp Year);
 // Credit Card has one modified-Date;
 
 each Currency Code is written as a Char(3);
-each Currency [static] is identified by its Code;
+each Currency is identified by its Code;
 Currency has one Name,
      Name is of at most one Currency;
 // Currency has one modified-Date;
